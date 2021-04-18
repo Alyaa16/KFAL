@@ -1,0 +1,44 @@
+
+<ion-header>
+  <div >
+    <ion-row style="padding-top: 13px;padding-right: 11px;padding-left: 11px;">
+      <ion-col col-1 (click)="toggleMenu()">
+        <img src="../../assets/imgs/menu.png">
+      </ion-col>
+      <ion-col col-11 >
+
+      </ion-col>
+    </ion-row>
+</div>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-row>
+    <ion-col col-12>
+           <p style="color: #214952;font-size: 15.61px;line-height: 16px;">
+            {{"Home_client.for create request please choose request type"|translate}}
+           </p>
+    </ion-col>
+  </ion-row>
+
+  <div style="padding: 5% 0;">
+    <button ion-button color="custom2" full (click)="chooseRequestType(1)" >
+      <p style="font-size: 19px;">{{"Home_client.translation only"|translate}}</p>
+    </button>
+    <button ion-button color="custom2" full (click)="chooseRequestType(2)">
+      <p style="font-size: 19px;">{{"Home_client.translation and academic review"|translate}} </p>
+     </button>
+    <button ion-button color="custom2" full (click)="chooseRequestType(3)">
+      <p style="font-size: 19px;" >{{"Home_client.academic review only"|translate}}</p>
+    </button>
+  </div>
+
+ <div style="text-align: center;">
+   <button style="height: 50px;width: 50px;" [disabled]="RequestType==0" ion-button round color="custom1" (click)="makeRequest()" >
+             <ion-icon style="    font-size: 27px;" *ngIf="dir==true" name="md-arrow-back"></ion-icon>
+             <ion-icon style="    font-size: 27px;" *ngIf="dir==false" name="md-arrow-forward"></ion-icon>
+   </button>
+ </div>
+
+</ion-content>

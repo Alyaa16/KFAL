@@ -1,0 +1,142 @@
+<ion-header>
+  <div>
+      <ion-row style="padding-top: 13px;padding-right: 11px;">
+          <ion-col col-1 (click)="dismiss()">
+              <ion-icon *ngIf="dir==true"  style="font-size: 35px;" name="ios-arrow-round-forward-outline"></ion-icon>
+              <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
+        </ion-col>
+        <ion-col col-11 style="margin-top: 10px; text-align: center;height: 16px;width: 54px;color: #07133c;font-size: 15.61px;line-height: 16px;">
+          {{"upgrade requests"|translate}}
+          </ion-col>
+      </ion-row>
+  </div>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+
+<!-- 
+    <ion-card>
+      <ion-card-header style="padding: 5px 8px;background-color: #FFAA45;">
+        <ion-item>
+          <ion-label style="color:white">
+            {{"translator upgrade requests"|translate}}
+          </ion-label>
+          <ion-badge item-end color="custom2">{{providerRequests.length}}</ion-badge>
+        </ion-item>
+      </ion-card-header>
+
+      <ion-card-content>
+          <ion-item  *ngFor="let request of providerRequests"  (click)="requestDetails(request.FK_User_ID,request.CV,request.User_Full_Name)" >
+               <ion-label >  {{request.User_Full_Name}}</ion-label>
+          </ion-item>
+      </ion-card-content>
+    </ion-card> -->
+
+   
+
+  <div>
+    <ion-item style="padding-left: 0px !important;background-color: #ffaa45;    border-radius: 4px;">
+      <ion-label style="    padding: 0px 6px;">  {{"filter by language"|translate}}</ion-label>
+      <ion-select (ionChange)="chooseLanguage()" [(ngModel)]="language"  okText='{{"ok"|translate}}' cancelText='{{"cancel"|translate}}'>
+        <!-- <ion-option value='0'> الكل  </ion-option> -->
+        <ion-option  *ngFor="let lang of  languages" [value]="lang.Lang_ID">
+            <span *ngIf="dir==true">
+              {{lang._Lang_NameAr}}
+            </span>
+            <span *ngIf="dir==false">
+              {{lang._Lan_Name_En}}
+            </span>
+        </ion-option>
+      </ion-select>
+    </ion-item>
+
+
+    <ion-row (click)="UpgradeRequestDetails(request.UpgReq_ID,request.FK_User_ID,request.CV,request.Fk_LangID)" style="border: 1px solid gray;margin: 10px 0px;padding: 10px;" *ngFor="let request of upgradeRequests" >
+      <ion-col col-3>
+        <span style="padding: 10px; background-color: #07133c;color: white; width: 50px;height: 50px;border-radius: 50%;">
+          {{ request.UpgReq_ID}}
+         </span>
+      </ion-col>
+      <ion-col col-6>
+        <p style="font-size: 20px;margin: 0px !important;"> {{request.User_Full_Name}}</p>
+      </ion-col>
+      <ion-col col-3>
+        {{request.ReqStatus}}
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
+
+
+
+
+
+
+<!--   <div *ngIf="nodata" style="margin-top: 20%;font-size: 20px; text-align:center;">
+     {{"no exist requests"|translate}}
+  </div> -->
+
+  <!-- <div *ngIf="!nodata"> -->
+    <!-- <ion-card id="newUpgRequets">
+      <ion-card-header style="background-color: #FFAA45 ;">
+          <ion-row>
+            <ion-col col-11>
+              <p style="color: white;"> {{"all upgrade requests"|translate}}</p>
+            </ion-col>
+            <ion-col col-1>
+              <p style="color: white;"> {{upgradeRequests.length}} </p>
+            </ion-col>
+          </ion-row>
+      </ion-card-header>
+      <ion-card-content>
+          <ion-list>
+            <ion-item  *ngFor="let request of upgradeRequests"  (click)="requestDetails(request.FK_User_ID,request.CV,request.User_Full_Name)" >
+              <ion-row>
+                <ion-col col-1 style="width: 25px;height: 25px;border-radius: 50%;background-color: #FFAA45;text-align: center;color: #f2f2f2;">
+                    {{request.FK_User_ID}}
+                </ion-col>
+                <ion-col col-11 style="text-align: center;">
+                    {{request.User_Full_Name}}
+                </ion-col>
+              </ion-row>
+            </ion-item>
+          </ion-list>
+      </ion-card-content>
+    </ion-card> -->
+
+     <!-- <ion-card>
+      <ion-card-header style="padding: 5px 8px;background-color: #FFAA45;">
+        <ion-item>
+          <ion-label style="color:white">
+            {{"waiting accept upgrade requests"|translate}}
+          </ion-label>
+          <ion-badge item-end color="custom2">{{waitingAcceptUpgRequests. length}}</ion-badge>
+        </ion-item>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item  *ngFor="let request of academicReviewerRequests"  (click)="requestDetails(request.FK_User_ID,request.CV,request.User_Full_Name)" >
+          <ion-label >  {{request.User_Full_Name}}</ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card> -->
+
+  <!-- <ion-card id="waitingAcceptUpgRequets">
+      <ion-card-header style="background-color: #f2f2f2;">
+        <ion-row>
+          <ion-col col-11>
+            <p style="color: #FFAA45;"> {{"waiting accept upgrade requests"|translate}}</p>
+          </ion-col>
+          <ion-col col-1>
+            <p style="color: #FFAA45;"> {{waitingAcceptUpgRequests.length}} </p>
+          </ion-col>
+        </ion-row>
+      </ion-card-header>
+      <ion-card-content>
+
+      </ion-card-content>
+  </ion-card> -->

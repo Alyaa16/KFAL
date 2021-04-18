@@ -1,0 +1,236 @@
+
+<ion-header style="background-color: #F2F2F2;">
+  <ion-navbar  hideBackButton>
+    <ion-row>
+
+      <ion-col col-1 (click)="dismiss()">
+        <ion-icon *ngIf="dir==true"  style="font-size: 35px;" name="ios-arrow-round-forward-outline"></ion-icon>
+        <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
+      </ion-col>
+
+      <ion-col *ngIf="comefrom=='userprofile'"  col-10 style="text-align: center;margin-top: 0px;">
+          <ion-title style="color: #214952;">{{"Menu.profile"|translate}}</ion-title>
+      </ion-col>
+
+      <ion-col *ngIf="comefrom=='adminPanel'"  col-7 style="text-align: center;margin-top: 9px;">
+        <ion-title style="color: #07133c;">{{name}}</ion-title>
+      </ion-col>
+
+      <ion-col *ngIf="dir==true && comefrom=='userprofile'" col-1 (click)="edit()" style="margin-top: 6px;padding-top: 14px;transform: rotate(90deg);">
+          <img src="../../assets/imgs/edit.png" >
+      </ion-col>
+
+      <ion-col *ngIf="dir==false && comefrom=='userprofile'" col-1 (click)="edit()" style="margin-top: 6px;padding-top: 14px;">
+        <img src="../../assets/imgs/edit.png" >
+      </ion-col>
+
+      <ion-col col-4  >
+
+      </ion-col>
+
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+
+<ion-content  padding style="background-color: #F2F2F2;margin-bottom: 87px !important;padding-bottom: 0px;position:relative">
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <div *ngIf="!noData">
+
+
+  <ion-row style="    margin: 7px 0px;">
+    <ion-col col-5 style="color:#FFAA45;font-size: 18px;"> {{"Email"|translate}} </ion-col>
+    <ion-col col-7>  </ion-col>
+  </ion-row>
+
+  <div style="text-align: center;">
+      {{email}}
+  </div>
+
+  <ion-row style="    margin: 7px 0px;">
+      <ion-col col-5 style="color:#FFAA45;font-size: 18px"> {{"name"|translate}} </ion-col>
+      <ion-col col-7>  </ion-col>
+  </ion-row>
+  <div style="text-align: center;">
+      {{name}}
+  </div>
+
+  <ion-row *ngIf="comefrom=='userprofile'">
+      <ion-col col-5 style="color:#FFAA45;font-size: 18px;"> {{"password"|translate}} </ion-col>
+      <ion-col col-7>  </ion-col>
+  </ion-row>
+
+  <div *ngIf="comefrom=='userprofile'">
+    <ion-row>
+      <ion-col  col-11 style="text-align: center;">
+        <ion-input style="border-bottom: none !important;    text-align: center !important;margin: 0px !important;" readonly [value]="Password" [type]="passwordType" clearOnEdit="false"></ion-input>
+      </ion-col>
+      <ion-col col-1 >
+        <ion-icon item-end [name]="passwordIcon" class="passwordIcon" (click)="hideShowPassword()"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <ion-row style="    margin: 7px 0px;">
+      <ion-col col-5 style="color:#FFAA45;font-size: 18px"> {{"gender"|translate}} </ion-col>
+      <ion-col col-7>  </ion-col>
+  </ion-row>
+
+  <div style="text-align: center;">
+       {{gender}}
+  </div>
+
+  <div *ngIf="!DataNotCompleted">
+    <!-- <ion-item style="margin: 5px 0px;padding-left: 0px;"> -->
+      <ion-row style="    margin: 7px 0px;">
+        <ion-col col-9 style="color:#FFAA45;font-size: 18px"> {{"Country"|translate}}   </ion-col>
+        <ion-col col-3>   </ion-col>
+      </ion-row>
+    <!-- </ion-item> -->
+
+    <div style="text-align: center;">
+      {{CountryName}}
+    </div>
+
+    <!-- <ion-item  style="margin: 5px 0px;padding-left: 0px;"> -->
+        <ion-row style="    margin: 7px 0px;">
+          <ion-col col-9 style="color:#FFAA45;font-size: 18px"> {{"City"|translate}}   </ion-col>
+          <ion-col col-3>   </ion-col>
+        </ion-row>
+    <!-- </ion-item> -->
+
+    <div style="text-align: center;">
+      {{CityName}}
+    </div>
+
+    <ion-row style="margin: 7px 0px;">
+        <ion-col col-4>
+            <ion-label style="color:#FFAA45;font-size: 18px" >{{"Address"|translate}}</ion-label>
+        </ion-col>
+        <ion-col col-8> </ion-col>
+    </ion-row>
+
+    <div style="text-align: center;">
+      {{Address}}
+    </div>
+
+    <div *ngIf="!client">
+
+      <div *ngIf="!noLanguages">
+        <ion-row style="margin: 7px 0px;">
+          <ion-col col-8>
+              <ion-label style="color:#FFAA45;font-size: 18px" >{{"Proficient_languages"|translate}}</ion-label>
+          </ion-col>
+          <ion-col col-4> </ion-col>
+        </ion-row>
+
+        <div style="text-align: center;" *ngIf="!noLanguages">
+          <span *ngFor="let lang of my_languages;let i=index">
+            {{lang}} <span *ngIf="i+1<my_languages.length">, </span>
+          </span>
+        </div>
+      </div>
+
+
+      <!-- <div style="text-align: center;" *ngIf="noLanguages">
+        {{"no languages"|translate}}
+      </div> -->
+
+      <div *ngIf="Fk_SpecializationParentID!=null">
+        <ion-row style="margin: 7px 0px;">
+          <ion-col col-8>
+              <ion-label style="color:#FFAA45;font-size: 18px" >{{"general_feild"|translate}}</ion-label>
+          </ion-col>
+          <ion-col col-4> </ion-col>
+        </ion-row>
+
+        <div style="text-align: center;">
+          {{Fk_SpecializationParentID}}
+        </div>
+      </div>
+
+      <div *ngIf="FK_SpecializationChildID!=null">
+        <ion-row style="margin: 7px 0px;">
+          <ion-col col-8>
+              <ion-label style="color:#FFAA45;font-size: 18px" >{{"specific_feild"|translate}}</ion-label>
+          </ion-col>
+          <ion-col col-4> </ion-col>
+        </ion-row>
+
+        <div style="text-align: center;">
+          {{FK_SpecializationChildID}}
+        </div>
+      </div>
+
+      <div *ngIf="cv!=null">
+        <ion-row style="margin: 7px 0px;">
+          <ion-col col-8>
+              <ion-label style="color:#FFAA45;font-size: 18px" >CV</ion-label>
+          </ion-col>
+          <ion-col col-4> </ion-col>
+        </ion-row>
+
+        <div style="text-align: center;color:black">
+          {{cv}}
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+  <!-- position: absolute;bottom: 21%;width: 90%; -->
+  <div id="div1" *ngIf="DataNotCompleted && comefrom=='userprofile'" style="text-align: center;margin-top: 10%;">
+    <button (click)="completeProfile()" ion-button color="custom2" full style="height: 48px;border-radius: 10px;">
+        {{"completeProfile"|translate}}
+    </button>
+  </div>
+  <!-- position: absolute;bottom: 13%;width: 90%; -->
+  <div id="div2" *ngIf="client && comefrom=='userprofile'" style="text-align: center;">
+    <button *ngIf="!isUpgraing" (click)="upgradeProfile()" ion-button color="custom2" full style="height: 38px;border-radius: 10px;">
+        {{"account_upgrade"|translate}}
+    </button>
+
+    <div (click)="trackUpgReq()" *ngIf="isUpgraing" style="    margin-bottom: 15px;
+    color: #fff;
+    font-size: 19px;
+    padding-top: 0px;
+    text-align: center;
+    height: 40px;
+    background: #ffaa45;
+    border-radius: 10px;
+    line-height: 43px;
+    height: 48px;
+    border-radius: 10px;">
+       <p>{{"track your request"|translate}}</p>
+    </div>
+  </div>
+  <!-- position: absolute;bottom:3%;width: 90%; -->
+  <div id="div3" *ngIf="comefrom=='userprofile' && IsJoin==false" style="text-align: center;">
+    <button  (click)="joinDiscussions()" ion-button color="custom2" full style="height: 48px;border-radius: 10px;">
+        {{"join_discussion"|translate}}
+    </button>
+
+  </div>
+  <!-- style="position: absolute;bottom: 2%;width: 90%;" -->
+  <div id="div4" *ngIf="DataNotCompleted && comefrom=='userprofile'" >
+    <div style="color:#214952;font-size: 11px;text-align: center;">
+      * {{ "completeNote" |translate}}
+    </div>
+  </div>
+
+  </div>
+  <div *ngIf="noData">
+
+  </div>
+</ion-content>
+
+<ion-footer style="padding: 8px;background-color:#f2f2f2">
+  <ion-item  *ngIf="comefrom=='adminPanel'" style="padding-right: 0px !important;background: #f2f2f2;">
+    <ion-label *ngIf="dir==false" style="font-size: 20px;"> block</ion-label>
+    <ion-label *ngIf="dir==true" style="font-size: 20px;"> block</ion-label>
+    <ion-toggle mode="ios" [checked]="isblocked"  [(ngModel)]="isblocked" (ionChange)="blockuser()"></ion-toggle>
+  </ion-item>
+</ion-footer>
