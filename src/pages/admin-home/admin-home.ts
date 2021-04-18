@@ -72,7 +72,7 @@ export class AdminHomePage {
             }
           )
 
-          let loading=this.loadingCtrl.create({})
+          let loading=this.loadingCtrl.create({'content':this.translate.instant('please wait ...')})
           loading.present()
           this.admin.ShowAllRequestsForAdmin().subscribe(
             (res:any)=>{

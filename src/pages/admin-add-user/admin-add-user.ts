@@ -31,7 +31,8 @@ export class AdminAddUserPage {
       Password:['', Validators.compose([Validators.required])],
       ConfirmPassword:['', Validators.compose([Validators.required])],
       Gender:['', Validators.compose([Validators.required])],
-      Mobile:['', Validators.compose([Validators.required])]
+      Mobile:['', Validators.compose([Validators.required])],
+      account_type:['', Validators.compose([Validators.required])]
     });
   }
 
@@ -57,10 +58,11 @@ export class AdminAddUserPage {
 
 
   register(){
+    console.log(JSON.stringify(this.myform.value))
     if(this.myform.value.Password==this.myform.value.ConfirmPassword){
 
         // call api to register new
-        let loading =this.loadingCtrl.create({})
+        let loading =this.loadingCtrl.create({'content':this.translate.instant('please wait ...')})
         loading.present()
         this.storage.get('Trans_user_id').then((adminID)=>{
           if(adminID){
