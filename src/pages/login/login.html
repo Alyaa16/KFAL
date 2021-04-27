@@ -37,8 +37,8 @@
 
         <ion-item style="position:relative">
           <ion-input style="border-bottom: none !important;" [value]="mypassword"  formControlName="Password" [type]="passwordType" clearOnEdit="false" ></ion-input>
-          <ion-icon *ngIf="dir==false" style="position: absolute;top:0px;right:10px;font-size: 2rem !important;margin: 0 auto !important;" item-end [name]="passwordIcon"  (click)="hideShowPassword()"></ion-icon>
-          <ion-icon *ngIf="dir==true" style="position: absolute;top:0px;left:10px;font-size: 2rem !important;margin: 0 auto !important;" item-end [name]="passwordIcon"  (click)="hideShowPassword()"></ion-icon>
+          <ion-icon *ngIf=" IsRTl==false" style="position: absolute;top:0px;right:10px;font-size: 2rem !important;margin: 0 auto !important;" item-end [name]="passwordIcon"  (click)="hideShowPassword()"></ion-icon>
+          <ion-icon *ngIf=" IsRTl==true" style="position: absolute;top:0px;left:10px;font-size: 2rem !important;margin: 0 auto !important;" item-end [name]="passwordIcon"  (click)="hideShowPassword()"></ion-icon>
      
         </ion-item>
 

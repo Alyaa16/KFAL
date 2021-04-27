@@ -1,7 +1,30 @@
-<ion-content style="background-image: url(assets/imgs/bg.png);">
-</ion-content>
+<!-- <ion-content style="position: relative; background: url('../../assets/imgs/bg.png');
+background-attachment: fixed;
+background-size: cover; 
+background-repeat: no-repeat">
 
-<!-- 
+  
+    <button ion-fab style="position: absolute;left:5%;top:22%">
+      <ion-icon name="home"></ion-icon>
+    </button>
+
+    <button ion-fab style="position: absolute;left:30%;top:20%">
+      <ion-icon name="home"></ion-icon>
+    </button>
+
+    <button ion-fab style="position: absolute;right:5%;top:13%">
+      <ion-icon name="home"></ion-icon>
+    </button>
+
+    <button ion-fab style="position: absolute;right:30%;top: 14.5%">
+      <ion-icon name="home"></ion-icon>
+    </button>
+
+ 
+
+</ion-content> -->
+
+
 <ion-header>
   <div >
     <ion-row style="padding-top: 13px;padding-right: 11px;padding-left: 11px;">
@@ -15,17 +38,50 @@
 </div>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding style="position: relative; background: url('../../assets/imgs/kfal2.svg');
+background-attachment: fixed;
+background-size: 100%; 
+background-repeat: no-repeat">
 
-  <ion-row>
+   <ion-row style="margin-top: 50px;">
+    <ion-col col-1> </ion-col>
+    <ion-col col-2>
+      <button ion-fab style="width: 30px;height: 30px;" >
+        <ion-icon style="font-size: 1.4rem;" name="home"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button ion-fab style="width: 30px;height: 30px;" >
+        <ion-icon style="font-size: 1.4rem;" name="home"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button ion-fab style="width: 30px;height: 30px;" >
+        <ion-icon style="font-size: 1.4rem;" name="home"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button ion-fab style="width: 30px;height: 30px;" >
+        <ion-icon style="font-size: 1.4rem;" name="home"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button ion-fab style="width: 30px;height: 30px;" >
+        <ion-icon style="font-size: 1.4rem;" name="home"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-1> </ion-col>
+  </ion-row> 
+
+  <!-- <ion-row>
     <ion-col col-12>
            <p style="color: #214952;font-size: 15.61px;line-height: 16px;">
             {{"Home_client.for create request please choose request type"|translate}}
            </p>
     </ion-col>
-  </ion-row>
-
-  <div style="padding: 5% 0;">
+  </ion-row> -->
+<!-- 
+  <div style="padding: 5% 0;    margin-top: 33%;">
     <button ion-button color="custom2" full (click)="chooseRequestType(1)" >
       <p style="font-size: 19px;">{{"Home_client.translation only"|translate}}</p>
     </button>
@@ -42,6 +98,6 @@
              <ion-icon style="    font-size: 27px;" *ngIf="dir==true" name="md-arrow-back"></ion-icon>
              <ion-icon style="    font-size: 27px;" *ngIf="dir==false" name="md-arrow-forward"></ion-icon>
    </button>
- </div>
+ </div> -->
 
-</ion-content> -->
+</ion-content>

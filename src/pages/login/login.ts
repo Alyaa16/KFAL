@@ -21,14 +21,15 @@ export class LoginPage {
   passwordType: string = 'password';
   passwordIcon: string = 'eye-off';
   touchID:boolean
-  dir:boolean
+  IsRTl:boolean
   constructor(public menuCtrl: MenuController,public platform:Platform,private push: Push,
     public loadingCtrl:LoadingController,public modalCtrl:ModalController,
               public events: Events,public toastCtrl:ToastController,private faio:FingerprintAIO,
               public user:ClientProvider,public navCtrl: NavController,public alertCtrl:AlertController,
               public formBuilder: FormBuilder,public helper:HelperProvider,private storage: Storage,
               public translate: TranslateService,public navParams: NavParams) {
-                 this.dir=this.platform.isRTL
+                 this.IsRTl=this.platform.isRTL
+                 console.log("is rtl "+this.IsRTl)
                 this.storage.get("Password").then((res:any)=>{
                    if(res!=null){
                      this.mypassword=res
@@ -87,11 +88,15 @@ export class LoginPage {
           this.platform.setDir('rtl', true)
           this.lang="ar"
           this.storage.set("Trans_language",'ar')
+          this. IsRTl=true
+          console.log('lang changed to rtl')
         }else{
           this.helper.changeLanguage('en')
           this.platform.setDir('ltr', true)
           this.lang="en"
           this.storage.set("Trans_language",'en')
+          this. IsRTl=false
+          console.log('lang changed to ltr')
         }
       })
 
@@ -107,10 +112,12 @@ export class LoginPage {
         this.helper.changeLanguage('ar')
         this.platform.setDir('rtl', true)
         this.storage.set("Trans_language",'ar')
+        this.events.publish('trans_lang','ar')
       }else{
         this.helper.changeLanguage('en')
         this.platform.setDir('ltr', true)
         this.storage.set("Trans_language",'en')
+        this.events.publish('trans_lang','en')
       }
     })
   }
@@ -169,23 +176,23 @@ export class LoginPage {
     })
   }
 
-    change(lang){
-      console.log("lang0 "+lang)
-      if(lang=='en'){
-        this.helper.changeLanguage(lang)
-        this.platform.setDir('ltr', true)
-        this.lang="en"
-        this.events.publish('trans_lang','en')
-        this.storage.set("Trans_language",'en')
-      }else if(lang=='ar'){
-        this.helper.changeLanguage(lang)
-        this.platform.setDir('rtl', true)
-        this.lang="ar"
-        this.events.publish('trans_lang','ar')
-        this.storage.set("Trans_language",'ar')
-      }
+    // change(lang){
+    //   console.log("lang0 "+lang)
+    //   if(lang=='en'){
+    //     this.helper.changeLanguage(lang)
+    //     this.platform.setDir('ltr', true)
+    //     this.lang="en"
+    //     this.events.publish('trans_lang','en')
+    //     this.storage.set("Trans_language",'en')
+    //   }else if(lang=='ar'){
+    //     this.helper.changeLanguage(lang)
+    //     this.platform.setDir('rtl', true)
+    //     this.lang="ar"
+    //     this.events.publish('trans_lang','ar')
+    //     this.storage.set("Trans_language",'ar')
+    //   }
 
-    }
+    // }
 
     Login(){
       this.platform.ready().then(() => {
@@ -230,6 +237,7 @@ export class LoginPage {
                   this.storage.set('logined_in',true)
                   this.storage.set('Trans_user_type',res.UserData[0].UserType)
                   this.storage.set('userEmail',res.UserData[0].Email)
+
 
                   // ------------------------ check if user is admin
                   if(res.UserData[0].IsAdmin==true){
