@@ -28,8 +28,8 @@ export class AdminAddUserPage {
     this.myform =  this.formBuilder.group({
       UserEmail: ['', Validators.compose([Validators.required,Validators.email])],
       Name:['', Validators.compose([Validators.required])],
-      Password:['', Validators.compose([Validators.required])],
-      ConfirmPassword:['', Validators.compose([Validators.required])],
+      //Password:['', Validators.compose([Validators.required])],
+    //  ConfirmPassword:['', Validators.compose([Validators.required])],
       Gender:['', Validators.compose([Validators.required])],
       Mobile:['', Validators.compose([Validators.required])],
       account_type:['', Validators.compose([Validators.required])]
