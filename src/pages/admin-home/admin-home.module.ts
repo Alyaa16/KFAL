@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   imports: [
     IonicPageModule.forChild(AdminHomePage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
   ],
 })
 export class AdminHomePageModule {}

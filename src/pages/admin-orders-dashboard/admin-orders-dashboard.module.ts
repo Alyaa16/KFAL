@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { AdminOrdersDashboardPage } from './admin-orders-dashboard';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   imports: [
     IonicPageModule.forChild(AdminOrdersDashboardPage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),NgCircleProgressModule
+
   ],
 })
 export class AdminOrdersDashboardPageModule {}

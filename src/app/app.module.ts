@@ -29,6 +29,7 @@ import { GeneralProvider } from '../providers/general/general';
 import { TestformsProvider } from '../providers/testforms/testforms';
 import { ControlpanelProvider } from '../providers/controlpanel/controlpanel';
 import { UpgradeRequestsProvider } from '../providers/upgrade-requests/upgrade-requests';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -43,6 +44,25 @@ export function createTranslateLoader(http: HttpClient) {
     HttpClientModule,
     StarRatingModule ,
     IonicModule.forRoot(MyApp),
+      // Specify ng-circle-progress as an import
+      NgCircleProgressModule.forRoot({
+        // set defaults here
+        innerStrokeColor:"#FFAA45",
+        showInnerStroke:false,
+        responsive:true,
+        showSubtitle:false,
+        titleColor:"#FFAA45",// #b9b4b4
+        titleFontSize:"60",
+        showUnits:true,
+        radius: 100,
+        unitsFontSize:'20',
+        outerStrokeWidth: 16,
+        outerStrokeColor: "#FFAA45",
+        animationDuration: 300,
+      
+        innerStrokeWidth:4,
+       
+      }),
     TranslateModule.forRoot(),
     IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
