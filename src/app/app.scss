@@ -35,14 +35,48 @@ html[dir="ltr"]{
   ion-label, span, button, h1, h2, h3, h4, h5, h6, p, ion-item, ion-title ,div{
   font-family:'roboto' !important ;
  }
+
  span{
   text-transform: none;
  }
+
 }
 
 body {
     -webkit-user-select: text;
     user-select: text;
+}
+
+@media only screen and (min-width: 300px)  and (max-width: 400px){
+  .my_home_icons{
+    margin-top: 50px;
+    button.fab{
+      width: 40px !important;
+      height: 40px !important;
+      ion-icon{
+        font-size: 2.0rem;
+      }
+    }
+    #btn1{
+      margin-top: 20px;
+    }
+  
+    #btn2{
+      margin-top:7px;
+    }
+  
+    #btn3{
+      margin-top:-9px;
+    }
+  
+    #btn4{
+      margin-top:-15px;
+    }
+  
+    #btn5{
+      margin-top:-6px;
+    }
+  }
 }
 
 .has-refresher>.scroll-content {

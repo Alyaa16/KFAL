@@ -25,7 +25,7 @@ background-repeat: no-repeat">
 </ion-content> -->
 
 
-<ion-header>
+<!-- <ion-header>
   <div >
     <ion-row style="padding-top: 13px;padding-right: 11px;padding-left: 11px;">
       <ion-col col-1 (click)="toggleMenu()">
@@ -36,38 +36,38 @@ background-repeat: no-repeat">
       </ion-col>
     </ion-row>
 </div>
-</ion-header>
+</ion-header> -->
 
 <ion-content padding style="position: relative; background: url('../../assets/imgs/kfal2.svg');
 background-attachment: fixed;
 background-size: 100%; 
 background-repeat: no-repeat">
 
-   <ion-row style="margin-top: 50px;">
+   <ion-row  class="my_home_icons">
     <ion-col col-1> </ion-col>
     <ion-col col-2>
-      <button ion-fab  >
+      <button  id="btn1" ion-fab  >
         <ion-icon  name="home"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-2>
-      <button ion-fab  >
+      <button id="btn2" ion-fab     >
         <ion-icon name="home"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-2>
-      <button ion-fab >
+      <button id="btn3" ion-fab  (click)="toggleMenu()">
+        <ion-icon  name="menu"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button id="btn4" ion-fab  >
         <ion-icon  name="home"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-2>
-      <button ion-fab  >
-        <ion-icon  name="home"></ion-icon>
-      </button>
-    </ion-col>
-    <ion-col col-2>
-      <button ion-fab >
-        <ion-icon  name="home"></ion-icon>
+      <button id="btn5" ion-fab  >
+        <ion-icon  name="person"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-1> </ion-col>

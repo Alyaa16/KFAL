@@ -59,9 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
         outerStrokeWidth: 16,
         outerStrokeColor: "#FFAA45",
         animationDuration: 300,
-      
         innerStrokeWidth:4,
-       
       }),
     TranslateModule.forRoot(),
     IonicStorageModule.forRoot(),
