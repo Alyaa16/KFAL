@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, AlertController, MenuController, Events } from 'ionic-angular';
+import { Nav, Platform, AlertController, MenuController, Events, Alert } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Device } from '@ionic-native/device';
@@ -211,9 +211,14 @@ direction:boolean
     this.initializeApp();
 
   }
+  getDimsensions(){
+    
+    alert( 'width is'+window.screen.width+'height is '+window.screen.height)
+  }
 
   initializeApp() {
     this.platform.ready().then(() => {
+    this.getDimsensions()
 
           const options: PushOptions = {
             android: {

@@ -105,8 +105,8 @@ export class AdminProvider {
     if(navigator.onLine){
       return   this.http.get(this.helper.base_url+"User/DirectAdminRegistration?Name="+params.Name
       +"&Email="+params.UserEmail+
-      "&Password="+params.Password+
-      "&UserType=1"+
+      "&Password=null"+
+      "&UserType="+params.account_type +
       "&Gender="+params.Gender+
       "&Mobile="+params.Mobile+
       "&FK_AdminID="+FK_AdminID
