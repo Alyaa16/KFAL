@@ -213,7 +213,7 @@ direction:boolean
   }
   getDimsensions(){
     
-    alert( 'width is'+window.screen.width+'height is '+window.screen.height)
+    console.log( 'width is'+window.screen.width+'height is '+window.screen.height)
   }
 
   initializeApp() {
