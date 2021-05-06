@@ -1,3 +1,4 @@
+import { AdminProvider } from './../../providers/admin/admin';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, MenuController, Events, ToastController, LoadingController, AlertController, ModalController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -23,7 +24,7 @@ export class LoginPage {
   touchID:boolean
   IsRTl:boolean
   constructor(public menuCtrl: MenuController,public platform:Platform,private push: Push,
-    public loadingCtrl:LoadingController,public modalCtrl:ModalController,
+    public loadingCtrl:LoadingController,public modalCtrl:ModalController,private admin:AdminProvider,
               public events: Events,public toastCtrl:ToastController,private faio:FingerprintAIO,
               public user:ClientProvider,public navCtrl: NavController,public alertCtrl:AlertController,
               public formBuilder: FormBuilder,public helper:HelperProvider,private storage: Storage,
@@ -255,34 +256,32 @@ export class LoginPage {
 
                   // ------------------------ check if user account is verified
                     if(res.UserData[0].IsBlocked==false ||res.UserData[0].IsBlocked== null){
-                      if(res.UserData[0].UserType==1){
-                        this.navCtrl.setRoot('HometypePage')
-                        this.storage.set('Trans_upgrade',false)
+               
+                    //res.UserData[0].ID,res.UserData[0].UserType
+                    this.admin.CheckCompleteDataFromDirectReg(res.UserData[0].ID)
+                    .subscribe((val:any)=>{
+                      if(val=="True"){
+                        console.log('CheckCompleteDataFromDirectReg  true')
+                        if(res.UserData[0].UserType==1){
+                          this.navCtrl.setRoot('HometypePage')
+                          this.storage.set('Trans_upgrade',false)
+                        }
+                        else {
+                          this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
+                          console.log("this user has upgraded his account")
+                          this.storage.set('Trans_upgrade',true)
+                        }
+                      }else{
+                        console.log('CheckCompleteDataFromDirectReg  false')
+                        this.navCtrl.setRoot('AdminDirectRegCompleteDataPage')
                       }
-                      else {
-                        this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
-                        console.log("this user has upgraded his account")
-                        this.storage.set('Trans_upgrade',true)
-                      }
+                    })
+                      
                           // ask for toush id
 
                           this.storage.get('Trans_login_touch_id').then((val)=>{
                              if(val!=null){
-                                 /*  this.storage.set('Trans_login_touch_id',true)
-                                  this.faio.show({
-                                    clientId: 'kfal',
-                                    clientSecret: 'kfal2020', //Only necessary for Android
-                                    disableBackup:true,  //Only for Android(optional)
-                                    localizedFallbackTitle: 'Use Pin', //Only for iOS
-                                    localizedReason: 'Please authenticate' //Only for iOS
-                                  })
-                                .then((result: any) => {
-                                  console.log(JSON.stringify(result))
-
-                                })
-                                .catch((error: any) => {
-                                  console.log(JSON.stringify(error))
-                                }); */
+                             
                              }else{
 
                               this.translate.get("login with touch id").subscribe(
@@ -372,6 +371,26 @@ export class LoginPage {
         }
 
 
+    }
+
+    CheckCompleteDataFromDirectRegByadmin(UserID,UserType){
+      this.admin.CheckCompleteDataFromDirectReg(UserID).subscribe((val:any)=>{
+        if(val=="True"){
+          console.log('CheckCompleteDataFromDirectReg  true')
+          if(UserType==1){
+            this.navCtrl.setRoot('HometypePage')
+            this.storage.set('Trans_upgrade',false)
+          }
+          else {
+            this.navCtrl.setRoot('MainPage',{'user_type':UserType})
+            console.log("this user has upgraded his account")
+            this.storage.set('Trans_upgrade',true)
+          }
+        }else{
+          console.log('CheckCompleteDataFromDirectReg  false')
+          this.navCtrl.setRoot('AdminDirectRegCompleteDataPage')
+        }
+      })
     }
 
     loginwithtouchid(){

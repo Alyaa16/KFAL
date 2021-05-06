@@ -78,12 +78,13 @@ export class AdminAddUserPage {
                 toast.present();
                 toast.onDidDismiss(() => {
                 //  this.storage.set('Trans_logined_in',true)
+                // 
                   if(res=="تم تسجيل بيانات هذا الايمل من قبل"){
                   }
                   else if(res=="تم ارسال كود التفعيل عبر البريد الالكترونى بنجاح"){
                     this.viewCtrl.dismiss()
                   }
-                  else if(res=="تم تسجيل مستخدم جديد من قبل الادمن بنجاح"){
+                  else if(res=="تم ارسال بيانات التسجيل عبر البريد الالكترونى بنجاح"){
                     this.viewCtrl.dismiss()
                   }
                 });

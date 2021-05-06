@@ -42,16 +42,11 @@ background-repeat: no-repeat">
 background-attachment: fixed;
 background-size: 100%; 
 background-repeat: no-repeat">
-
-<!-- <ion-fab bottom right >
-  <button ion-fab> <ion-icon  name="menu"></ion-icon></button>
-  <ion-fab-list side="left">
-    <button ion-fab><ion-icon  name="home"></ion-icon></button>
-    <button ion-fab><ion-icon  name="person"></ion-icon></button>
-    <button ion-fab><ion-icon  name="home"></ion-icon></button>
-  </ion-fab-list>
-</ion-fab> -->
-   <ion-row  class="my_home_icons">
+<div>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" spinner="none">
+ 
+  </ion-refresher>
+  <ion-row  class="my_home_icons_before" *ngIf="beforePulling">
     <ion-col col-1> </ion-col>
     <ion-col col-2>
       <button  id="btn1" ion-fab  >
@@ -80,6 +75,56 @@ background-repeat: no-repeat">
     </ion-col>
     <ion-col col-1> </ion-col>
   </ion-row> 
+
+
+  <div *ngIf="!beforePulling" class="my_home_icons_after">
+    <ion-row>
+      <ion-col col-4>
+        <button id="btn4" ion-fab  >
+          <ion-icon  name="home"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-4>
+        <button id="btn4" ion-fab  >
+          <ion-icon  name="menu"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-4>
+        <button id="btn4" ion-fab  >
+          <ion-icon  name="person"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-1></ion-col>
+      <ion-col col-5>
+        <button id="btn4" ion-fab  >
+          <ion-icon  name="home"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-5>
+        <button id="btn4" ion-fab  >
+          <ion-icon  name="menu"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-1></ion-col>
+     
+    </ion-row>
+  </div>
+</div>
+
+<!-- <ion-fab bottom right >
+  <button ion-fab> <ion-icon  name="menu"></ion-icon></button>
+  <ion-fab-list side="left">
+    <button ion-fab><ion-icon  name="home"></ion-icon></button>
+    <button ion-fab><ion-icon  name="person"></ion-icon></button>
+    <button ion-fab><ion-icon  name="home"></ion-icon></button>
+  </ion-fab-list>
+</ion-fab> -->
 
   <!-- <ion-row>
     <ion-col col-12>

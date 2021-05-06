@@ -10,7 +10,8 @@ import moment from 'moment';
 
 @Injectable()
 export class AdminProvider {
-
+  url:string=''
+  lang_url:string=''
   constructor(public general:GeneralProvider,public http1:Http,public toastCtrl:ToastController,
               private translate: TranslateService,public http: HttpClient,public helper:HelperProvider) {
     console.log('Hello AdminProvبider Provider');
@@ -105,7 +106,7 @@ export class AdminProvider {
     if(navigator.onLine){
       return   this.http.get(this.helper.base_url+"User/DirectAdminRegistration?Name="+params.Name
       +"&Email="+params.UserEmail+
-      "&Password=null"+
+      //"&Password=null"+
       "&UserType="+params.account_type +
       "&Gender="+params.Gender+
       "&Mobile="+params.Mobile+
@@ -117,6 +118,31 @@ export class AdminProvider {
     }
   }
 
+  CheckCompleteDataFromDirectReg(UserID){
+    if(navigator.onLine){
+      return   this.http.get(this.helper.base_url+"User/CheckCompleteDataFromDirectReg?UserID="+UserID)
+    }
+    else{
+      this.general. presentToastConnection()
+    }
+  }
+
+  CompleteUserData(UserID,Fk_SpecializationParentID,FK_SpecializationChildID,Languages){
+    if(navigator.onLine){
+     this.url=this.helper.base_url+"User/CompleteUserData?UserID="+UserID+"&Fk_SpecializationParentID="+Fk_SpecializationParentID+"&FK_SpecializationChildID="+FK_SpecializationChildID
+    
+     for(let i=0;i<Languages.length;i++){
+      console.log(Languages[i])
+      this.lang_url+="&Languages="+Languages[i]
+    }
+    console.log(this.lang_url)
+    console.log(this.url+this.lang_url)
+      return this.http.get(this.url+this.lang_url,{})
+    }
+    else{
+      this.general. presentToastConnection()
+    }
+  }
 //------------------------------------dicussions -------------------------------------------------//
 // for admin only
 AddNewTopic(TopicName,TopicContent,Fk_SpecializationParentID,FK_SpecializationChildID,FK_LanguageID,Age){

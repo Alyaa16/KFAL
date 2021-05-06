@@ -10,6 +10,7 @@ import { IonicPage, NavController, NavParams, MenuController, Platform } from 'i
 export class HometypePage {
   RequestType:any=0
   dir:boolean
+  beforePulling:boolean=true
   constructor(public navCtrl: NavController,public menuCtrl:MenuController,
               public navParams: NavParams,public plt:Platform) {
                 this.dir=this.plt.isRTL
@@ -39,5 +40,13 @@ export class HometypePage {
   chooseRequestType(type){
    this.RequestType=type
   }
+  doRefresh(event) {
+    console.log('Begin async operation');
 
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.complete();
+      this.beforePulling=!this.beforePulling
+    }, 100);
+  }
 }
