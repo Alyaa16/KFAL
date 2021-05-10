@@ -6,7 +6,6 @@ import { Device } from '@ionic-native/device';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { HelperProvider } from '../providers/helper/helper';
 import { Storage } from '@ionic/storage';
-import {SettingsProvider} from '../providers/settings/settings';
 import * as firebase from 'firebase';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';

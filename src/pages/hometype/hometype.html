@@ -46,6 +46,7 @@ background-repeat: no-repeat">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" spinner="none">
  
   </ion-refresher>
+  
   <ion-row  class="my_home_icons_before" *ngIf="beforePulling">
     <ion-col col-1> </ion-col>
     <ion-col col-2>
@@ -54,8 +55,8 @@ background-repeat: no-repeat">
       </button>
     </ion-col>
     <ion-col col-2>
-      <button id="btn2" ion-fab     >
-        <ion-icon name="home"></ion-icon>
+      <button id="btn2" ion-fab  (click)="Orders()"   >
+        <ion-icon name="ios-paper-outline"></ion-icon>
       </button>
     </ion-col>
     <ion-col col-2>
@@ -69,7 +70,7 @@ background-repeat: no-repeat">
       </button>
     </ion-col>
     <ion-col col-2>
-      <button id="btn5" ion-fab  >
+      <button id="btn5" ion-fab  (click)="openPage('ClientProfilePage')">
         <ion-icon  name="person"></ion-icon>
       </button>
     </ion-col>
@@ -80,19 +81,19 @@ background-repeat: no-repeat">
   <div *ngIf="!beforePulling" class="my_home_icons_after">
     <ion-row>
       <ion-col col-4>
-        <button id="btn4" ion-fab  >
-          <ion-icon  name="home"></ion-icon>
+        <button id="btn4" ion-fab  (click)="Orders()">
+          <ion-icon  name="ios-paper-outline"></ion-icon>
         </button>
       </ion-col>
 
       <ion-col col-4>
-        <button id="btn4" ion-fab  >
+        <button id="btn4" ion-fab   (click)="toggleMenu()">
           <ion-icon  name="menu"></ion-icon>
         </button>
       </ion-col>
 
       <ion-col col-4>
-        <button id="btn4" ion-fab  >
+        <button id="btn4" ion-fab  (click)="openPage('ClientProfilePage')" >
           <ion-icon  name="person"></ion-icon>
         </button>
       </ion-col>
@@ -126,31 +127,7 @@ background-repeat: no-repeat">
   </ion-fab-list>
 </ion-fab> -->
 
-  <!-- <ion-row>
-    <ion-col col-12>
-           <p style="color: #214952;font-size: 15.61px;line-height: 16px;">
-            {{"Home_client.for create request please choose request type"|translate}}
-           </p>
-    </ion-col>
-  </ion-row> -->
-<!-- 
-  <div style="padding: 5% 0;    margin-top: 33%;">
-    <button ion-button color="custom2" full (click)="chooseRequestType(1)" >
-      <p style="font-size: 19px;">{{"Home_client.translation only"|translate}}</p>
-    </button>
-    <button ion-button color="custom2" full (click)="chooseRequestType(2)">
-      <p style="font-size: 19px;">{{"Home_client.translation and academic review"|translate}} </p>
-     </button>
-    <button ion-button color="custom2" full (click)="chooseRequestType(3)">
-      <p style="font-size: 19px;" >{{"Home_client.academic review only"|translate}}</p>
-    </button>
-  </div>
 
- <div style="text-align: center;">
-   <button style="height: 50px;width: 50px;" [disabled]="RequestType==0" ion-button round color="custom1" (click)="makeRequest()" >
-             <ion-icon style="    font-size: 27px;" *ngIf="dir==true" name="md-arrow-back"></ion-icon>
-             <ion-icon style="    font-size: 27px;" *ngIf="dir==false" name="md-arrow-forward"></ion-icon>
-   </button>
- </div> -->
+
 
 </ion-content>

@@ -13,7 +13,7 @@
   },
   "Home_client":{
     "home":"الرئيسية",
-    "for create request please choose request type":"لإنشاء طلب  جديد من فضلك اختر نوع الطلب ",
+    "for create request please choose request type":"اختر نوع الطلب ",
     "translation only":"ترجمة فقط ",
     "translation and academic review":"ترجمة وتدقيق أكاديمي",
     "academic review only":"تدقيق أكاديمي فقط"

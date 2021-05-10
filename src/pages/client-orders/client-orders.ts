@@ -152,7 +152,7 @@ export class ClientOrdersPage {
 
 
   addOrder(){
-    this.navCtrl.push('HometypePage')
+    this.navCtrl.push('MainpagePage')
   }
 
   doRefresh(refresher)

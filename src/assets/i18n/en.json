@@ -13,7 +13,7 @@
   },
   "Home_client":{
     "home":"home",
-    "for create request please choose request type":"for create request please choose request type",
+    "for create request please choose request type":"choose request type",
     "translation only":"translation only",
     "translation and academic review":"translation and academic review",
     "academic review only":"academic review only"
