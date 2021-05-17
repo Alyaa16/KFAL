@@ -225,6 +225,8 @@ export class LoginPage {
             this.user.sign_in(this.myform.value,this.helper.registrationId).subscribe(
               (res:any)=>{
                 loading.dismiss()
+                console.log(typeof(res))
+               if(typeof(res)=='string'){
                 if(res=="تاكد من البريد او رقم المرور"){
                   const toast = this.toastCtrl.create({
                     message: res,
@@ -232,6 +234,17 @@ export class LoginPage {
                   });
                   toast.present();
                 }else{
+                  const toast = this.toastCtrl.create({
+                    message: res,
+                    duration: 5000
+                  });
+                  toast.present();
+                  toast.onDidDismiss(()=>{
+                    this.navCtrl.push('CodeVerificationPage',{'comefrom':'verification','email':this.myform.value.UserEmail})
+                  })
+                }
+               }
+                else{
                   //UserDate
                   this.storage.set('Trans_user_id',res.UserData[0].ID)
                   this.storage.set('Password',res.UserData[0].Password)
@@ -254,7 +267,7 @@ export class LoginPage {
                   // ------------------------ check if user account is verified
                   if(res.UserData[0].VerificationStatus){
 
-                  // ------------------------ check if user account is verified
+                  // ------------------------ check if user account is blocked
                     if(res.UserData[0].IsBlocked==false ||res.UserData[0].IsBlocked== null){
                
                     //res.UserData[0].ID,res.UserData[0].UserType
@@ -277,7 +290,7 @@ export class LoginPage {
                       }
                     })
                       
-                          // ask for toush id
+                          // ask for touch id
 
                           this.storage.get('Trans_login_touch_id').then((val)=>{
                              if(val!=null){
