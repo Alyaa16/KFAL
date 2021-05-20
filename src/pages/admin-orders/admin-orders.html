@@ -43,7 +43,7 @@
     <div *ngIf="orders.length==0" style="margin-top: 30%;text-align: center;font-size: 23px; color:#3B5E66 ">
         {{"no requests"|translate}} {{ordersType|translate}}
     </div>
-    <ion-row *ngFor="let request of orders" (click)="OrderDetails(request.Request_ID,ordersType)" style="margin-bottom: 6px;background-color: #F2F2F2;padding: 6px;border-radius: 5px;">
+    <!-- <ion-row *ngFor="let request of orders" (click)="OrderDetails(request.Request_ID,ordersType)" style="margin-bottom: 6px;background-color: #F2F2F2;padding: 6px;border-radius: 5px;">
         <ion-col col-2 style="background-color: #07133c;color: #FFAA45;white-space: normal;border-radius: 5px;font-size: 15px;text-align: center;">
           <div style="margin-bottom: 0px;">  {{request.day}}  </div>
           <div style="margin-top: 00px;">  {{request.month}} </div>
@@ -52,12 +52,15 @@
           <div style="padding: 0px 13px; margin-bottom: 12px;color: #3B5E66;font-size: 16px;line-height: 15px;">
               {{request.Request_Orginal_File}}
           </div>
-            <!-- <div style="padding: 0px 13px;color: #3B5E66;font-size: 14px;line-height: 15px;">
+             <div style="padding: 0px 13px;color: #3B5E66;font-size: 14px;line-height: 15px;">
             {{request.FK_Request_Deadline_Hours}} {{"hour"|translate}}
-          </div> -->
+          </div> 
         </ion-col>
         <ion-col col-1></ion-col>
         <ion-col col-1 style="white-space: nowrap;">  {{request.RequestCode}} </ion-col>
-    </ion-row>
+    </ion-row> -->
+
+    <request userType="admin" [requestType]= "ordersType" [requestDetails]="request" *ngFor="let request of orders" ></request>
+
   </div>
 </ion-content>

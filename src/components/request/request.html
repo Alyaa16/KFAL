@@ -1,0 +1,21 @@
+
+<ion-row (click)="showDetails(requestDetails,requestType,userType)"  style="    margin-bottom: 6px;background-color: #F2F2F2;padding: 6px;border-radius: 5px;">
+  <ion-col col-2 style="background-color: #214952;color: #FFAA45;white-space: normal;border-radius: 5px;font-size: 15px;text-align: center;">
+    <div style="margin-bottom: 9px;"> {{requestDetails.day}} </div>
+    <div> {{requestDetails.month}} </div>
+  </ion-col>
+  <ion-col col-7>
+    <div *ngIf="dir==true" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;white-space: nowrap;overflow: hidden;">
+       {{requestDetails.Request_Orginal_File}}
+    </div>
+    <div *ngIf="dir==false" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;white-space: nowrap;overflow: hidden;">
+      {{requestDetails.Request_Orginal_File}}
+     </div>
+      <div style="    padding: 0px 13px;color: #3B5E66;  font-size: 18px;line-height: 15px;">
+     {{requestDetails.requestValue}}
+    </div>
+  </ion-col>
+  <ion-col col-1></ion-col>
+  <ion-col col-1 style="white-space: nowrap;"> {{requestDetails.RequestCode}} </ion-col>
+</ion-row>
+

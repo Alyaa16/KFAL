@@ -37,78 +37,24 @@
 
     <div [ngSwitch]="orderType" style="margin-top:4%">
         <div *ngSwitchCase="'new'" style="    margin: 0 5%;">
-            <div *ngIf="new_requests.length==0" style="margin-top: 30%;text-align: center;font-size: 23px; color:#3B5E66 ">
+            <div *ngIf="new_requests.length==0" style="margin-top: 50%;text-align: center;font-size: 18px; color:#3B5E66 ">
                 {{"no new requests"|translate}}
             </div>
-            <ion-row *ngFor="let request of new_requests" (click)="OrderDetails(request.Request_ID,'new')" style="    margin-bottom: 6px;background-color: #F2F2F2;padding: 6px;border-radius: 5px;">
-                <ion-col col-2 style="background-color: #214952;color: #FFAA45;white-space: normal;border-radius: 5px;font-size: 15px;text-align: center;">
-                  <div style="margin-bottom: 9px;">  {{request.day}}  </div>
-                  <div>  {{request.month}} </div>
-                </ion-col>
-                <ion-col col-7>
-                  <div *ngIf="dir==true" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;white-space: nowrap;overflow: hidden;">
-                      {{request.Request_Orginal_File}}
-                  </div>
-                  <div *ngIf="dir==false" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;white-space: nowrap;overflow: hidden;">
-                    {{request.Request_Orginal_File}}
-                   </div>
-                    <div style="    padding: 0px 13px;color: #3B5E66;  font-size: 18px;line-height: 15px;">
-                    {{request.Request_Value}}$
-                  </div>
-                </ion-col>
-                <ion-col col-1></ion-col>
-                <ion-col col-1 style="white-space: nowrap;">  {{request.RequestCode}} </ion-col>
-            </ion-row>
+            <request userType="client"  requestType= "new" [requestDetails]="request" *ngFor="let request of new_requests" ></request>
         </div>
 
         <div *ngSwitchCase="'current'" style="    margin: 0 5%;">
-            <div *ngIf="current_requests.length==0" style="margin-top: 30%;text-align: center;font-size: 23px; color:#3B5E66 ">
+            <div *ngIf="current_requests.length==0" style="margin-top: 50%;text-align: center;font-size: 18px; color:#3B5E66 ">
                 {{"no current requests"|translate}}
             </div>
-            <ion-row *ngFor="let request of current_requests" (click)="OrderDetails(request.Request_ID,'current')" style="    margin-bottom: 6px;background-color: #F2F2F2;padding: 6px;border-radius: 5px;">
-                <ion-col col-2 style="background-color: #214952;color: #FFAA45;white-space: normal;border-radius: 5px;font-size: 15px;text-align: center;">
-                  <div style="margin-bottom: 9px;">  {{request.day}}  </div>
-                  <div>  {{request.month}} </div>
-                </ion-col>
-                <ion-col col-7>
-                  <div *ngIf="dir==true" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;line-height: 15px;white-space: nowrap;overflow: hidden;direction: ltr;">
-                      {{request.Request_Orginal_File}}
-                  </div>
-                  <div *ngIf="dir==false" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;line-height: 15px;white-space: nowrap;overflow: hidden;direction: rtl;">
-                    {{request.Request_Orginal_File}}
-                   </div>
-                    <div style="    padding: 0px 13px;color: #3B5E66;  font-size: 18px;line-height: 15px;">
-                    {{request.Request_Value}}$
-                  </div>
-                </ion-col>
-                <ion-col col-1></ion-col>
-                <ion-col col-1 style="white-space: nowrap;">  {{request.RequestCode}} </ion-col>
-            </ion-row>
+            <request  userType="client"  requestType= "current" [requestDetails]="request" *ngFor="let request of current_requests" ></request>
         </div>
 
         <div *ngSwitchCase="'received'" style="    margin: 0 5%;">
-            <div *ngIf="received_requests.length==0" style="margin-top: 30%;text-align: center;font-size: 23px; color:#3B5E66 ">
+            <div *ngIf="received_requests.length==0" style="margin-top: 50%;text-align: center;font-size: 18px; color:#3B5E66 ">
               {{"no completed requests"|translate}}
             </div>
-            <ion-row *ngFor="let request of received_requests" (click)="OrderDetails(request.Request_ID,'received')" style="    margin-bottom: 6px;background-color: #F2F2F2;padding: 6px;border-radius: 5px;">
-                <ion-col col-2 style="background-color: #214952;color: #FFAA45;white-space: normal;border-radius: 5px;font-size: 15px;text-align: center;">
-                  <div style="margin-bottom: 9px;">  {{request.day}}  </div>
-                  <div>  {{request.month}} </div>
-                </ion-col>
-                <ion-col col-7>
-                  <div *ngIf="dir==true" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;line-height: 15px;white-space: nowrap;overflow: hidden;direction: ltr;">
-                      {{request.Request_Orginal_File}}
-                  </div>
-                  <div *ngIf="dir==false" style="padding: 0px 13px;margin-bottom: 12px;color: #3B5E66;font-size: 18px;line-height: 15px;white-space: nowrap;overflow: hidden;direction: rtl;">
-                    {{request.Request_Orginal_File}}
-                  </div>
-                    <div style="    padding: 0px 13px;color: #3B5E66;  font-size: 18px;line-height: 15px;">
-                    {{request.Request_Value}}$
-                  </div>
-                </ion-col>
-                <ion-col col-1></ion-col>
-                <ion-col col-1 style="white-space: nowrap;">  {{request.RequestCode}} </ion-col>
-            </ion-row>
+            <request userType="client"   requestType= "received" [requestDetails]="request" *ngFor="let request of received_requests" ></request>
         </div>
     </div>
 

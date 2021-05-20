@@ -1,10 +1,20 @@
 
 <ion-header>
-  <ion-navbar>
+  <!-- <ion-navbar>
     <ion-title style="color: #214952;font-size: 12.61px;"> {{"Home_client.for create request please choose request type"|translate}}   </ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
+<ion-row style="padding-top: 13px;padding-right: 11px;">
+  <ion-col col-1 (click)="dismiss()">
+    <ion-icon *ngIf="dir==true"  style="font-size: 35px;" name="ios-arrow-round-forward-outline"></ion-icon>
+    <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
 
+  </ion-col>
+  <ion-col col-11 style="text-align: center;color: #214952;font-size: 15.61px;    margin-top: 2px;">
+    {{"Home_client.for create request please choose request type"|translate}} 
+  </ion-col>
+</ion-row>
+</ion-header>
 <ion-content padding>
  <!--  <ion-row>
     <ion-col col-12>

@@ -19,7 +19,8 @@ export class AdminOrdersPage {
   ordersType:string=""
   orders:any[]=[]
   backOrderType:any='client' //  from review or from client
-  constructor(public menuCtrl:MenuController, public loadingCtrl:LoadingController,public platform:Platform,
+  constructor(public menuCtrl:MenuController, public loadingCtrl:LoadingController,
+    public platform:Platform,
      public translate: TranslateService,public viewCtrl:ViewController,
       public navCtrl: NavController, public navParams: NavParams) {
         this.dir=this.platform.isRTL

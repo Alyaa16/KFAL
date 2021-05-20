@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ClientOrdersPage } from './client-orders';
@@ -9,7 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   imports: [
     IonicPageModule.forChild( ClientOrdersPage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+     ComponentsModule
   ],
 })
 export class ClientOrdersPageModule {}

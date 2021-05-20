@@ -1,12 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, MenuController, NavController, NavParams, Platform } from 'ionic-angular';
+import { IonicPage, MenuController, NavController, NavParams, Platform, ViewController } from 'ionic-angular';
 
-/**
- * Generated class for the MainpagePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -18,7 +12,7 @@ export class MainpagePage {
   dir:boolean
   beforePulling:boolean=true
   constructor(public navCtrl: NavController,public menuCtrl:MenuController,
-              public navParams: NavParams,public plt:Platform) {
+              public navParams: NavParams,public plt:Platform,private viewCtrl:ViewController) {
                 this.dir=this.plt.isRTL
                 this.menuCtrl.enable(true)
   }
@@ -36,5 +30,9 @@ makeRequest(){
     this.navCtrl.push('HomePage',
        {'type':this.RequestType}
     )
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss()
   }
 }

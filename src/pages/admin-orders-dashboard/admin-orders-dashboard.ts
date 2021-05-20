@@ -140,7 +140,6 @@ export class AdminOrdersDashboardPage {
           ]
 
 
-          console.log(JSON.stringify(this.chartMap))
         }
         else {
           this.allorders = []
