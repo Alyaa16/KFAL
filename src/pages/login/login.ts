@@ -214,6 +214,7 @@ export class LoginPage {
         const pushObject: PushObject = this.push.init(options);
         pushObject.on('registration').subscribe((registration: any) => {
           console.log('Device registered', JSON.stringify(registration))
+         // alert('Device registered..'+registration.registrationId)
           this.helper.set_registration_id(registration.registrationId)
         });
 

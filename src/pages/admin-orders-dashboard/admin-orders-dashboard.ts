@@ -132,7 +132,7 @@ export class AdminOrdersDashboardPage {
             },
             {
               'orderType': 'cancel',
-              'orderList': this.closedOrders,
+              'orderList': this.canceledOrders,
               'title': 'cancel1',
               'percent': ((this.canceledOrders.length / this.allorders.length) * 100),
             }

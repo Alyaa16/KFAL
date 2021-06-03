@@ -18,7 +18,13 @@ export class AdminOrdersPage {
   closedOrders:any[]=[]
   ordersType:string=""
   orders:any[]=[]
-  backOrderType:any='client' //  from review or from client
+  backOrderType:any='new' //  from review or from client
+
+  // items = ['item1', 'item2', 'item3', 'item4'];
+
+  // addItem(newItem: string) {
+  //   this.items.push(newItem);
+  // }
   constructor(public menuCtrl:MenuController, public loadingCtrl:LoadingController,
     public platform:Platform,
      public translate: TranslateService,public viewCtrl:ViewController,
@@ -51,6 +57,11 @@ export class AdminOrdersPage {
 
   OrderDetails(Request_ID,type){
     this.navCtrl.push('AdminOrderDetailsPage',{'Request_ID':Request_ID,'Request_type':this.translate.instant(type) })
+  }
+
+  showRequestDetails(Request_ID){
+    console.log('fire show request details ')
+    //this.navCtrl.push('AdminOrderDetailsPage',{'Request_ID':Request_ID,'Request_type':this.translate.instant(type) })
   }
 
   doRefresh(refresher){

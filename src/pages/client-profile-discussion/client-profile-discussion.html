@@ -19,7 +19,7 @@
     <ion-item style="margin: 5px 0px;">
         <ion-label style="color:#FFAA45;padding: 20px 0px;">{{"education_grade"|translate}}</ion-label>
         <ion-select  [(ngModel)]="education_grade"  okText='{{"ok"|translate}}' cancelText='{{"cancel"|translate}}'  >
-          <ion-option *ngFor="let document_level of document_levels" [value]="document_level.ID">
+          <ion-option *ngFor="let document_level of document_levels" [value]="document_level._EducationLevel_ID">
               {{document_level.EducationNameEn}}
           </ion-option>
         </ion-select>

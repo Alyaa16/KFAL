@@ -1,3 +1,4 @@
+import { ComponentsModule } from './../../components/components.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { AdminOrderDetailsPage } from './admin-order-details';
@@ -11,7 +12,8 @@ import { StarRatingModule } from 'ionic3-star-rating';
   imports: [
     IonicPageModule.forChild( AdminOrderDetailsPage),
     TranslateModule.forChild(),
-    StarRatingModule
+    StarRatingModule,
+    ComponentsModule
   ],
 })
 export class AdminOrderDetailsPageModule {}

@@ -1,7 +1,7 @@
 
 <ion-header>
   <ion-navbar>
-    <ion-title>{{"SpecializationPanel"|translate}}</ion-title>
+    <ion-title style="text-align: center;">{{"SpecializationPanel"|translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -28,7 +28,7 @@
 <div *ngIf="isSelected==true">
 <p> {{"specific feilds"|translate}} </p>
 
-<ion-card>
+<ion-card style="margin: 0px !important;width: 100%">
   <ion-card-header style="background-color:#FFAA45;color: white;">
     <ion-row>
       <ion-col col-5 style="text-align:center;"> {{"Name"|translate}} </ion-col>
@@ -42,7 +42,7 @@
 </ion-card>
 
 <div *ngIf="SpecificFeilds!=0">
-  <ion-card *ngFor="let feild of SpecificFeilds">
+  <ion-card *ngFor="let feild of SpecificFeilds" style="margin: 0px !important;width: 100%">
     <ion-card-header>
       <ion-row>
         <ion-col col-5 style="text-align: center;"> {{feild.SpecializationName}} </ion-col>

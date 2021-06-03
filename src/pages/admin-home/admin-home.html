@@ -12,6 +12,87 @@
 </ion-header>
 
 <ion-content style="padding:6px">
+
+  <!--
+<ion-content padding style="position: relative; background: url('../../assets/imgs/kfal2.svg');
+background-attachment: fixed;
+background-size: 100%; 
+background-repeat: no-repeat">
+<div>
+   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" spinner="none">
+ 
+  </ion-refresher>
+  
+  <ion-row  class="my_home_icons_before" *ngIf="beforePulling">
+    <ion-col col-1> </ion-col>
+    <ion-col col-2>
+      <button  id="btn1" ion-fab (click)="Home()" >
+        <ion-icon  name="home"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button id="btn2" ion-fab  (click)="Orders()"   >
+        <ion-icon name="ios-paper-outline"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button id="btn3" ion-fab  (click)="toggleMenu()">
+        <ion-icon  name="menu"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button id="btn4" ion-fab (click)="openPage('NotificationsPage')" >
+        <ion-icon  name="notifications"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-2>
+      <button id="btn5" ion-fab  (click)="openPage('ClientProfilePage')">
+        <ion-icon  name="person"></ion-icon>
+      </button>
+    </ion-col>
+    <ion-col col-1> </ion-col>
+  </ion-row> 
+
+
+  <div *ngIf="!beforePulling" class="my_home_icons_after">
+    <ion-row>
+      <ion-col col-4>
+        <button id="btn4" ion-fab  (click)="Orders()">
+          <ion-icon  name="ios-paper-outline"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-4>
+        <button id="btn4" ion-fab   (click)="toggleMenu()">
+          <ion-icon  name="menu"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-4>
+        <button id="btn4" ion-fab  (click)="openPage('ClientProfilePage')" >
+          <ion-icon  name="person"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-1></ion-col>
+      <ion-col col-5>
+        <button id="btn4" ion-fab  (click)="Home()" >
+          <ion-icon  name="home"></ion-icon>
+        </button>
+      </ion-col>
+
+      <ion-col col-5>
+        <button id="btn4" ion-fab (click)="openPage('NotificationsPage')" >
+          <ion-icon  name="notifications"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-1></ion-col>
+     
+    </ion-row>
+  </div>
+</div> -->
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>

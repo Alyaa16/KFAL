@@ -105,7 +105,8 @@ export class TranslatorOrderDetailsPage {
                     })
 
                     this.RequestCode=res[0].RequestCode
-                  if(this.request_data.Request_Orginal_File.substr(8)!=''  ){
+               
+                    if(this.request_data.Request_Orginal_File.substr(8)!=''  ){
                     this.FileName=this.request_data.Request_Orginal_File.substr(8)
                     //this.FileName=this.FileName.substring(0, this.FileName.indexOf('.'))
                   }else{

@@ -5,8 +5,6 @@ import { HelperProvider } from '../helper/helper';
 import { ToastController } from 'ionic-angular';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { GeneralProvider } from '../general/general';
-import { AddNotificationPage } from '../../pages/add-notification/add-notification';
-import moment from 'moment';
 
 @Injectable()
 export class AdminProvider {

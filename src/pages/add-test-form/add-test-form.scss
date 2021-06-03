@@ -32,4 +32,10 @@ page-add-test-form {
 .item-ios.item-block .item-inner{
   padding-right: 0px !important;
 }
+
+.item > ion-icon, .item-inner > ion-icon {
+  min-height: 2.8rem;
+  font-size: 1.8rem !important;
+  line-height: 1;
+}
 }

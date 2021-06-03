@@ -5,6 +5,7 @@ import { AdminProvider } from "../../providers/admin/admin";
 import { GeneralProvider } from "../../providers/general/general";
 import { TestformsProvider } from "../../providers/testforms/testforms";
 import { UpgradeRequestsProvider } from "../../providers/upgrade-requests/upgrade-requests";
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -26,8 +27,8 @@ export class AdminHomePage {
   newusers:any[]=[]
   Translators:any[]=[]
   Reviewers:any[]=[]
-
-  constructor(public menuCtrl:MenuController, public loadingCtrl:LoadingController,public general:GeneralProvider,private test:TestformsProvider,
+  beforePulling:boolean=true
+  constructor(public menuCtrl:MenuController,private storage:Storage, public loadingCtrl:LoadingController,public general:GeneralProvider,private test:TestformsProvider,
      public translate: TranslateService,public platform :Platform,public admin:AdminProvider,private testform:TestformsProvider,
       public navCtrl: NavController, public navParams: NavParams,private testforms:TestformsProvider,private upgradeService:UpgradeRequestsProvider) {
 
@@ -147,6 +148,45 @@ joinRoom(key){
   console.log(key)
 }
 
+openPage(page) {
+  this.navCtrl.push(page)
+}
+
+Home(){
+  this.storage.get("Trans_user_type").then((val:any)=>{
+    console.log("current user  :"+val)
+    if(val==1){ // this user is client
+      this.storage.get('Trans_upgrade').then((res:any)=>{
+        if(res){
+          this.navCtrl.push('MainPage')
+        }else{
+          this.navCtrl.push('HometypePage')
+        }
+      })
+    }else{
+      this.navCtrl.push('MainPage')   // this user is provider: translator or reviewer or admin
+    }
+  })
+}
+
+Orders(){
+  this.storage.get("Trans_user_type").then((val:any)=>{
+    console.log("current user  :"+val)
+    if(val==1){
+      this.navCtrl.push('ClientOrdersPage')  // this user is client
+    }else{
+      if(val==3){
+        this.navCtrl.push('TranslatorHomePage',{'type':'translator'})   // this user is provider: translator or reviewer or admin
+      }
+      if(val==4){
+        this.navCtrl.push('TranslatorHomePage',{'type':'Proofreader'})   // this user is provider: translator or reviewer or admin
+      }
+      if(val==2){
+        this.navCtrl.push('AdminOrdersDashboardPage')   // this user is  admin
+      }
+    }
+  })
+}
 showProviderProfile(id){
   this.navCtrl.push('ClientProfilePage',{'user_id':id})
 }

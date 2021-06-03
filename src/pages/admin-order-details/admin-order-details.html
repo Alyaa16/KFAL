@@ -54,7 +54,8 @@
     </ion-row>
   </div>
 </ion-header>
-<ion-content padding>
+<!-- <request-details [request_status]="request_status"  [requestDetails]="request_data"></request-details> -->
+ <ion-content padding>
 
     <div  *ngIf="request_status==1" style="font-size: 14px ;color: red;text-align: center;" >
       <p> {{'waiting for admin accept'|translate}}</p>
@@ -181,7 +182,6 @@
       {{request_data.Requst_Notes}}
     </div>
 
-      <!-- preview request file -->
       <button ion-button (click)="filePreview()" full color="custom2" style="height: 48px;border-radius: 15px;font-size: 17px;margin: 8px 0px;">
           <ion-row style="width: 100%;">
             <ion-col col-2>
@@ -193,7 +193,6 @@
           </ion-row>
       </button>
 
-     <!-- accept or refuse this request by admin -->
       <ion-row *ngIf="request_status==1">
         <ion-col col-6>
           <button  (click)="accept()" ion-button full color="custom4" style="height: 48px;border-radius: 15px;font-size: 17px;margin: 8px 0px;">
@@ -223,4 +222,4 @@
         </div>
       </ion-row>
 
-</ion-content>
+</ion-content> 

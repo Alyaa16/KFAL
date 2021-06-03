@@ -17,7 +17,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 export class AddTestFormPage {
   languages:any[]=[]
   dir:boolean
-  language:any
+  language:number
   FilleName:any
   filechoose:boolean=false
   testforms:any[]=[]
@@ -34,6 +34,9 @@ export class AddTestFormPage {
                   this.panel.GetLanguages().subscribe(
                     (res:any)=>{
                       this.languages=res
+                      this.language=this.languages[0].Lang_ID
+                      this. GetTestForm_ByLangID(this.language)
+                      console.log('frist language id '+this.language)
                     }
                   )
   }
@@ -65,15 +68,16 @@ export class AddTestFormPage {
    }
 
    chooselanguage(){
-    this.panel.GetTestForm_ByLangID(this.language).subscribe(
-      (res:any)=>{
-        if(typeof(res)!='string'){
-          this.testforms=res
-          this.testforms=this.testforms.reverse()
-        }else{
-           this.nodataResult=res
-        }
-      })
+    // this.panel.GetTestForm_ByLangID(this.language).subscribe(
+    //   (res:any)=>{
+    //     if(typeof(res)!='string'){
+    //       this.testforms=res
+    //       this.testforms=this.testforms.reverse()
+    //     }else{
+    //        this.nodataResult=res
+    //     }
+    //   })
+    this.GetTestForm_ByLangID(this.language)
    }
 
    removeTest(TestID){
@@ -89,25 +93,12 @@ export class AddTestFormPage {
         {
           text: this.translate.instant("yes"),
           handler: () => {
+            this.helper.presentLoading()
             this.panel.DeleteTestForm_ByTestID(TestID).subscribe(
               (res:any)=>{
                // if(res=="تم الحذف بنجاح"){
-                    this.helper.presentLoading()
-                    this.panel.GetTestForm_ByLangID(this.language).subscribe(
-                      (res:any)=>{
-                        this.testforms=[]
-                        this.helper.dismissLoading()
-                            console.log(res)
-                            if(typeof(res)!='string'){
-                              this.testforms=res
-                              this.testforms=this.testforms.reverse()
-                              console.log(JSON.stringify(this.testforms))
-                            }else{
-                              this.nodataResult=res
-                            }
-                      },(err:any)=>{
-                        this.helper.dismissLoading()
-                    })
+                 this.helper.dismissLoading()
+                   this. GetTestForm_ByLangID(this.language)
              //   }
               },(err:any)=>{
                 this.helper.dismissLoading()
@@ -126,6 +117,25 @@ export class AddTestFormPage {
     this.iab.create("https://kfal.careofme.net/Images/"+FileName,'_system','location=yes');
    }
 
+   GetTestForm_ByLangID(language:number){
+    this.helper.presentLoading()
+    this.panel.GetTestForm_ByLangID(language).subscribe(
+      (res:any)=>{
+        this.testforms=[]
+        this.helper.dismissLoading()
+            console.log(res)
+            if(typeof(res)!='string'){
+              this.testforms=res
+              this.testforms=this.testforms.reverse()
+              console.log(JSON.stringify(this.testforms))
+            }else{
+              this.nodataResult=res
+            }
+      },(err:any)=>{
+        this.helper.dismissLoading()
+    })
+   }
+   
    add(){
       this.storage.get('Trans_user_id').then(val=>{
         if(val){

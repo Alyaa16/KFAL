@@ -188,7 +188,7 @@ export class AdminOrderDetailsPage {
     this.viewCtrl.dismiss()
   }
 
-  filePreview(FileType_Name){
+  filePreview(){
        this.iab.create("http://kfal.careofme.net"+this.request_data.Request_Orginal_File,'_system','location=yes');
   }
 

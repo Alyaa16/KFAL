@@ -59,32 +59,32 @@ body {
 
 @media only screen and (min-width: 360px)  and (max-width: 400px){
   .my_home_icons_before{
-    margin-top: 50px;
+    //margin-top: 50px;
     button.fab{
-      width: 40px !important;
-      height: 40px !important;
+      width: 35px !important;
+      height: 35px !important;
       ion-icon{
-        font-size: 2.0rem;
+        font-size: 1.5rem;
       }
     }
    
     #btn1{
-      margin-top: 38px;
+      margin-top: 50px;
       position:absolute;
     }
   
     #btn2{
-      margin-top:24px;
+      margin-top:35px;
       position:absolute;
     }
   
     #btn3{
-      margin-top:3px;
+      margin-top:13px;
       position:absolute;
     }
   
     #btn4{
-      margin-top:-5px;
+      margin-top:1px;
       position:absolute;
     }
   
@@ -96,7 +96,7 @@ body {
 
   .my_home_icons_after{
     
-    margin-top:100px;
+    //margin-top:70px;
     button.fab{
       width: 80px !important;
       height: 80px !important;
@@ -150,10 +150,45 @@ body {
   left: 13px !important;
   right: 13px !important;
 }
+
+// html[dir="ltr"]{
+//   .menu-inner {
+//     margin-top: 16%;
+//     width: 52%;
+//     border-radius:  0 90px 0 0 ; 
+  
+//       // width: 52%;
+//       // border-radius: 90px 0 0 90px;
+//       // margin-top: 16%;
+//       // margin-bottom: 16%;
+//       // height: 84%;
+//   }
+// }
+
+// html[dir="rtl"]{
+//   .menu-inner {
+//     margin-top: 16%;
+//     width: 52%;
+//     border-radius: 90px 0 0 0;
+  
+//       // width: 52%;
+//       // border-radius: 90px 0 0 90px;
+//       // margin-top: 16%;
+//       // margin-bottom: 16%;
+//       // height: 84%;
+//   }
+// }
+
 .menu-inner {
   margin-top: 16%;
-  width: 65%;
+  width: 52%;
   border-radius: 90px 0 0 0;
+
+    // width: 52%;
+    // border-radius: 90px 0 0 90px;
+    // margin-top: 16%;
+    // margin-bottom: 16%;
+    // height: 84%;
 }
 .alert-radio-icon{
   left: 13px !important;

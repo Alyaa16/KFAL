@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Content, Platform } from 'ionic-angular';
-import { TranslateService } from '@ngx-translate/core';
 import * as firebase from 'firebase';
 
 
@@ -12,7 +11,7 @@ import * as firebase from 'firebase';
 export class MessagesPage {
   data = { type:'', user:'', message:'',deviceid:'',regid:'' };
 
-  @ViewChild (Content) content:Content;
+  @ViewChild(Content) content:Content;
   hide:any=false
   mymessage:any
   requestCode:any=""
@@ -23,7 +22,8 @@ export class MessagesPage {
   msg:any
   type:any
   dir:boolean
-  constructor(public plt:Platform,public viewCtrl:ViewController, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public plt:Platform,public viewCtrl:ViewController,
+              public navCtrl: NavController, public navParams: NavParams) {
     this.dir=this.plt.isRTL
 
     this.requestCode=this.navParams.get('RequestCode')
@@ -44,7 +44,7 @@ export class MessagesPage {
       this.chats = snapshotToArray(resp);
       setTimeout(() => {
         if(this.offStatus === false) {
-          this.content.scrollToBottom(300);
+          this.content.scrollToBottom(300); 
         }
       }, 1000);
     });

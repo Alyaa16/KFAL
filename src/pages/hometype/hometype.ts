@@ -37,6 +37,22 @@ export class HometypePage {
     this.navCtrl.push(page)
   }
 
+  Home(){
+    this.storage.get("Trans_user_type").then((val:any)=>{
+      console.log("current user  :"+val)
+      if(val==1){ // this user is client
+        this.storage.get('Trans_upgrade').then((res:any)=>{
+          if(res){
+            this.navCtrl.push('MainPage')
+          }else{
+            this.navCtrl.push('HometypePage')
+          }
+        })
+      }else{
+        this.navCtrl.push('MainPage')   // this user is provider: translator or reviewer or admin
+      }
+    })
+  }
 
   Orders(){
     this.storage.get("Trans_user_type").then((val:any)=>{

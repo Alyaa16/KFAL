@@ -54,7 +54,7 @@ export function createTranslateLoader(http: HttpClient) {
         titleFontSize:"60",
         showUnits:true,
         radius: 100,
-        unitsFontSize:'20',
+        unitsFontSize:'25',
         outerStrokeWidth: 16,
         outerStrokeColor: "#FFAA45",
         animationDuration: 300,

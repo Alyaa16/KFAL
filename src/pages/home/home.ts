@@ -265,7 +265,7 @@ dismiss(){
                         });
                         toast.present();
                        }else{
-                         if(this.ReviewType==3){
+                         //if(this.ReviewType==3){
                           this.data= {
                             'langfrom':this.lang1,
                             'langto':this.lang1,
@@ -280,22 +280,22 @@ dismiss(){
                             'ReviewType':this.ReviewType
                             }
                           this.navCtrl.push('PaymentMethodsPage',{'data':this.data})
-                         }else{
-                          this.data= {
-                            'langfrom':this.lang1,
-                            'langto':this.lang2,
-                            'GeneralFeild':this.GeneralFeild,
-                            'SpecificFeild':this.SpecificFeild,
-                            'level':this.Level,
-                            'Deadline':this.Deadline,
-                            'pages':this.No_of_pages,
-                            'amount':this.No_of_pages*this.PagePrice,
-                            'file':this.file1,
-                            'notices':this.notices,
-                            'ReviewType':this.ReviewType
-                            }
-                          this.navCtrl.push('PaymentMethodsPage',{'data':this.data})
-                         }
+                        //  }else{
+                        //   this.data= {
+                        //     'langfrom':this.lang1,
+                        //     'langto':this.lang2,
+                        //     'GeneralFeild':this.GeneralFeild,
+                        //     'SpecificFeild':this.SpecificFeild,
+                        //     'level':this.Level,
+                        //     'Deadline':this.Deadline,
+                        //     'pages':this.No_of_pages,
+                        //     'amount':this.No_of_pages*this.PagePrice,
+                        //     'file':this.file1,
+                        //     'notices':this.notices,
+                        //     'ReviewType':this.ReviewType
+                        //     }
+                        //   this.navCtrl.push('PaymentMethodsPage',{'data':this.data})
+                        //  }
 
                        }
                    }

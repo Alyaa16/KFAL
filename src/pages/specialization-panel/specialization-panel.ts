@@ -16,6 +16,7 @@ export class SpecializationPanelPage {
   SpecificFeilds:any=[]
   isSelected:boolean=false
   noSpecificFeilds:any=''
+  fristGeneralFeildID:number
   constructor(public navCtrl: NavController, public navParams: NavParams,private panel:ControlpanelProvider,private translate:TranslateService,
     private helper:HelperProvider,private plt:Platform,private loadingCtrl:LoadingController,private alertCtrl:AlertController ) {
 
@@ -25,6 +26,9 @@ export class SpecializationPanelPage {
     this.panel.GetParentSp().subscribe(
       (res:any)=>{
         this.GeneralFeilds=res
+        this.GeneralFeild=this.GeneralFeilds[0].ID
+        console.log('frsit id : '+this.GeneralFeild)
+        
         this.helper.dismissLoading()
       },(err:any)=>{
         this.helper.dismissLoading()
