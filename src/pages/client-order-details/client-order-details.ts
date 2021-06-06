@@ -42,16 +42,18 @@ export class ClientOrderDetailsPage {
   language:any
   reason:any
   dir:boolean
-  status:any=0
+  request_status:any=0
   rate:number=0
   comment:string=""
+  RequestID:number
   constructor(public viewCtrl:ViewController, public user:ClientProvider,public general:GeneralProvider,
     public toastCtrl:ToastController,public platform:Platform,public alertCtrl:AlertController,
      public loadingCtrl:LoadingController, public modalCtrl: ModalController,private storage: Storage,
      public translate: TranslateService,public navCtrl: NavController,private androidPermissions: AndroidPermissions,
      private transfer: FileTransfer,private panel:ControlpanelProvider,
      private file: File, public navParams: NavParams) {
-
+      this.RequestID=this.navParams.get('request_id')
+      console.log('Request id is '+this.RequestID)
       this.dir=this.platform.isRTL
         this.RequestType=this.navParams.get('request_type')
         let loading=this.loadingCtrl.create({})
@@ -67,7 +69,7 @@ export class ClientOrderDetailsPage {
             }
           }
           this.request_data=res[0]
-          this.status=this.request_data.FK_Request_Status_ID
+          this.request_status=this.request_data.FK_Request_request_status_ID
           this.panel.GetLanguages().subscribe(
             (val:any[])=>{
                 val.forEach(elem=>{
@@ -155,8 +157,8 @@ export class ClientOrderDetailsPage {
 
   filePreview(){
     this.androidPermissions.requestPermission(this.androidPermissions.PERMISSION.READ_EXTERNAL_STORAGE)
-          .then(status => {
-            if(status.hasPermission) {
+          .then(request_status => {
+            if(request_status.hasPermission) {
               const fileTransfer:FileTransferObject=this.transfer.create()
               let path=this.file.externalRootDirectory +'Download/' + this.request_data.Request_Orginal_File
               const url1 = encodeURI('http://kfal.careofme.net'+this.request_data.Request_Orginal_File)
@@ -174,6 +176,25 @@ export class ClientOrderDetailsPage {
             }
           });
   }
+
+  
+// downloadDoc(doc: Document) {
+// 	this.doc = doc;
+
+//     this.file.createDir(this.file.externalRootDirectory, 'my_downloads', false).then(response => {
+// 		console.log('Directory created',response);
+// 		const fileTransfer: TransferObject = this.transfer.create();
+// 	    fileTransfer.download(this.doc.url,this.file.externalRootDirectory + '/my_downloads/' + this.doc.name + '.docx').then((entry) => {
+// 	    	console.log('file download response',entry);
+// 	    })
+// 	    .catch((err) =>{
+// 	    	console.log('error in file download',err);
+// 	    });
+
+// 	}).catch(err => {
+// 		console.log('Could not create directory "my_downloads" ',err);
+// 	}); 
+//  }
 
   acceptReceivedRequest(){
     let Modal = this.modalCtrl.create('ClientOrderFeedbackPage',{'type':'acceptReceivedRequest','request_id':this.navParams.get('request_id')} );

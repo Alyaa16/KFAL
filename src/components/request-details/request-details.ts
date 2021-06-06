@@ -1,41 +1,38 @@
+import { Platform } from 'ionic-angular';
 import { Component, Input } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { Platform, ViewController } from 'ionic-angular';
 
 @Component({
   selector: 'request-details',
   templateUrl: 'request-details.html'
 })
 export class RequestDetailsComponent {
-  dir: boolean;
+
+  dir:boolean
   RequestType:any
-  status:any
-  rate:3
-  @Input('request_status') request_status:number
-  @Input('requestDetails') requestDetails:any;
-  details:any={}
-
-  constructor(private plt: Platform,  public translate: TranslateService,private viewCtrl:ViewController) {
+  request_status:any
+  @Input('RequestData') RequestData:any
+  rate:any
+  constructor(private plt:Platform) {
     console.log('Hello RequestDetailsComponent Component');
-    this.dir = this.plt.isRTL
-    console.log(this.request_status)
-    console.log(this.requestDetails)
+    this.dir=this.plt.isRTL
   }
 
-  ngAfterViewInit() {
-
-    console.log( 'all request details admin order '+JSON.stringify(this.requestDetails))
-    
-   }
-  acceptReceivedRequest(){
-
-  }
   refuseReceivedRequest(){
 
   }
+
+  acceptReceivedRequest(){
+
+  }
+
+  ngOnChanges(){
+    console.log('request details '+JSON.stringify(this.RequestData))
+  }
+
   filePreview(){
 
   }
+
   CancelRequest(){
 
   }
@@ -43,14 +40,5 @@ export class RequestDetailsComponent {
 
   }
 
- 
-  dismiss(){
-    this.viewCtrl.dismiss()
-  }
-  open_client_profile(){
 
-  }
-  chooseAccount($event){
-
-  }
 }

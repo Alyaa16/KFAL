@@ -1,3 +1,4 @@
+import { HelperProvider } from './../../providers/helper/helper';
 import { Component } from '@angular/core';
 import { IonicPage, NavController,Platform, NavParams, ModalController, LoadingController, ViewController, ToastController, AlertController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -26,7 +27,7 @@ export class AdminOrderDetailsPage {
   comment:any;
   dir:boolean
   filechoose:boolean=false
-  Request_ID:any
+  RequestID:any
   RequestType:string=""
   ProviderType:string=""
   langFrom:string=""
@@ -60,13 +61,13 @@ export class AdminOrderDetailsPage {
               public alertCtrl: AlertController,private iab: InAppBrowser,public popoverCtrl: PopoverController,
               public toastCtrl:ToastController,public platform:Platform,private file1:File,
               public loadingCtrl:LoadingController, public modalCtrl: ModalController,private storage: Storage,
-              public translate: TranslateService,public navCtrl: NavController,
+              public translate: TranslateService,public navCtrl: NavController,private helper:HelperProvider,
               private androidPermissions: AndroidPermissions,private panel:ControlpanelProvider,
               private file: File, public navParams: NavParams) {
 
                 this.dir=this.platform.isRTL
                 this.FilleName=this.translate.instant("chooseFile")
-                this.Request_ID=this.navParams.get('Request_ID')
+                this.RequestID=this.navParams.get('Request_ID')
                 this.RequestType=this.navParams.get('Request_type')
                 console.log("type of request.."+ this.navParams.get('Request_type'))
                 this.ProviderType=this.navParams.get('providerType')
@@ -76,6 +77,7 @@ export class AdminOrderDetailsPage {
                 loading.present()
                 this.user1.GetRequestByID(this.navParams.get('Request_ID'))
                 .subscribe((res:any[])=>{
+                  loading.dismiss()
                   for(let i=0;i< res.length;i++)
                   {
                     if(res[i].Request_Date!=null){
@@ -85,6 +87,7 @@ export class AdminOrderDetailsPage {
                     }
                   }
                     this.request_data=res[0]  // set all request details
+                    console.log('request_data '+JSON.stringify(this.request_data))
                     this.RequestCode=res[0].RequestCode
                     this.UserId=res[0].FK_User_ID
                     console.log("admin request details => user id"+this.UserId)
@@ -98,30 +101,7 @@ export class AdminOrderDetailsPage {
                       this.user=res.dt[0].User_Full_Name.charAt(0)
                     },(err:any)=>{})
 
-         //#region
-
-                  this.panel.GetLanguages().subscribe(
-                    (val:any[])=>{
-                      loading.dismiss()
-                        val.forEach(elem=>{
-                          if(elem.Lang_ID == this.request_data.FK_Original_Lang_ID){
-                            if(this.platform.isRTL){
-                              this.langFrom=elem._Lang_NameAr
-                            }else{
-                              this.langFrom=elem._Lan_Name_En
-                            }
-                          }
-                          if(elem.Lang_ID== this.request_data.FK_Target_Lang_ID){
-                            if(this.platform.isRTL){
-                              this.langTo=elem._Lang_NameAr
-                            }else{
-                              this.langTo=elem._Lan_Name_En
-                            }
-                          }
-                        })
-                    },(err)=>{
-                      loading.dismiss()
-                    })
+                  this.GetLanguages()
 
                   if(this.request_data.Request_Orginal_File.substr(8)!=''  ){
                     this.FileName=this.request_data.Request_Orginal_File.substr(8)
@@ -130,23 +110,7 @@ export class AdminOrderDetailsPage {
                       this.no_file_uploaded=true
                   }
 
-                  this.general.GetParentSp().subscribe(
-                    (val:any[])=>{
-                        val.forEach(elem=>{
-                          if(elem.ID == this.request_data.Fk_SpecializationParentID){
-                            this.general_feild=elem.SpecializationName
-                          }
-                        })
-                    },(err)=>{})
-
-                  this.general.GetChildSp(this.request_data.Fk_SpecializationParentID).subscribe(
-                    (val:any[])=>{
-                        val.forEach(elem=>{
-                          if(elem.ID == this.request_data.FK_SpecializationChildID){
-                            this.specific_feild=elem.SpecializationName
-                          }
-                        })
-                    },(err)=>{})
+                  this.GetRequestSpecification()
 
                 this.panel.GetEducationLevel().subscribe(
                   (val:any[])=>{
@@ -180,6 +144,52 @@ export class AdminOrderDetailsPage {
 
   }
 
+  GetRequestSpecification(){
+    this.general.GetParentSp().subscribe(
+      (val:any[])=>{
+          val.forEach(elem=>{
+            if(elem.ID == this.request_data.Fk_SpecializationParentID){
+              this.general_feild=elem.SpecializationName
+            }
+          })
+      },(err)=>{})
+
+    this.general.GetChildSp(this.request_data.Fk_SpecializationParentID).subscribe(
+      (val:any[])=>{
+          val.forEach(elem=>{
+            if(elem.ID == this.request_data.FK_SpecializationChildID){
+              this.specific_feild=elem.SpecializationName
+            }
+          })
+      },(err)=>{})
+  }
+
+  GetLanguages(){
+    this.helper.presentLoading()
+    this.panel.GetLanguages().subscribe(
+      (val:any[])=>{
+         this.helper.dismissLoading()
+          val.forEach(elem=>{
+            if(elem.Lang_ID == this.request_data.FK_Original_Lang_ID){
+              if(this.platform.isRTL){
+                this.langFrom=elem._Lang_NameAr
+              }else{
+                this.langFrom=elem._Lan_Name_En
+              }
+            }
+            if(elem.Lang_ID== this.request_data.FK_Target_Lang_ID){
+              if(this.platform.isRTL){
+                this.langTo=elem._Lang_NameAr
+              }else{
+                this.langTo=elem._Lan_Name_En
+              }
+            }
+          })
+      },(err)=>{
+        this.helper.dismissLoading()
+      })
+  }
+  
   ionViewDidLoad() {
     console.log('ionViewDidLoad AdminOrderDetailsPage');
   }
