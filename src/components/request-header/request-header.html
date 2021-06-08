@@ -5,7 +5,7 @@
             <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
         </ion-col>
         <ion-col col-10 style="margin-top: 9px;text-align: center;height: 16px;width: 54px;color: #214952;font-size: 15.61px;line-height: 16px;">
-           {{RequestCode}}
+           {{RequestData.RequestCode}}
         </ion-col>
         <ion-col col-1 *ngIf="dir==true && RequestData.FK_Request_Status_ID==1" (click)="edit()" style="padding-top: 14px;transform: rotate(90deg);" >
           <img src="../../assets/imgs/edit.png" >
@@ -26,9 +26,9 @@
           <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
         </ion-col>
         <ion-col col-9 style="margin-top: 9px;text-align: center;height: 16px;width: 54px;color: #07133c;font-size: 15.61px;line-height: 16px;">
-          {{RequestCode}}
+          {{RequestData.RequestCode}}
         </ion-col>
-        <ion-col col-2  *ngIf="request_status==1 || request_status==3" style="margin-top: 9px;text-align: center;"(click)="open_client_profile()">
+        <ion-col col-2  *ngIf="RequestData.FK_Request_Status_ID==1 || RequestData.FK_Request_Status_ID==3" style="margin-top: 9px;text-align: center;"(click)="open_client_profile()">
           <span *ngIf="dir==true"  style="color:#FFAA45;background-color:#07133c;border-radius: 50%;padding:  6% 18%;text-transform: capitalize;">
            {{UserName}}
           </span>
@@ -36,7 +36,7 @@
             {{UserName}}
           </span>
         </ion-col>
-        <ion-col col-2  *ngIf="!(request_status==1 || request_status==3)  " style="text-align: center;" (click)="chooseAccount($event)">
+        <ion-col col-2  *ngIf="!(RequestData.FK_Request_Status_ID==1 || RequestData.FK_Request_Status_ID==3)  " style="text-align: center;" (click)="chooseAccount($event)">
           <div  *ngIf="dir==true" style="color:#FFAA45;background-color:#07133c;border-radius: 50%;padding: 10% 10%;">
             <ion-icon   style="font-size: 26px;" name="ios-person-outline"></ion-icon>
           </div>

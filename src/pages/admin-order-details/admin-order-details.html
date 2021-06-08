@@ -55,7 +55,7 @@
   </div>
 </ion-header> -->
 <ion-header>
-<request-header [UserName]='user' UserType="admin"  [RequestData]="request_data" [RequestID]="RequestID" [request_status]="request_data.FK_Request_Status_ID" [langFrom]="langFrom" [RequestCode]="RequestCode"   [langTo]="langTo"></request-header>
+<request-header [UserName]='user' UserType="admin"  [RequestData]="request_data"  [langFrom]="langFrom"  [langTo]="langTo"></request-header>
 </ion-header>
  <ion-content padding>
  
@@ -197,7 +197,7 @@
       </button>
 
       -->
-      <request-details [RequestData]="request_data"></request-details>
+      <request-details [RequestData]="request_data" [GeneralFeild]="general_feild" [SpecificFeild]="specific_feild" [FileLevel]="file_level"></request-details>
 
       <ion-row *ngIf="request_data.FK_Request_Status_ID==1">
         <ion-col col-6>

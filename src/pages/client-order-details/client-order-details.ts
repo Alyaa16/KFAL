@@ -242,10 +242,11 @@ export class ClientOrderDetailsPage {
   }
 
   edit(){
+    console.log('event emitter emit from parent')
     // call api to edit this request as soon as it is new
     this.navCtrl.push('ClientOrderEditPage',
         {
-          'request_id':this.navParams.get('request_id')
+          'request_id':this.request_data.Request_ID
         }
     )
   }

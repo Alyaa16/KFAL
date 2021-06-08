@@ -47,13 +47,13 @@
       <ion-col col-1></ion-col>
     </ion-row>
   </div>-->
-  <request-header UserType='client' [RequestData]="request_data" [RequestID]="RequestID" request_status={{request_status}} [langFrom]="langFrom" RequestCode={{request_data.RequestCode}}   [langTo]="langTo"></request-header>
+  <request-header  (EditRequest)="edit($event)" UserType='client' [RequestData]="request_data"  [langFrom]="langFrom"    [langTo]="langTo"></request-header>
 
 </ion-header> 
 
 
 <ion-content padding >
-<request-details [RequestData]="request_data"></request-details>
+<request-details [RequestData]="request_data" [GeneralFeild]="general_feild" [SpecificFeild]="specific_feild" [FileLevel]="file_level"></request-details>
       <!-- <ion-row>
         <ion-col col-4 style="white-space: nowrap; color: #214952;font-size: 16px;line-height: 15px;">
           {{"general_feild"|translate}}

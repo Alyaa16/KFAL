@@ -84,6 +84,7 @@ export class TranslatorNewOrdersPage {
                               this.newOrders.push(elem)
                             }
                           })
+                          console.log('new orders '+JSON.stringify(this.newOrders))
                           this.newOrders.reverse()
                           this.general.GetDeadlines().subscribe((res:any)=>{
                             this.deadlines=res
