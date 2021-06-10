@@ -98,6 +98,7 @@ export class TranslatorNewOrdersPage {
                               var result =  this.newOrders.filter((val) =>{
                                   return val.FK_Request_Deadline_Hours=== search;
                               }).length;
+                              console.log(result)
                               this.deadlines[i].count=result
                             }
                           },(err:any)=>{})

@@ -202,8 +202,22 @@ export class AdminOrderDetailsPage {
        this.iab.create("http://kfal.careofme.net"+this.request_data.Request_Orginal_File,'_system','location=yes');
   }
 
+   // request status is   1 or 3
   open_client_profile(){
     this.navCtrl.push('ClientProfilePage',{'user_id': this.UserId})
+  }
+
+   // request status is not  1 or 3
+  chooseAccount(myEvent){
+    let popover = this.popoverCtrl.create('ToggleAcountPage',
+        {
+          'userId':this.UserId,
+          'translatorId':this.translatorId,
+          'reviewerId':this.reviewerId
+        });
+    popover.present({
+      ev: myEvent
+    });
   }
 
   accept(){
@@ -254,16 +268,5 @@ export class AdminOrderDetailsPage {
     })
   }
 
-  chooseAccount(myEvent){
-
-    let popover = this.popoverCtrl.create('ToggleAcountPage',
-     {
-      'userId':this.UserId,
-      'translatorId':this.translatorId,
-      'reviewerId':this.reviewerId}
-      );
-    popover.present({
-      ev: myEvent
-    });
-  }
+  
 }

@@ -12,6 +12,7 @@ export class HometypePage {
   RequestType:any=0
   dir:boolean
   beforePulling:boolean=true
+  afterPulling:boolean=false
   constructor(public navCtrl: NavController,public menuCtrl:MenuController,private storage:Storage,
               public navParams: NavParams,public plt:Platform) {
                 this.dir=this.plt.isRTL
@@ -22,13 +23,28 @@ export class HometypePage {
     console.log('ionViewDidLoad HometypePage');
   }
 
+  onScroll(ev){
+    console.log('on scroll '+JSON.stringify( ev))
+
+
+    if((ev.scrollTop>117  && ev.directionY=="up") || (ev.scrollTop>117  && ev.directionY=="down")){
+      console.log('scroll == 117')
+      this.afterPulling=true
+      this.beforePulling=false
+    }
+    if(ev.scrollTop<=117 && ev.directionY=="down"  ){
+      console.log('scroll < 117')
+      this.beforePulling=true
+      this.afterPulling=false
+    }
+    if(ev.scrollTop==0 ){//&& ev.directionY=="up"
+      console.log('scroll = 0 ')
+      this.beforePulling=true
+      this.afterPulling=false
+    }
+  }
+
   toggleMenu(){
-    // if(this.dir){
-    //   this.menuCtrl.toggle('right')
-    // }else
-    // {
-    //   this.menuCtrl.toggle('left')
-    // }
     this.menuCtrl.toggle()
   }
 
@@ -73,13 +89,13 @@ export class HometypePage {
     })
   }
  
-  doRefresh(event) {
-    console.log('Begin async operation');
+  // doRefresh(event) {
+  //   console.log('Begin async operation');
 
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      event.complete();
-      this.beforePulling=!this.beforePulling
-    }, 100);
-  }
+  //   setTimeout(() => {
+  //     console.log('Async operation has ended');
+  //     event.complete();
+  //     this.beforePulling=!this.beforePulling
+  //   }, 100);
+  // }
 }

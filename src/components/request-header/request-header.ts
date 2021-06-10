@@ -14,6 +14,9 @@ export class RequestHeaderComponent {
   @Input('UserType') UserType:any
   @Input('UserName') UserName:any
   @Output() EditRequest = new EventEmitter()
+  @Output() OpenClientProfile = new EventEmitter()
+  @Output() ChooseAccount = new EventEmitter()
+
 
    constructor(private plt:Platform,private viewCtrl:ViewController,private navCtrl:NavController) {
     console.log('Hello RequestHeaderComponent Component');
@@ -40,16 +43,18 @@ export class RequestHeaderComponent {
   }
 
   edit(){
-   console.log('event emitter emit from child')
+   console.log('EditRequest event emitter emit from child')
     this.EditRequest.emit()
   }
 
-  chooseAccount($event){
-
+  chooseAccount(){
+    console.log('ChooseAccount event emitter emit from child')
+    this.ChooseAccount.emit()
   }
 
   open_client_profile(){
-
+    console.log('OpenClientProfile event emitter emit from child')
+    this.OpenClientProfile.emit()
   }
 
 }

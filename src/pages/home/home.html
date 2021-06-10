@@ -17,8 +17,9 @@
         <!-- <ion-col col-1></ion-col> -->
         <ion-col col-5 style="    text-align: center;font-size: 15px;">
           <div (click)="chooseLangFrom()" >
-            <p style="margin: 5px;white-space: nowrap;">
-              <ion-icon name="ios-arrow-down-outline"></ion-icon> <span style="font-size: 19px;">{{langFrom}}</span>
+            <p style="white-space: nowrap;">
+              <ion-icon name="ios-arrow-down-outline"></ion-icon> 
+              <span style="font-size: 16px;">{{langFrom}}</span>
             </p>
           </div>
         </ion-col>
@@ -31,14 +32,15 @@
 
         <ion-col col-5 style="text-align: center;">
           <div (click)="chooseLangTo()" *ngIf="ReviewType!=3">
-            <p style="margin: 5px;white-space: nowrap;">
-               <ion-icon name="ios-arrow-down-outline"></ion-icon> <span style="font-size: 19px;"> {{langTo}}</span>
+            <p style="white-space: nowrap;">
+               <ion-icon name="ios-arrow-down-outline"></ion-icon> 
+               <span style="font-size: 16px;"> {{langTo}}</span>
             </p>
           </div>
 
           <div *ngIf="ReviewType==3">
-            <p style="margin: 5px;white-space: nowrap;">
-              <span style="font-size: 19px;">{{langTo}}</span>
+            <p style="white-space: nowrap;">
+              <span style="font-size: 16px;">{{langTo}}</span>
             </p>
           </div>
        </ion-col>

@@ -37,15 +37,8 @@ background-repeat: no-repeat">
     </ion-row>
 </div>
 </ion-header> -->
+<ion-header no-padding>
 
-<ion-content  style=" background: url('../../assets/imgs/kfal_images/Artboard\ 1.svg');
-background-attachment: fixed;
-background-size: 100%; 
-background-repeat: no-repeat">
-<div>
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" spinner="none">
- 
-  </ion-refresher>
   <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="615" height="206" viewBox="0 0 615 206" style="width: 100%;height: auto;position:relative">
     <defs>
       <clipPath id="clip-path">
@@ -97,99 +90,171 @@ background-repeat: no-repeat">
     </g>
   </svg>
   
-<div *ngIf="beforePulling">
-  <button  style="width:35px;height: 35px; position: absolute;top:7%;left:32%" ion-fab (click)="Home()" >
-    <ion-icon style="font-size: 1.4rem;" name="home"></ion-icon>
-  </button>
+  <div *ngIf="beforePulling">
+    <button  style="background-color: #ffffff;    color: #214952;width:35px;height: 35px; position: absolute;top:35%;left:32%" ion-fab (click)="Home()" >
+      <ion-icon style="font-size: 1.8rem;" name="home"></ion-icon>
+    </button>
 
-  <button  style="width:35px;height: 35px; position: absolute;top:4%;left:45%" ion-fab (click)="Orders()" >
-    <ion-icon style="font-size: 1.4rem;" name="ios-paper-outline"></ion-icon>
-  </button>
+    <button  style="background-color: #ffffff;     color: #214952;width:35px;height: 35px; position: absolute;top:21%;left:45%" ion-fab (click)="Orders()" >
+      <ion-icon style="font-size: 1.8rem;" name="paper"></ion-icon>
+    </button>
 
-  <button  style="width:35px;height: 35px; position: absolute;top:2.5%;left:58%" ion-fab (click)="toggleMenu()" >
-    <ion-icon style="font-size: 1.4rem;" name="menu"></ion-icon>
-  </button>
+    <button  style="color: #ffffff; background-color: #214952;width:35px;height: 35px; position: absolute;top:12.5%;left:58%" ion-fab (click)="toggleMenu()" >
+      <ion-icon style="font-size: 2rem;" name="menu"></ion-icon>
+    </button>
 
-  <button  style="width:35px;height: 35px; position: absolute;top:3%;left:72%" ion-fab (click)="openPage('NotificationsPage')" >
-    <ion-icon style="font-size: 1.4rem;" name="notifications"></ion-icon>
-  </button>
+    <button  style=" background-color: #ffffff;    color: #214952;width:35px;height: 35px; position: absolute;top:16%;left:72%" ion-fab (click)="openPage('NotificationsPage')" >
+      <ion-icon style="font-size: 1.8rem;" name="notifications"></ion-icon>
+    </button>
 
-  <button  style="width:35px;height: 35px; position: absolute;top:5%;left:86%" ion-fab (click)="openPage('ClientProfilePage')" >
-    <ion-icon style="font-size: 1.4rem;" name="person"></ion-icon>
-  </button>
-</div>
+    <button  style=" background-color: #ffffff;    color: #214952;width:35px;height: 35px; position: absolute;top:27.7%;left:86%" ion-fab (click)="openPage('ClientProfilePage')" >
+      <ion-icon style="font-size: 1.8rem;" name="person"></ion-icon>
+    </button>
+  </div>
 
-
-  <!-- <ion-row  class="my_home_icons_before" *ngIf="beforePulling">
-    <ion-col col-1> </ion-col>
-    <ion-col col-2>
-      <button  id="btn1" ion-fab (click)="Home()" >
-        <ion-icon  name="home"></ion-icon>
-      </button>
-    </ion-col>
-    <ion-col col-2>
-      <button id="btn2" ion-fab  (click)="Orders()"   >
-        <ion-icon name="ios-paper-outline"></ion-icon>
-      </button>
-    </ion-col>
-    <ion-col col-2>
-      <button id="btn3" ion-fab  (click)="toggleMenu()">
-        <ion-icon  name="menu"></ion-icon>
-      </button>
-    </ion-col>
-    <ion-col col-2>
-      <button id="btn4" ion-fab (click)="openPage('NotificationsPage')" >
-        <ion-icon  name="notifications"></ion-icon>
-      </button>
-    </ion-col>
-    <ion-col col-2>
-      <button id="btn5" ion-fab  (click)="openPage('ClientProfilePage')">
-        <ion-icon  name="person"></ion-icon>
-      </button>
-    </ion-col>
-    <ion-col col-1> </ion-col>
-  </ion-row>  -->
-
-
-  <div *ngIf="!beforePulling" class="my_home_icons_after">
+  <div *ngIf="afterPulling" class="my_home_icons_after">
     <ion-row>
       <ion-col col-4>
-        <button id="btn4" ion-fab  (click)="Orders()">
-          <ion-icon  name="ios-paper-outline"></ion-icon>
+        <button  style="background-color:#ffffff  ;color:#214952"  id="btn4" ion-fab  (click)="Home()" >
+          <ion-icon   style="font-size: 4.5rem" name="home"></ion-icon>
         </button>
+        <p style="text-align: center;">Home </p>
       </ion-col>
 
       <ion-col col-4>
-        <button id="btn4" ion-fab   (click)="toggleMenu()">
-          <ion-icon  name="menu"></ion-icon>
+        <button   style="background-color:  #214952 ;color:#ffffff " id="btn4" ion-fab   (click)="toggleMenu()">
+          <ion-icon  style="font-size: 5.5rem" name="menu"></ion-icon>
         </button>
+        <p style="text-align: center;">Menu </p>
       </ion-col>
 
       <ion-col col-4>
-        <button id="btn4" ion-fab  (click)="openPage('ClientProfilePage')" >
-          <ion-icon  name="person"></ion-icon>
+        <button  style="background-color:#ffffff  ;color:#214952 "  id="btn4" ion-fab  (click)="openPage('ClientProfilePage')" >
+          <ion-icon  style="font-size: 4.5rem"  name="person"></ion-icon>
         </button>
+        <p style="text-align: center;">Profile </p>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col col-1></ion-col>
-      <ion-col col-5>
-        <button id="btn4" ion-fab  (click)="Home()" >
-          <ion-icon  name="home"></ion-icon>
+      <ion-col col-5>   
+        <button style="background-color:#ffffff  ;color:#214952 " id="btn4" ion-fab  (click)="Orders()">
+          <ion-icon   style="font-size: 4.5rem" name="paper"></ion-icon>
         </button>
+        <p style="text-align: center;">Orders </p>
       </ion-col>
 
       <ion-col col-5>
-        <button id="btn4" ion-fab (click)="openPage('NotificationsPage')" >
-          <ion-icon  name="notifications"></ion-icon>
+        <button  style="background-color:#ffffff  ;color:#214952  "id="btn4" ion-fab (click)="openPage('NotificationsPage')" >
+          <ion-icon   style="font-size: 4.5rem" name="notifications"></ion-icon>
         </button>
+        <p style="text-align: center;">Notifications </p>
       </ion-col>
       <ion-col col-1></ion-col>
-     
+      
     </ion-row>
   </div>
+
+</ion-header>
+<ion-content  style=" background: url('../../assets/imgs/kfal_images/Artboard\ 1.svg');
+background-attachment: fixed;
+background-size: 100%; 
+background-repeat: no-repeat" (ionScroll)="onScroll($event)">
+<div>
+ 
+
+
+
+
 </div>
 
+<ion-scroll style="width:100%; height:100vh" scrollY="true">
 
+  <ion-card>
+    <ion-card-header></ion-card-header>
+    <ion-card-content>
+      <img src="../../assets/imgs/logo.png" style="width:30px">
+    </ion-card-content>
+   </ion-card>
+   
+    <ion-card>
+      <ion-card-header></ion-card-header>
+       <ion-card-content>
+         <img src="../../assets/imgs/logo.png" style="width:30px">
+       </ion-card-content>
+   </ion-card>
+   
+   <ion-card>
+     <ion-card-header></ion-card-header>
+      <ion-card-content>
+       <img src="../../assets/imgs/logo.png" style="width:30px">
+      </ion-card-content>
+   </ion-card>
+   <ion-card>
+     <ion-card-header></ion-card-header>
+     <ion-card-content>
+       <img src="../../assets/imgs/logo.png" style="width:30px">
+     </ion-card-content>
+    </ion-card>
+    
+     <ion-card>
+       <ion-card-header></ion-card-header>
+        <ion-card-content>
+          <img src="../../assets/imgs/logo.png" style="width:30px">
+        </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-header></ion-card-header>
+       <ion-card-content>
+        <img src="../../assets/imgs/logo.png" style="width:30px">
+       </ion-card-content>
+    </ion-card><ion-card>
+     <ion-card-header></ion-card-header>
+     <ion-card-content>
+       <img src="../../assets/imgs/logo.png" style="width:30px">
+     </ion-card-content>
+    </ion-card>
+    
+     <ion-card>
+       <ion-card-header></ion-card-header>
+        <ion-card-content>
+          <img src="../../assets/imgs/logo.png" style="width:30px">
+        </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-header></ion-card-header>
+       <ion-card-content>
+        <img src="../../assets/imgs/logo.png" style="width:30px">
+       </ion-card-content>
+    </ion-card><ion-card>
+     <ion-card-header></ion-card-header>
+     <ion-card-content>
+       <img src="../../assets/imgs/logo.png" style="width:30px">
+     </ion-card-content>
+    </ion-card>
+    
+     <ion-card>
+       <ion-card-header></ion-card-header>
+        <ion-card-content>
+          <img src="../../assets/imgs/logo.png" style="width:30px">
+        </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-header></ion-card-header>
+       <ion-card-content>
+        <img src="../../assets/imgs/logo.png" style="width:30px">
+       </ion-card-content>
+    </ion-card>
+</ion-scroll>
+
+<!--
+<ion-card>
+  <img src="../../assets/imgs/Artboard 28.png"/>
+  <div class="card-title">San Francisco</div>
+  <div class="card-subtitle">72 Listings</div>
+</ion-card> -->
 </ion-content>

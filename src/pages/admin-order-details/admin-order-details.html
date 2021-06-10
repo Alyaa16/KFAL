@@ -55,11 +55,12 @@
   </div>
 </ion-header> -->
 <ion-header>
-<request-header [UserName]='user' UserType="admin"  [RequestData]="request_data"  [langFrom]="langFrom"  [langTo]="langTo"></request-header>
-</ion-header>
- <ion-content padding>
  
-
+  <request-header (ChooseAccount)="chooseAccount()"  (OpenClientProfile)="open_client_profile()" [UserName]='user' UserType="admin"  [RequestData]="request_data"  [langFrom]="langFrom"  [langTo]="langTo"></request-header>
+  </ion-header>
+ 
+  <ion-content padding>
+ 
    <div  *ngIf="request_data.FK_Request_Status_ID==1" style="font-size: 14px ;color: red;text-align: center;" >
       <p> {{'waiting for admin accept'|translate}}</p>
     </div>
