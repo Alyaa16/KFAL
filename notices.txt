@@ -135,3 +135,7 @@ Environment Variables:
 Misc:
 
     backend : pro
+
+
+  device id:
+    fNPoZnkbEwE:APA91bHv9mZKIPvewUibH_OSh-UKKAjX-W1rAUmrCgHUwICnO-qZb9rWCUVBtouej707JRDU1IXbILXeYfq0dV2z-izs1YB6EH5ZgR8PIZYtsB2PCAIAIQYikGEYFEZIaPKqVPNyOrGh

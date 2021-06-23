@@ -87,14 +87,14 @@ export class AdminOrderDetailsPage {
                     }
                   }
                     this.request_data=res[0]  // set all request details
-                    console.log('request_data '+JSON.stringify(this.request_data))
+                   // console.log('request_data '+JSON.stringify(this.request_data))
                     this.RequestCode=res[0].RequestCode
                     this.UserId=res[0].FK_User_ID
-                    console.log("admin request details => user id"+this.UserId)
+                  //  console.log("admin request details => user id"+this.UserId)
                     this.translatorId=res[0].FK_Ttranslator_ID
                     this.reviewerId=res[0].FK_Reviewer_ID
                     this.request_status=res[0].FK_Request_Status_ID
-                    console.log(this.request_status)
+                 //   console.log(this.request_status)
                   this.user1.GetUserDataByUserID(res[0].FK_User_ID).subscribe(
                     (res:any)=>{
                       this.user_frist_name=res.dt[0].User_Full_Name

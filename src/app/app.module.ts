@@ -29,6 +29,7 @@ import { TestformsProvider } from '../providers/testforms/testforms';
 import { ControlpanelProvider } from '../providers/controlpanel/controlpanel';
 import { UpgradeRequestsProvider } from '../providers/upgrade-requests/upgrade-requests';
 import { NgCircleProgressModule } from 'ng-circle-progress';
+import { ExpandableHeaderComponent } from '../components/expandable-header/expandable-header';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
@@ -36,6 +37,7 @@ export function createTranslateLoader(http: HttpClient) {
 @NgModule({
   declarations: [
     MyApp,
+
   ],
   imports: [
     BrowserModule,

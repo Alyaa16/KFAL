@@ -29,10 +29,10 @@ export class RequestDetailsComponent {
   }
 
   ngOnChanges(){
-    console.log('request details '+JSON.stringify(this.RequestData))
-    console.log('general feild is '+this.GeneralFeild)
-    console.log('specific feild is '+this.SpecificFeild)
-    console.log('education level is '+this.FileLevel)
+    // console.log('request details '+JSON.stringify(this.RequestData))
+    // console.log('general feild is '+this.GeneralFeild)
+    // console.log('specific feild is '+this.SpecificFeild)
+    // console.log('education level is '+this.FileLevel)
   }
 
   filePreview(){

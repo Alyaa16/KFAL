@@ -51,6 +51,7 @@ export class ClientProvider {
   }
 
   sign_in(params,DeviceID){
+    alert('login services : '+DeviceID)
     if(navigator.onLine){
       return   this.http.get(this.helper.base_url+"User/Login?Email="+params.UserEmail+"&Password="+params.Password+"&DeviceID="+DeviceID)
     }

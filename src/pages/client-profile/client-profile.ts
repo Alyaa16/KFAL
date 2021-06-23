@@ -45,7 +45,8 @@ export class ClientProfilePage {
  IsJoin:boolean
  FK_SpecializationChildID:any
  Fk_SpecializationParentID:any
- languages:any[]
+ languages:any[]=[]
+ _languages:any[]=[]
  cv:any
  isUpgraing:boolean
   constructor(public translate: TranslateService,public viewCtrl:ViewController,public general:GeneralProvider,
@@ -243,13 +244,15 @@ export class ClientProfilePage {
                 }
 
 
-                this.languages=res.Languages
-                if( this.languages.length!=0){
+                this._languages=res.Languages
+                if( this._languages.length!=0){
                   this.noLanguages=false
 
                   this.GetLanguages()
+                  console.log('there are languages',JSON.stringify(this._languages))
                 }else{
                   this.noLanguages=true
+                  console.log('no languages')
                 }
 
               this. checkProfileCompletion(this.userData)
@@ -383,18 +386,20 @@ export class ClientProfilePage {
   }
 
   GetLanguages(){
+    console.log('get languages called')
+    console.log('user languages '+JSON.stringify(this.languages))
     this.panel.GetLanguages().subscribe((res:any[])=>{
-      this.languages.forEach(elem=>{
+      this._languages.forEach(elem=>{
         res.forEach(lang=>{
-          if(elem.LangID==lang.ID){
+          if(elem.LangID==lang.Lang_ID){
             if(this.dir==true){
-              this.my_languages.push(lang.NameAr)
+              this.languages.push(lang._Lang_NameAr)
+              console.log('user languages '+JSON.stringify(this.languages))
             }else{
-              this.my_languages.push(lang.NameEn)
+              this.languages.push(lang._Lan_Name_En)
             }
           }
         })
-
       })
     },(err:any)=>{
     })
@@ -511,28 +516,28 @@ export class ClientProfilePage {
           }
 
 
-          this.languages=res.Languages
-          if( this.languages.length!=0){
-            this.noLanguages=false
+          // this.languages=res.Languages
+          // if( this.languages.length!=0){
+          //   this.noLanguages=false
 
-            this.panel.GetLanguages().subscribe((res:any[])=>{
-              this.languages.forEach(elem=>{
-                res.forEach(lang=>{
-                  if(elem.LangID==lang.ID){
-                    if(this.dir==true){
-                      this.my_languages.push(lang.NameAr)
-                    }else{
-                      this.my_languages.push(lang.NameEn)
-                    }
-                  }
-                })
+          //   this.panel.GetLanguages().subscribe((res:any[])=>{
+          //     this.languages.forEach(elem=>{
+          //       res.forEach(lang=>{
+          //         if(elem.LangID==lang.ID){
+          //           if(this.dir==true){
+          //             this.my_languages.push(lang.NameAr)
+          //           }else{
+          //             this.my_languages.push(lang.NameEn)
+          //           }
+          //         }
+          //       })
 
-              })
-            },(err:any)=>{
-            })
-          }else{
-            this.noLanguages=true
-          }
+          //     })
+          //   },(err:any)=>{
+          //   })
+          // }else{
+          //   this.noLanguages=true
+          // }
 
           if(res.dt[0].FK_Country_ID==null && res.dt[0].FK_City_ID==null && res.dt[0].User_Address==null){
             this.DataNotCompleted=true

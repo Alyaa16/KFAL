@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController, Platform } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Content } from 'ionic-angular';
 
 
 @IonicPage()
@@ -9,6 +10,8 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'hometype.html',
 })
 export class HometypePage {
+  @ViewChild(Content) mycontent: Content;
+
   RequestType:any=0
   dir:boolean
   beforePulling:boolean=true
@@ -17,37 +20,41 @@ export class HometypePage {
               public navParams: NavParams,public plt:Platform) {
                 this.dir=this.plt.isRTL
                 this.menuCtrl.enable(true)
+                //this.mycontent.scrollToBottom();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HometypePage');
   }
 
-  onScroll(ev){
-    console.log('on scroll '+JSON.stringify( ev))
-
-
-    if((ev.scrollTop>117  && ev.directionY=="up") || (ev.scrollTop>117  && ev.directionY=="down")){
-      console.log('scroll == 117')
-      this.afterPulling=true
-      this.beforePulling=false
-    }
-    if(ev.scrollTop<=117 && ev.directionY=="down"  ){
-      console.log('scroll < 117')
-      this.beforePulling=true
-      this.afterPulling=false
-    }
-    if(ev.scrollTop==0 ){//&& ev.directionY=="up"
-      console.log('scroll = 0 ')
-      this.beforePulling=true
-      this.afterPulling=false
-    }
+  startScrolling(ev){
+    console.log('start scroll :  '+JSON.stringify(ev))
   }
 
+  onScroll(ev){
+    console.log('on scroll '+JSON.stringify( ev))
+    
+    if(ev.scrollTop<=260 && ev.directionY=="up"  ){
+      console.log('scroll < 140  ev.directionY=="up"')
+      this.beforePulling=false
+      this.afterPulling=true
+      
+    }else{
+      this.beforePulling=true
+      this.afterPulling=false
+ 
+    }
+  
+  } 
+  scrolltobottom(){
+    console.log('scroll to bottom')
+    this.mycontent.scrollToBottom(1000);
+  }
   toggleMenu(){
     this.menuCtrl.toggle()
   }
 
+  
  
   openPage(page) {
     this.navCtrl.push(page)

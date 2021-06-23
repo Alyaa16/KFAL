@@ -1,9 +1,9 @@
 <ion-header >
   <div *ngIf="ordersType=='back1'" style="background-color: #F2F2F2;height: 110px;">
-      <ion-row style="padding-top: 13px;padding-right: 11px;">
+      <ion-row style="padding-top: 13px;padding-right: 11px;margin: 0px 16px;">
           <ion-col col-1 (click)="dismiss()">
-              <ion-icon *ngIf="dir==true"  style="font-size: 35px;" name="ios-arrow-round-forward-outline"></ion-icon>
-              <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
+              <ion-icon *ngIf="dir==true"  style="font-size: 40px;" name="ios-arrow-round-forward-outline"></ion-icon>
+              <ion-icon *ngIf="dir==false"  style="font-size: 40px;" name="ios-arrow-round-back-outline"></ion-icon>
         </ion-col>
         <ion-col col-11 style="margin-top: 10px; text-align: center;height: 16px;width: 54px;color: #07133c;font-size: 15.61px;line-height: 16px;">
           {{"requests1"|translate}} {{ordersType|translate}}
@@ -11,10 +11,10 @@
       </ion-row>
   </div>
   <div *ngIf="ordersType!='back1'">
-    <ion-row style="padding-top: 13px;padding-right: 11px;">
+    <ion-row style="padding-top: 13px;padding-right: 11px;margin: 0px 16px;">
         <ion-col col-1 (click)="dismiss()">
-            <ion-icon *ngIf="dir==true"  style="font-size: 35px;" name="ios-arrow-round-forward-outline"></ion-icon>
-            <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
+            <ion-icon *ngIf="dir==true"  style="font-size: 40px;" name="ios-arrow-round-forward-outline"></ion-icon>
+            <ion-icon *ngIf="dir==false"  style="font-size: 40px;" name="ios-arrow-round-back-outline"></ion-icon>
       </ion-col>
       <ion-col col-11 style="margin-top: 10px; text-align: center;height: 16px;width: 54px;color: #07133c;font-size: 15.61px;line-height: 16px;">
         {{"requests1"|translate}} {{ordersType|translate}}

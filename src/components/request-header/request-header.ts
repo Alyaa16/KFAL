@@ -30,7 +30,6 @@ export class RequestHeaderComponent {
   ngOnChanges(){
     console.log('ngOnChanges lang from is '+this.langFrom)
     console.log('ngOnChanges lang to is '+this.langTo)
-    console.log('ngOnChanges request data' +JSON.stringify( this.RequestData))
   }
 
   ngAfterViewInit() {

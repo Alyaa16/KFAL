@@ -73,7 +73,7 @@
     </ion-row>
   </div>
 
-  <ion-row style="    margin: 7px 0px;">
+  <ion-row style="margin: 7px 0px;">
       <ion-col col-5 style="color:#FFAA45;font-size: 18px"> {{"gender"|translate}} </ion-col>
       <ion-col col-7>  </ion-col>
   </ion-row>
@@ -84,7 +84,7 @@
 
   <div *ngIf="!DataNotCompleted">
     <!-- <ion-item style="margin: 5px 0px;padding-left: 0px;"> -->
-      <ion-row style="    margin: 7px 0px;">
+      <ion-row style="margin: 7px 0px;">
         <ion-col col-9 style="color:#FFAA45;font-size: 18px"> {{"Country"|translate}}   </ion-col>
         <ion-col col-3>   </ion-col>
       </ion-row>
@@ -127,8 +127,8 @@
         </ion-row>
 
         <div style="text-align: center;" *ngIf="!noLanguages">
-          <span *ngFor="let lang of my_languages;let i=index">
-            {{lang}} <span *ngIf="i+1<my_languages.length">, </span>
+          <span *ngFor="let lang of languages;let i=index">
+            {{lang}} <span *ngIf="i+1<languages.length">, </span>
           </span>
         </div>
       </div>

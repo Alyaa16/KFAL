@@ -17,18 +17,20 @@ export class HelperProvider {
   trans_user_type:any
   notification_status:boolean
   isadmin:boolean=false
+
   private theme: BehaviorSubject<String>;
    // http://192.168.1.160:8899 local
   // link to any file :https://kfal.careofme.net/Images/Artboard%20%E2%80%93%2036.png
   // https://kfal.careofme.net  cloud
   base_url:string="https://kfal.careofme.net/TranslationAppAPI/"
-  registrationId:string=""
+  registrationId=""
   constructor(public loadingCtrl:LoadingController,public translate: TranslateService,
       public http: HttpClient) {
     this.theme = new BehaviorSubject('dark-theme');
   }
 
   set_registrationId(va){
+    alert('registrationId set successfully : '+va);
     this.registrationId=va
   }
 

@@ -6,6 +6,7 @@ import { StarRatingModule } from 'ionic3-star-rating';
 import { TranslateModule } from '@ngx-translate/core';
 import { NoDataMessageComponent } from './no-data-message/no-data-message';
 import { RequestHeaderComponent } from './request-header/request-header';
+import { ExpandableHeaderComponent } from './expandable-header/expandable-header';
 
 @NgModule({
 	declarations: [RequestComponent,
@@ -13,6 +14,7 @@ import { RequestHeaderComponent } from './request-header/request-header';
     NoDataMessageComponent,
     RequestHeaderComponent,
     RequestDetailsComponent,
+    ExpandableHeaderComponent,
 
     ],
 	imports: [IonicModule,StarRatingModule,TranslateModule],
@@ -21,6 +23,7 @@ import { RequestHeaderComponent } from './request-header/request-header';
     NoDataMessageComponent,
     RequestHeaderComponent,
     RequestDetailsComponent,
+    ExpandableHeaderComponent,
    ]
 })
 export class ComponentsModule {}
