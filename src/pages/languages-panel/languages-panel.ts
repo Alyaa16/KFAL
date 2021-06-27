@@ -1,7 +1,7 @@
 import { ControlpanelProvider } from './../../providers/controlpanel/controlpanel';
 import { HelperProvider } from './../../providers/helper/helper';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController, ViewController } from 'ionic-angular';
 import { GeneralProvider } from '../../providers/general/general';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,7 +15,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class LanguagesPanelPage {
   Languages:any[]=[]
   dir:boolean
-  constructor(public navCtrl: NavController, public navParams: NavParams,private general:GeneralProvider,private translate:TranslateService,
+  constructor(private viewCtrl:ViewController, public navCtrl: NavController, public navParams: NavParams,private general:GeneralProvider,private translate:TranslateService,
     private helper:HelperProvider,private plt:Platform,private panal:ControlpanelProvider,private alertCtrl:AlertController ) {
 
       this.dir=this.plt.isRTL
@@ -41,6 +41,10 @@ export class LanguagesPanelPage {
 
       }
     )
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss()
   }
 
   ionViewDidLoad() {

@@ -1,6 +1,6 @@
 import { ControlpanelProvider } from './../../providers/controlpanel/controlpanel';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController, ViewController } from 'ionic-angular';
 import { HelperProvider } from '../../providers/helper/helper';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -15,7 +15,8 @@ export class EducationLevelsPanelPage {
 
   EducationLevels:any=[]
   dir:boolean
-  constructor(public navCtrl: NavController, public navParams: NavParams,private panel:ControlpanelProvider,
+  constructor(public navCtrl: NavController,private viewCtrl:ViewController,
+              public navParams: NavParams,private panel:ControlpanelProvider,
               private plt:Platform,private helper:HelperProvider,private alertCtrl:AlertController,private translate:TranslateService) {
 
                 this.dir=this.plt.isRTL
@@ -32,6 +33,10 @@ export class EducationLevelsPanelPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EducationLevelsPanelPage');
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss()
   }
 
   ionViewDidEnter(){

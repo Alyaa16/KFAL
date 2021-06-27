@@ -39,10 +39,10 @@ export class ComplaintsPage {
                       res[i].date= moment(res[i].Date).format('ll').split(',')[0]
                       res[i].month=res[i].date.split(' ')[0]
                       res[i].day=res[i].date.split(' ')[1]
-                      this.user.GetUserDataByUserID(res[i].FK_UserID).subscribe(
-                      (userData:any)=>{
-                        res[i].UserName=userData[0].User_Full_Name
-                      })
+                      // this.user.GetUserDataByUserID(res[i].FK_UserID).subscribe(
+                      // (userData:any)=>{
+                      //   res[i].UserName=userData[0].User_Full_Name
+                      // })
                   }
                  this.allcomplains=res
                }else{

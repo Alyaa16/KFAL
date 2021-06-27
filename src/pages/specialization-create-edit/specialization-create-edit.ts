@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController, Platform } from 'ionic-angular';
 import { ControlpanelProvider } from '../../providers/controlpanel/controlpanel';
 import { HelperProvider } from '../../providers/helper/helper';
 import {Storage} from '@ionic/storage';
@@ -14,9 +14,13 @@ export class SpecializationCreateEditPage {
    id:any
    spName:any
    parentID:any=null
-   IsEditing:boolean
-  constructor(public navCtrl: NavController, public navParams: NavParams,private helper:HelperProvider,private viewCtrl:ViewController,
+   ISEditing:boolean
+   dir:boolean
+  constructor(public navCtrl: NavController, private plt:Platform,
+              public navParams: NavParams,private helper:HelperProvider,private viewCtrl:ViewController,
               private controlpanel:ControlpanelProvider,private storage:Storage,private toastCtrl:ToastController) {
+                
+                this.dir=this.plt.isRTL
                 this.parentID=this.navParams.get('parentID')
                 console.log( "===="+ this.parentID)
                 if(this.navParams.get('id')!=undefined){
@@ -24,14 +28,18 @@ export class SpecializationCreateEditPage {
                     this.id=this.navParams.get('id')
                     this.spName=this.navParams.get('spName')
                     console.log(this.id +" "+this.spName)
-                    this.IsEditing=true
+                    this.ISEditing=true
                   }else{
-                    this.IsEditing=false
+                    this.ISEditing=false
                   }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SpecializationCreateEditPage');
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss()
   }
 
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, AlertController, ViewController } from 'ionic-angular';
 import { HelperProvider } from '../../providers/helper/helper';
 import { ControlpanelProvider } from '../../providers/controlpanel/controlpanel';
 import { GeneralProvider } from '../../providers/general/general';
@@ -17,7 +17,7 @@ export class DeadlinesPanelPage {
   Deadlines:any[]=[]
   dir:boolean
   constructor(public navCtrl: NavController, public navParams: NavParams,private general:GeneralProvider,private translate:TranslateService,
-    private helper:HelperProvider,private plt:Platform,private panal:ControlpanelProvider,private alertCtrl:AlertController ) {
+    private helper:HelperProvider,private viewCtrl:ViewController, private plt:Platform,private panal:ControlpanelProvider,private alertCtrl:AlertController ) {
 
       this.dir=this.plt.isRTL
 
@@ -41,6 +41,9 @@ export class DeadlinesPanelPage {
     )
   }
 
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
 
   delete(ID){
     const alert = this.alertCtrl.create({

@@ -1,6 +1,6 @@
 import { ControlpanelProvider } from './../../providers/controlpanel/controlpanel';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { HelperProvider } from '../../providers/helper/helper';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -17,7 +17,7 @@ export class SpecializationPanelPage {
   isSelected:boolean=false
   noSpecificFeilds:any=''
   fristGeneralFeildID:number
-  constructor(public navCtrl: NavController, public navParams: NavParams,private panel:ControlpanelProvider,private translate:TranslateService,
+  constructor(public navCtrl: NavController,private viewCtrl:ViewController, public navParams: NavParams,private panel:ControlpanelProvider,private translate:TranslateService,
     private helper:HelperProvider,private plt:Platform,private loadingCtrl:LoadingController,private alertCtrl:AlertController ) {
 
       this.dir=this.plt.isRTL
@@ -128,5 +128,9 @@ export class SpecializationPanelPage {
 
   addNewSpecializationchild(){
     this.navCtrl.push('SpecializationCreateEditPage',{'parentID':this.GeneralFeild})
+  }
+  
+  dismiss(){
+    this.viewCtrl.dismiss();
   }
 }

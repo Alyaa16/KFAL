@@ -1,4 +1,5 @@
 {
+  "TheMenu":"القائمة",
   "Menu":{
     "home":"الرئيسية",
     "profile":"الملف الشخصي",
@@ -350,5 +351,9 @@
    "Do you want to delete this specialization ?":"هل تريد مسح هذا التخصص؟",
    "User Type":"نوع الحساب",
    "please wait ...":"من فضلك انتظر..",
-   "complete data":"استكمال البيانات"
+   "complete data":"استكمال البيانات",
+   "filter by language":"تصفية حسب اللغة",
+   "direct accept":"موافقة مباشرة",
+   "direct refuse":"رفض مباشر",
+   "testform":"إرسال نماذج اختبار"
 }

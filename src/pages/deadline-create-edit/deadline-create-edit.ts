@@ -1,7 +1,7 @@
 import { HelperProvider } from './../../providers/helper/helper';
 import { ControlpanelProvider } from './../../providers/controlpanel/controlpanel';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 
 
 @IonicPage()
@@ -15,8 +15,10 @@ export class DeadlineCreateEditPage {
   _Hour:number=0
   _Price:number=0
   deadlineID:any
-  constructor(public navCtrl: NavController, public navParams: NavParams,private viewCtrl:ViewController,
+  dir:boolean
+  constructor(public navCtrl: NavController,private plt:Platform, public navParams: NavParams,private viewCtrl:ViewController,
     private panel:ControlpanelProvider,private helper:HelperProvider) {
+      this.dir=this.plt.isRTL
       if(this.navParams.get('id')!=undefined){
         console.log(this.navParams.get('id'))
         this.deadlineID=this.navParams.get('id')
@@ -32,6 +34,10 @@ export class DeadlineCreateEditPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DeadlineCreateEditPage');
+  }
+
+  dismiss(){
+   this.viewCtrl.dismiss()
   }
 
   AddDeadline(){
