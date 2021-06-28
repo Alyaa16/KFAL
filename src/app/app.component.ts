@@ -239,7 +239,7 @@ direction:boolean
           // });
           pushObject.on('notification').subscribe((notification: any) => {
             console.log('Received a notification', JSON.stringify(notification))
-            alert('Received a notification title '+notification.title)
+            console.log('Received a notification title '+notification.title)
 
             if(notification.title== " اضافة طلب جديد  "){
               this.nav.push('AdminOrderDetailsPage',{

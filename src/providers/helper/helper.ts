@@ -30,7 +30,7 @@ export class HelperProvider {
   }
 
   set_registrationId(va){
-    alert('registrationId set successfully : '+va);
+    console.log('registrationId set successfully : '+va);
     this.registrationId=va
   }
 

@@ -223,7 +223,7 @@ export class LoginPage {
         if(this.myform.valid){
           let loading =this.loadingCtrl.create({})
           loading.present()//registration.registrationId
-         alert(' before login this.helper.registrationId : '+   this.helper.registrationId)
+         console.log(' before login this.helper.registrationId : '+   this.helper.registrationId)
             this.user.sign_in(this.myform.value,this.helper.registrationId).subscribe(
               (res:any)=>{
                 loading.dismiss()
