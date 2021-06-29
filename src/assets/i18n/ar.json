@@ -355,5 +355,6 @@
    "filter by language":"تصفية حسب اللغة",
    "direct accept":"موافقة مباشرة",
    "direct refuse":"رفض مباشر",
-   "testform":"إرسال نماذج اختبار"
+   "testform":"إرسال نماذج اختبار",
+   "no_upgradeRequests":"لا توجد طلبات ترقية في هذه اللغة"
 }

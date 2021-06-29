@@ -351,5 +351,6 @@
    "filter by language":"filter by language",
    "direct accept":"direct accept",
    "direct refuse":"direct refuse",
-   "testform": "testform"
+   "testform": "testform",
+   "no_upgradeRequests":"no upgradeRequests for this language"
   }

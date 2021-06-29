@@ -204,8 +204,9 @@ export class UpgradeRequestsPage {
     console.log('call choose language :  ' + this.language)
     this.UpgReqService.GetUpgradeRequestsByLangID(language).subscribe(
       (res: any) => {
-        console.log(JSON.stringify(res))
-        this.upgradeRequests = res
+        //console.log(JSON.stringify(res))
+        res=="لا توجد طلبات متاحة فى هذا التوقيت" ? this.upgradeRequests = [] : this.upgradeRequests = res
+           
       }, (err: any) => {
         console.log(JSON.stringify(err))
       }

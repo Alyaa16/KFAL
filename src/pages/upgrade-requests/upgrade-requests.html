@@ -33,20 +33,28 @@
       </ion-select>
     </ion-item>
 
+  <div class="UpgradeRequests" *ngIf="upgradeRequests.length!=0">
+      <ion-row  *ngFor="let request of upgradeRequests" (click)="UpgradeRequestDetails(request.UpgReq_ID,request.FK_User_ID,request.CV,request.Fk_LangID)" style="border-radius: 4px; border: 1px solid gray;margin: 10px 0px;padding: 10px;" >
+        <ion-col col-2 style="text-align: center;">
+          <span style=" background-color: #07133c; color: white; width: 40px;height: 40px;border-radius: 50%;display: block;line-height: 40px;">
+            {{ request.UpgReq_ID}}
+          </span>
+        </ion-col>
+        <ion-col col-7>
+          <p style="font-size: 20px;margin: 0px !important;"> {{request.User_Full_Name}}</p>
+        </ion-col>
+        <ion-col col-3>
+          {{request.ReqStatus}}
+        </ion-col>
+      </ion-row>
+  </div>
 
-    <ion-row (click)="UpgradeRequestDetails(request.UpgReq_ID,request.FK_User_ID,request.CV,request.Fk_LangID)" style="border-radius: 4px; border: 1px solid gray;margin: 10px 0px;padding: 10px;" *ngFor="let request of upgradeRequests" >
-      <ion-col col-2 style="text-align: center;">
-        <span style=" background-color: #07133c; color: white; width: 40px;height: 40px;border-radius: 50%;display: block;line-height: 40px;">
-          {{ request.UpgReq_ID}}
-         </span>
-      </ion-col>
-      <ion-col col-7>
-        <p style="font-size: 20px;margin: 0px !important;"> {{request.User_Full_Name}}</p>
-      </ion-col>
-      <ion-col col-3>
-        {{request.ReqStatus}}
-      </ion-col>
-    </ion-row>
+  <div style="margin-top: 40%;" *ngIf="upgradeRequests.length==0">
+   
+      <p style="text-align: center;color: #FFAA45;">{{ "no_upgradeRequests"|translate}}</p>
+   
+  </div>
+   
   </div>
 </ion-content>
 
