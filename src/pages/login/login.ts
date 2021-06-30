@@ -214,7 +214,7 @@ export class LoginPage {
           loading.present()//registration.registrationId
          console.log(' before login this.helper.registrationId : '+   this.helper.registrationId)
        
-         if(this.helper.registrationId!=''){
+         //if(this.helper.registrationId!=''){
             this.user.sign_in(this.myform.value,this.helper.registrationId).subscribe(
                   (res:any)=>{
                     loading.dismiss()
@@ -367,10 +367,10 @@ export class LoginPage {
                       loading.dismiss()
                   }
             )
-          }else{
-            loading.dismiss()
-            this.InitNotifications()
-          }
+          // }else{
+          //   loading.dismiss()
+          //   this.InitNotifications()
+          // }
 
         }
         else{
