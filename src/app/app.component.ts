@@ -32,18 +32,17 @@ export class MyApp {
   user_type:any
   mysidemenu:string=''
   appUrl:string="";
-dir:any
-direction:boolean
+  dir:any
+  direction:boolean
   constructor(public helper:HelperProvider, public translate: TranslateService,private push: Push,
               public alertCtrl:AlertController,public events:Events,
               public general: GeneralProvider,
               private socialSharing: SocialSharing,public platform: Platform,private device: Device,
               public statusBar: StatusBar,private faio:FingerprintAIO,
               public splashScreen: SplashScreen,private storage: Storage,public menuCtrl:MenuController) {
-              this.direction=this.platform.isRTL
-              console.log("direction is rtl :  "+ this.direction)
-
-           //   this.events.subscribe('trans_lang',val=>{console.log(val)})
+            
+                this.direction=this.platform.isRTL
+                console.log("direction is rtl :  "+ this.direction)
 
                 this.events.subscribe('language',(val)=>{
                   console.log('language changed : '+val)
@@ -53,166 +52,126 @@ direction:boolean
                     this.dir='left'
                   }
                 })
-    console.log( "side is :"+ this.dir)
-                firebase.initializeApp(config);
-    console.log( "current notification_status: "+ this.helper.notification_status)
+                console.log( "side is :"+ this.dir)
+                            firebase.initializeApp(config);
+                console.log( "current notification_status: "+ this.helper.notification_status)
 
-      this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
-        //console.log("lang changed detected", event);
-       // this.translate.setDefaultLang(event.lang);
-        this.helper.changeLanguage(event.lang)
-      })
+                this.translate.onLangChange.subscribe((event: LangChangeEvent) => {
+                  //console.log("lang changed detected", event);
+                // this.translate.setDefaultLang(event.lang);
+                  this.helper.changeLanguage(event.lang)
+                })
 
-      this.storage.get('notificationStatus').then((val:any)=>{
-        if(val!=null){
-          this.helper.notification_status=val
-        }else{
-          this.helper.notification_status=false
-        }
-      })
-      console.log( "helper notification_status: "+ this.helper.notification_status)
+                this.storage.get('notificationStatus').then((val:any)=>{
+                  if(val!=null){
+                    this.helper.notification_status=val
+                  }else{
+                    this.helper.notification_status=false
+                  }
+                })
+                console.log( "helper notification_status: "+ this.helper.notification_status)
 
-      this.events.subscribe('trans_lang',(val:any)=>{
-          console.log( "event :"+val)
-          console.log(typeof(val))
-        this.helper.changeLanguage(val)
-          // this.translate.setDefaultLang(val)
-      })
+                this.events.subscribe('trans_lang',(val:any)=>{
+                    console.log( "event :"+val)
+                    console.log(typeof(val))
+                  this.helper.changeLanguage(val)
+                    // this.translate.setDefaultLang(val)
+                })
 
-      this.storage.get('Trans_user_type').then((val)=>{
-        this.helper.set_type(val)
-        if(val){
-          if(val==1){
-            this.storage.get('Trans_upgrade').then((res:any)=>{
-              if(res){
-                //---------------Here check for open app with touch id  -------------------
-                this.storage.get('Trans_login_touch_id').then(
-                 (val)=>{
-                   if(val==true){
-                      // this.faio.show({
-                      //   clientId: 'kfal',
-                      //   clientSecret: 'kfal2020', //Only necessary for Android
-                      //   disableBackup:true,  //Only for Android(optional)
-                      //   localizedFallbackTitle: 'Use Pin', //Only for iOS
-                      //   localizedReason: 'Please authenticate' //Only for iOS
-                      //   })
-                      //   .then((result: any) => {
-                      //     this.rootPage = 'MainPage';
-                      //   })
-                      //   .catch((error: any) => {
-                      //   });
-                      this.rootPage = 'LoginPage';
-                   }else{
-                    this.rootPage = 'MainPage';
-                   }
-                 })
-                 //-------------------------------------------------------------------------
-              }else{
-                //---------------Here check for open app with touch id  -------------------
-                this.storage.get('Trans_login_touch_id').then(
-                  (val)=>{
-                    if(val==true){
-                      //  this.faio.show({
-                      //    clientId: 'kfal',
-                      //    clientSecret: 'kfal2020', //Only necessary for Android
-                      //    disableBackup:true,  //Only for Android(optional)
-                      //    localizedFallbackTitle: 'Use Pin', //Only for iOS
-                      //    localizedReason: 'Please authenticate' //Only for iOS
-                      //    })
-                      //    .then((result: any) => {
-                      //      this.rootPage = 'MainPage';
-                      //    })
-                      //    .catch((error: any) => {
-                      //    });
-                      this.rootPage = 'LoginPage';
-                    }else{
-                     this.rootPage = 'HometypePage';
+                this.storage.get('Trans_user_type').then((val)=>{
+                  this.helper.set_type(val)
+                  if(val){
+                    if(val==1){
+                      this.storage.get('Trans_upgrade').then((res:any)=>{
+                        if(res){
+                          //---------------Here check for open app with touch id  -------------------
+                          this.storage.get('Trans_login_touch_id').then(
+                          (val)=>{
+                            if(val==true){
+                                this.rootPage = 'LoginPage';
+                            }else{
+                              this.rootPage = 'MainPage';
+                            }
+                          })
+                          //-------------------------------------------------------------------------
+                        }else{
+                          //---------------Here check for open app with touch id  -------------------
+                          this.storage.get('Trans_login_touch_id').then(
+                            (val)=>{
+                              if(val==true){
+                                this.rootPage = 'LoginPage';
+                              }else{
+                              this.rootPage = 'HometypePage';
+                              }
+                            })
+                            //-------------------------------------------------------------------------
+                        }
+                      })
+                    }else if(val==3 ||val==4 || val==2){
+                      //---------------Here check for open app with touch id  -------------------
+                      this.storage.get('Trans_login_touch_id').then(
+                        (val)=>{
+                          if(val==true){
+                          
+                            this.rootPage = 'LoginPage';
+                          }else{
+                          this.rootPage = 'MainPage';
+                          }
+                        })
+                        //-------------------------------------------------------------------------
                     }
-                  })
-                  //-------------------------------------------------------------------------
-              }
-            })
-          }else if(val==3 ||val==4 || val==2){
-             //---------------Here check for open app with touch id  -------------------
-             this.storage.get('Trans_login_touch_id').then(
-              (val)=>{
-                if(val==true){
-                  //  this.faio.show({
-                  //    clientId: 'kfal',
-                  //    clientSecret: 'kfal2020', //Only necessary for Android
-                  //    disableBackup:true,  //Only for Android(optional)
-                  //    localizedFallbackTitle: 'Use Pin', //Only for iOS
-                  //    localizedReason: 'Please authenticate' //Only for iOS
-                  //    })
-                  //    .then((result: any) => {
-                  //      this.rootPage = 'MainPage';
-                  //    })
-                  //    .catch((error: any) => {
-                  //    });
-                  this.rootPage = 'LoginPage';
-                }else{
-                 this.rootPage = 'MainPage';
-                }
-              })
-              //-------------------------------------------------------------------------
-          }
-          else if(val==5){
-            //---------------Here check for open app with touch id  -------------------
-            this.storage.get('Trans_login_touch_id').then(
-             (val)=>{
-               if(val==true){
-                 //  this.faio.show({
-                 //    clientId: 'kfal',
-                 //    clientSecret: 'kfal2020', //Only necessary for Android
-                 //    disableBackup:true,  //Only for Android(optional)
-                 //    localizedFallbackTitle: 'Use Pin', //Only for iOS
-                 //    localizedReason: 'Please authenticate' //Only for iOS
-                 //    })
-                 //    .then((result: any) => {
-                 //      this.rootPage = 'MainPage';
-                 //    })
-                 //    .catch((error: any) => {
-                 //    });
-                 this.rootPage = 'LoginPage';
-               }else{
-                this.rootPage = 'MainAcademyPage';
-               }
-             })
-             //-------------------------------------------------------------------------
-         }
-        }else{
-          this.rootPage = 'LoginPage';
-        }
-      })
+                    else if(val==5){
+                      //---------------Here check for open app with touch id  -------------------
+                      this.storage.get('Trans_login_touch_id').then(
+                      (val)=>{
+                        if(val==true){
+                          
+                          this.rootPage = 'LoginPage';
+                        }else{
+                          this.rootPage = 'MainAcademyPage';
+                        }
+                      })
+                      //-------------------------------------------------------------------------
+                  }
+                  }else{
+                    this.rootPage = 'LoginPage';
+                  }
+                })
 
-      this.storage.get('Trans_language').then((val:any)=>{
-        console.log("app component stored language :"+val)
-        this.lang=val
-        if(val==null){
-         this.helper.changeLanguage('en')
-          this.platform.setDir('ltr',true)
-          this.helper.set_language('en')
-          this.storage.set('Trans_language','en')
-        }else{
-          this.helper.changeLanguage(this.lang)
-          this.storage.set('Trans_language',this.lang)
-          if(val=='ar'){
-            this.platform.setDir('rtl',true)
-            this.dir='right'
-          }
-          if(val=='en'){
-            this.platform.setDir('ltr',true)
-            this.dir='left'
-          }
-          this.helper.set_language(val)
-        }
-       })
-    this.initializeApp();
+                this.storage.get('Trans_language').then((val:any)=>{
+                  console.log("app component stored language :"+val)
+                  this.lang=val
+                  if(val==null){
+                  this.helper.changeLanguage('en')
+                    this.platform.setDir('ltr',true)
+                    this.helper.set_language('en')
+                    this.storage.set('Trans_language','en')
+                  }else{
+                    this.helper.changeLanguage(this.lang)
+                    this.storage.set('Trans_language',this.lang)
+                    if(val=='ar'){
+                      this.platform.setDir('rtl',true)
+                      this.dir='right'
+                    }
+                    if(val=='en'){
+                      this.platform.setDir('ltr',true)
+                      this.dir='left'
+                    }
+                    this.helper.set_language(val)
+                  }
+                })
+
+                this.initializeApp();
 
   }
-  getDimsensions(){
-    
+
+  getDimsensions(){  
     console.log( 'width is'+window.screen.width+'height is '+window.screen.height)
+  }
+
+  GetDeviceId(){
+    this.helper.set_device_id(this.device.uuid)
+    console.log('Device UUID is: ' + this.device.uuid);
   }
 
   initializeApp() {
@@ -232,13 +191,16 @@ direction:boolean
                 sound: 'false'
             }
           };
+       
           const pushObject: PushObject = this.push.init(options);
-          // pushObject.on('registration').subscribe((registration: any) => {
-          //   console.log('Device registered', JSON.stringify(registration))
-          //   this.helper.set_registration_id(registration.registrationId)
-          // });
+       
+          pushObject.on('registration').subscribe((registration: any) => {
+            console.log('Device registered', JSON.stringify(registration))
+          });
+
+      
           pushObject.on('notification').subscribe((notification: any) => {
-            console.log('Received a notification', JSON.stringify(notification))
+            alert('Received a notification'+JSON.stringify(notification))
             console.log('Received a notification title '+notification.title)
 
             if(notification.title== " اضافة طلب جديد  "){
@@ -263,7 +225,11 @@ direction:boolean
             }
 
           });
-          pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+
+          pushObject.on('error').subscribe((error:any) => {
+            console.error('Error with Push plugin', error);
+            alert('Error with Push plugin'+JSON.stringify( error))
+          });
 
           this.storage.get('Trans_language').then((val:any)=>{
             console.log("lang   :"+val)
@@ -348,24 +314,24 @@ direction:boolean
     //       this.socialSharing.share("kfal app",'','',this.appUrl)
   }
 
-  Orders(){
-    this.storage.get("Trans_user_type").then((val:any)=>{
-      console.log("current user  :"+val)
-      if(val==1){
-        this.nav.push('ClientOrdersPage')  // this user is client
-      }else{
-        if(val==3){
-          this.nav.push('TranslatorHomePage',{'type':'translator'})   // this user is provider: translator or reviewer or admin
-        }
-        if(val==4){
-          this.nav.push('TranslatorHomePage',{'type':'Proofreader'})   // this user is provider: translator or reviewer or admin
-        }
-        if(val==2){
-          this.nav.push('AdminOrdersDashboardPage')   // this user is  admin
-        }
-      }
-    })
-  }
+  // Orders(){
+  //   this.storage.get("Trans_user_type").then((val:any)=>{
+  //     console.log("current user  :"+val)
+  //     if(val==1){
+  //       this.nav.push('ClientOrdersPage')  // this user is client
+  //     }else{
+  //       if(val==3){
+  //         this.nav.push('TranslatorHomePage',{'type':'translator'})   // this user is provider: translator or reviewer or admin
+  //       }
+  //       if(val==4){
+  //         this.nav.push('TranslatorHomePage',{'type':'Proofreader'})   // this user is provider: translator or reviewer or admin
+  //       }
+  //       if(val==2){
+  //         this.nav.push('AdminOrdersDashboardPage')   // this user is  admin
+  //       }
+  //     }
+  //   })
+  // }
 
   logout(){
     this.translate.get("logout").subscribe(

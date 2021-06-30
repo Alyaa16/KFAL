@@ -24,14 +24,16 @@ export class LoginPage {
   touchID:boolean
   IsRTl:boolean
   constructor(public menuCtrl: MenuController,public platform:Platform,private push: Push,
-    public loadingCtrl:LoadingController,public modalCtrl:ModalController,private admin:AdminProvider,
-              public events: Events,public toastCtrl:ToastController,private faio:FingerprintAIO,
-              public user:ClientProvider,public navCtrl: NavController,public alertCtrl:AlertController,
-              public formBuilder: FormBuilder,public helper:HelperProvider,private storage: Storage,
-              public translate: TranslateService,public navParams: NavParams) {
-                 this.IsRTl=this.platform.isRTL
+              public loadingCtrl:LoadingController,public modalCtrl:ModalController,
+              private admin:AdminProvider,public events: Events,public toastCtrl:ToastController,
+              private faio:FingerprintAIO,public user:ClientProvider,public navCtrl: NavController,
+              public alertCtrl:AlertController,public formBuilder: FormBuilder,
+              public helper:HelperProvider,private storage: Storage,public translate: TranslateService,public navParams: NavParams) {
+               
+                this.IsRTl=this.platform.isRTL
                  console.log("is rtl "+this.IsRTl)
-                this.storage.get("Password").then((res:any)=>{
+              
+                 this.storage.get("Password").then((res:any)=>{
                    if(res!=null){
                      this.mypassword=res
                    }
@@ -72,34 +74,34 @@ export class LoginPage {
                   }
                 })
 
-    // kept saved to the second login - know if user asked before for touch id login
+                // kept saved to the second login - know if user asked before for touch id login
 
-      this.storage.get('Trans_login_touch_id').then((val:any)=>{
-          if(val!=null){
-            this.touchID=val
+                this.storage.get('Trans_login_touch_id').then((val:any)=>{
+                    if(val!=null){
+                      this.touchID=val
 
-          }else{
-            this.touchID=false
-        }
-      })
+                    }else{
+                      this.touchID=false
+                  }
+                })
 
-      this.events.subscribe('trans_lang',(res)=>{
-         if(res=='ar'){
-          this.helper.changeLanguage('ar')
-          this.platform.setDir('rtl', true)
-          this.lang="ar"
-          this.storage.set("Trans_language",'ar')
-          this. IsRTl=true
-          console.log('lang changed to rtl')
-        }else{
-          this.helper.changeLanguage('en')
-          this.platform.setDir('ltr', true)
-          this.lang="en"
-          this.storage.set("Trans_language",'en')
-          this. IsRTl=false
-          console.log('lang changed to ltr')
-        }
-      })
+                this.events.subscribe('trans_lang',(res)=>{
+                  if(res=='ar'){
+                    this.helper.changeLanguage('ar')
+                    this.platform.setDir('rtl', true)
+                    this.lang="ar"
+                    this.storage.set("Trans_language",'ar')
+                    this. IsRTl=true
+                    console.log('lang changed to rtl')
+                  }else{
+                    this.helper.changeLanguage('en')
+                    this.platform.setDir('ltr', true)
+                    this.lang="en"
+                    this.storage.set("Trans_language",'en')
+                    this. IsRTl=false
+                    console.log('lang changed to ltr')
+                  }
+                })
 
   }
 
@@ -177,205 +179,199 @@ export class LoginPage {
     })
   }
 
-    // change(lang){
-    //   console.log("lang0 "+lang)
-    //   if(lang=='en'){
-    //     this.helper.changeLanguage(lang)
-    //     this.platform.setDir('ltr', true)
-    //     this.lang="en"
-    //     this.events.publish('trans_lang','en')
-    //     this.storage.set("Trans_language",'en')
-    //   }else if(lang=='ar'){
-    //     this.helper.changeLanguage(lang)
-    //     this.platform.setDir('rtl', true)
-    //     this.lang="ar"
-    //     this.events.publish('trans_lang','ar')
-    //     this.storage.set("Trans_language",'ar')
-    //   }
 
-    // }
+  InitNotifications(){
+    this.platform.ready().then(() => {
+
+      const options: PushOptions = {
+        android: {
+          'senderID':'992142184038',
+          forceShow:true,
+          sound: this.helper.notification_status,
+          clearNotifications:false
+        },
+        ios: {
+            alert: 'true',
+            badge: true,
+            sound: 'false'
+        }
+      };
+      const pushObject: PushObject = this.push.init(options);
+      pushObject.on('registration').subscribe((registration: any) => {
+        console.log('Device registered', JSON.stringify(registration))
+       // alert('Device registered..'+registration.registrationId)
+        this.helper.set_registration_id(registration.registrationId)
+      });
+
+    })
+  }
 
     Login(){
-      this.platform.ready().then(() => {
-
-        const options: PushOptions = {
-          android: {
-            'senderID':'992142184038',
-            forceShow:true,
-            sound: this.helper.notification_status,
-            clearNotifications:false
-          },
-          ios: {
-              alert: 'true',
-              badge: true,
-              sound: 'false'
-          }
-        };
-        const pushObject: PushObject = this.push.init(options);
-        pushObject.on('registration').subscribe((registration: any) => {
-          console.log('Device registered', JSON.stringify(registration))
-         // alert('Device registered..'+registration.registrationId)
-          this.helper.set_registration_id(registration.registrationId)
-        });
-
-      })
+        this.InitNotifications()
         this.helper.set_email(this.myform.value.UserEmail)
         if(this.myform.valid){
           let loading =this.loadingCtrl.create({})
           loading.present()//registration.registrationId
          console.log(' before login this.helper.registrationId : '+   this.helper.registrationId)
+       
+         if(this.helper.registrationId!=''){
             this.user.sign_in(this.myform.value,this.helper.registrationId).subscribe(
-              (res:any)=>{
-                loading.dismiss()
-                console.log(typeof(res))
-               if(typeof(res)=='string'){
-                if(res=="تاكد من البريد او رقم المرور"){
-                  const toast = this.toastCtrl.create({
-                    message: res,
-                    duration: 5000
-                  });
-                  toast.present();
-                }else{
-                  const toast = this.toastCtrl.create({
-                    message: res,
-                    duration: 5000
-                  });
-                  toast.present();
-                  toast.onDidDismiss(()=>{
-                    this.navCtrl.push('CodeVerificationPage',{'comefrom':'verification','email':this.myform.value.UserEmail})
-                  })
-                }
-               }
-                else{
-                  //UserDate
-                  this.storage.set('Trans_user_id',res.UserData[0].ID)
-                  this.storage.set('Password',res.UserData[0].Password)
-                  this.storage.set('logined_in',true)
-                  this.storage.set('Trans_user_type',res.UserData[0].UserType)
-                  this.storage.set('userEmail',res.UserData[0].Email)
-
-
-                  // ------------------------ check if user is admin
-                  if(res.UserData[0].IsAdmin==true){
-                    console.log("admin")
-                    this.helper.UserIsAdmin(true);
-                    this.storage.set('isadmin',true)
-                  }else{
-                    console.log("not admin")
-                    this.helper.UserIsAdmin(false);
-                    this.storage.set('isadmin',false)
+                  (res:any)=>{
+                    loading.dismiss()
+                    console.log(typeof(res))
+                  if(typeof(res)=='string'){
+                    if(res=="تاكد من البريد او رقم المرور"){
+                      const toast = this.toastCtrl.create({
+                        message: res,
+                        duration: 5000
+                      });
+                      toast.present();
+                    }else{
+                      const toast = this.toastCtrl.create({
+                        message: res,
+                        duration: 5000
+                      });
+                      toast.present();
+                      toast.onDidDismiss(()=>{
+                        this.navCtrl.push('CodeVerificationPage',{'comefrom':'verification','email':this.myform.value.UserEmail})
+                      })
+                    }
                   }
+                    else{
+                      //UserData
+                      this.storage.set('Trans_user_id',res.UserData[0].ID)
+                      this.storage.set('Password',res.UserData[0].Password)
+                      this.storage.set('logined_in',true)
+                      this.storage.set('Trans_user_type',res.UserData[0].UserType)
+                      this.storage.set('userEmail',res.UserData[0].Email)
 
-                  // ------------------------ check if user account is verified
-                  if(res.UserData[0].VerificationStatus){
 
-                  // ------------------------ check if user account is blocked
-                    if(res.UserData[0].IsBlocked==false ||res.UserData[0].IsBlocked== null){
-               
-                    //res.UserData[0].ID,res.UserData[0].UserType
-                    this.admin.CheckCompleteDataFromDirectReg(res.UserData[0].ID)
-                    .subscribe((val:any)=>{
-                      if(val=="True"){
-                        console.log('CheckCompleteDataFromDirectReg  true')
-                        if(res.UserData[0].UserType==1){
-                          this.navCtrl.setRoot('HometypePage')
-                          this.storage.set('Trans_upgrade',false)
-                        }
-                        else {
-                          this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
-                          console.log("this user has upgraded his account")
-                          this.storage.set('Trans_upgrade',true)
-                        }
+                      // ------------------------ check if user is admin
+                      if(res.UserData[0].IsAdmin==true){
+                        console.log("admin")
+                        this.helper.UserIsAdmin(true);
+                        this.storage.set('isadmin',true)
                       }else{
-                        console.log('CheckCompleteDataFromDirectReg  false')
-                        this.navCtrl.push('AdminDirectRegCompleteDataPage')
+                        console.log("not admin")
+                        this.helper.UserIsAdmin(false);
+                        this.storage.set('isadmin',false)
                       }
-                    })
-                      
-                          // ask for touch id
 
-                          this.storage.get('Trans_login_touch_id').then((val)=>{
-                             if(val!=null){
-                             
-                             }else{
+                      // ------------------------ check if user account is verified
+                      if(res.UserData[0].VerificationStatus){
 
-                              this.translate.get("login with touch id").subscribe(
-                                value => {
-                                this.translate.get("yes").subscribe(
-                                    value1 => {
-                                      this.translate.get("cancel").subscribe(
-                                        value2 => {
-                                    const alert = this.alertCtrl.create({
-                                      subTitle: value,
-                                      buttons: [
-                                        {
-                                          text:  value2,
-                                          role: 'cancel',
-                                          handler: () => {
-                                            this.storage.set('Trans_login_touch_id',false)
-                                          }
-                                        },
-                                        {
-                                          text: value1,
-                                          handler: () => {
-                                            this.storage.set('Trans_login_touch_id',true)
-                                            this.faio.show({
-                                              clientId: 'kfal',
-                                              clientSecret: 'kfal2020', //Only necessary for Android
-                                              disableBackup:true,  //Only for Android(optional)
-                                              localizedFallbackTitle: 'Use Pin', //Only for iOS
-                                              localizedReason: 'Please authenticate' //Only for iOS
-                                          })
-                                          .then((result: any) => {
-                                            console.log(JSON.stringify(result))
-                                            if(res.UserData[0].UserType==1){
-                                              this.navCtrl.setRoot('HometypePage')
-                                              this.storage.set('Trans_upgrade',false)
-                                            }
-                                            else {
-                                              this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
-                                              console.log("this user has upgraded his account")
-                                              this.storage.set('Trans_upgrade',true)
-                                            }
-                                          })
-                                          .catch((error: any) => {
-                                            console.log(JSON.stringify(error))
-                                          });
-                                          }
-                                        }
-                                      ]
-                                    });
-                                    alert.present();
-                                  })
-                                })
-                              })
+                      // ------------------------ check if user account is blocked
+                        if(res.UserData[0].IsBlocked==false ||res.UserData[0].IsBlocked== null){
+                  
+                        //res.UserData[0].ID,res.UserData[0].UserType
+                        this.admin.CheckCompleteDataFromDirectReg(res.UserData[0].ID)
+                        .subscribe((val:any)=>{
+                          if(val=="True"){
+                            console.log('CheckCompleteDataFromDirectReg  true')
+                            if(res.UserData[0].UserType==1){
+                              this.navCtrl.setRoot('HometypePage')
+                              this.storage.set('Trans_upgrade',false)
                             }
+                            else {
+                              this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
+                              console.log("this user has upgraded his account")
+                              this.storage.set('Trans_upgrade',true)
+                            }
+                          }else{
+                            console.log('CheckCompleteDataFromDirectReg  false')
+                            this.navCtrl.push('AdminDirectRegCompleteDataPage')
+                          }
+                        })
+                          
+                              // ask for touch id
 
-                           })
-                      }else{
+                              this.storage.get('Trans_login_touch_id').then((val)=>{
+                                if(val!=null){
+                                
+                                }else{
+
+                                  this.translate.get("login with touch id").subscribe(
+                                    value => {
+                                    this.translate.get("yes").subscribe(
+                                        value1 => {
+                                          this.translate.get("cancel").subscribe(
+                                            value2 => {
+                                        const alert = this.alertCtrl.create({
+                                          subTitle: value,
+                                          buttons: [
+                                            {
+                                              text:  value2,
+                                              role: 'cancel',
+                                              handler: () => {
+                                                this.storage.set('Trans_login_touch_id',false)
+                                              }
+                                            },
+                                            {
+                                              text: value1,
+                                              handler: () => {
+                                                this.storage.set('Trans_login_touch_id',true)
+                                                this.faio.show({
+                                                  clientId: 'kfal',
+                                                  clientSecret: 'kfal2020', //Only necessary for Android
+                                                  disableBackup:true,  //Only for Android(optional)
+                                                  localizedFallbackTitle: 'Use Pin', //Only for iOS
+                                                  localizedReason: 'Please authenticate' //Only for iOS
+                                              })
+                                              .then((result: any) => {
+                                                console.log(JSON.stringify(result))
+                                                if(res.UserData[0].UserType==1){
+                                                  this.navCtrl.setRoot('HometypePage')
+                                                  this.storage.set('Trans_upgrade',false)
+                                                }
+                                                else {
+                                                  this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
+                                                  console.log("this user has upgraded his account")
+                                                  this.storage.set('Trans_upgrade',true)
+                                                }
+                                              })
+                                              .catch((error: any) => {
+                                                console.log(JSON.stringify(error))
+                                              });
+                                              }
+                                            }
+                                          ]
+                                        });
+                                        alert.present();
+                                      })
+                                    })
+                                  })
+                                }
+
+                              })
+                          }else{
+                            const toast = this.toastCtrl.create({
+                              message:this.translate.instant('account is blocked'),
+                              duration: 5000
+                            });
+                            toast.present();
+                          }
+                      }
+                      else{
                         const toast = this.toastCtrl.create({
-                          message:this.translate.instant('account is blocked'),
+                          message: res,
                           duration: 5000
                         });
                         toast.present();
+                        toast.onDidDismiss(()=>{
+                          this.navCtrl.push('CodeVerificationPage',{'comefrom':'verification','email':this.myform.value.UserEmail})
+                        })
                       }
-                  }
-                  else{
-                    const toast = this.toastCtrl.create({
-                      message: res,
-                      duration: 5000
-                    });
-                    toast.present();
-                    toast.onDidDismiss(()=>{
-                      this.navCtrl.push('CodeVerificationPage',{'comefrom':'verification','email':this.myform.value.UserEmail})
-                    })
-                  }
 
-                }
-                },(err:any)=>{
-                  loading.dismiss()
-              }
+                    }
+                    },(err:any)=>{
+                      loading.dismiss()
+                  }
             )
+          }else{
+            loading.dismiss()
+            this.InitNotifications()
+          }
+
         }
         else{
           const toast = this.toastCtrl.create({
@@ -384,8 +380,6 @@ export class LoginPage {
           });
           toast.present();
         }
-
-
     }
 
     CheckCompleteDataFromDirectRegByadmin(UserID,UserType){

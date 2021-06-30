@@ -163,14 +163,10 @@ export class UpgradeRequestsPage {
     this.dir = this.platform.isRTL
 
     this.chooseLanguage(this.language);
-
-    let loading = this.loadingCtrl.create({
-      spinner: 'Show ios',
-    })
-    loading.present()
+    
     this.panel.GetLanguages().subscribe((res: any) => {
-      refresher.complete();
       this.languages = res
+      refresher.complete();
     }, (err: any) => {
       refresher.complete();
     })

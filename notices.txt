@@ -94,7 +94,7 @@ My jobs Page (for interpreter & auditor to manage/track their work)
   // //----------------------------------- admin and new request added   ----------------------------//
             // alert(notification.title)
               if(notification.title==" اضافة طلب جديد  "){
-                alert("ppp")
+ 
                 this.nav.push('AdminOrderDetailsPage',{
                   'Request_ID':notification.additionalData.AdditionalData.RequestID,
                   'Request_type':"RequestType=='new' || RequestType=='جديدة'"
