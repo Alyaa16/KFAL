@@ -246,12 +246,12 @@ export class AdminOrderDetailsPage {
 
   refuse(){// send status to know type refuse or accept
       this.storage.get('Trans_user_id').then((val:any)=>{
-        this.admin.UpdateRequestToApproveByAdmin(val,this.navParams.get('Request_ID'),3)
+        this.admin.UpdateRequestToRefusedByAdmin (val,this.navParams.get('Request_ID'),14)
         .subscribe(
           (res:any)=>{
-            if(res=="تم الموافقة على الطلب بنجاح و تحويله الى الترجمة"){
+            if(res=="تم رفض الطلب "){
               let toast = this.toastCtrl.create({
-                message: this.translate.instant("this request is accepted and forward for translation"),
+                message: this.translate.instant("Request refused by admin"),
                 duration: 3000,
                 position: 'bottom'
               });

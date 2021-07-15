@@ -10,9 +10,11 @@ import { GeneralProvider } from '../general/general';
 export class AdminProvider {
   url:string=''
   lang_url:string=''
+  UserType_url:string='';
+  UserType_full_url:string=''
   constructor(public general:GeneralProvider,public http1:Http,public toastCtrl:ToastController,
               private translate: TranslateService,public http: HttpClient,public helper:HelperProvider) {
-    console.log('Hello AdminProvبider Provider');
+    console.log('Hello AdminProvider Provider');
   }
   // private link to create admin account
 
@@ -100,16 +102,22 @@ export class AdminProvider {
     }
   }
   
+
   DirectAdminRegistration(params,FK_AdminID){
-    if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/DirectAdminRegistration?Name="+params.Name
+    if(navigator.onLine){   
+      this.UserType_full_url=this.helper.base_url+"User/DirectAdminRegistration?Name="+params.Name
       +"&Email="+params.UserEmail+
-      //"&Password=null"+
-      "&UserType="+params.account_type +
       "&Gender="+params.Gender+
       "&Mobile="+params.Mobile+
       "&FK_AdminID="+FK_AdminID
-      )
+
+      for(let i=0;i< params.user_type.length;i++){
+        console.log(params.user_type[i])
+        this.UserType_url+="&UserType="+params.user_type[i]
+      }
+    
+      return   this.http.get(this.UserType_full_url+this.UserType_url)
+      
     }
     else{
       this.general. presentToastConnection()
@@ -143,14 +151,14 @@ export class AdminProvider {
   }
 //------------------------------------dicussions -------------------------------------------------//
 // for admin only
-AddNewTopic(TopicName,TopicContent,Fk_SpecializationParentID,FK_SpecializationChildID,FK_LanguageID,Age){
+AddNewTopic(TopicName,TopicContent,Fk_SpecializationParentID,FK_SpecializationChildID,FK_LanguageID,Age, FK_UserID){
   if(navigator.onLine){
     return   this.http.get(this.helper.base_url+"Discussion/AddDiscussionTopic?TopicName="+TopicName+
     "&TopicContent="+TopicContent+
     "&Fk_SpecializationParentID="+Fk_SpecializationParentID+
     "&FK_SpecializationChildID="+FK_SpecializationChildID+
     "&FK_LanguageID="+FK_LanguageID+
-    "&Age="+Age)
+    "&Age="+Age+"&FK_UserID="+ FK_UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -172,6 +180,14 @@ joinDiscussionTable(FK_UserID,FK_EducationLevelID,Fk_SpecializationParentID,FK_S
   }
 }
 
+GetAllDiscussionTopicsByAdminID(UserID){
+  if(navigator.onLine){
+    return   this.http.get(this.helper.base_url+"Discussion/GetAllDiscussionTopicsByAdminID?UserID="+UserID)
+  }
+  else{
+    this.general. presentToastConnection()
+  }
+}
 
 GetAllDiscussionsByUserID(UserID){
   if(navigator.onLine){
@@ -207,5 +223,14 @@ AddDiscussionLog(Fk_UserID,Fk_DiscussionTopicID,UserDiscussionDetails,Discussion
   }
 }
 
+
+ChangeAccountTypeActivationState(AccountType_ID,ActiveState){
+  if(navigator.onLine){
+    return   this.http.get(this.helper.base_url+"User/ChangeAccountTypeActivationState?AccountType_ID="+AccountType_ID+'&ActiveState='+ActiveState)
+  }
+  else{
+    this.general. presentToastConnection()
+  }
+}
 }
 

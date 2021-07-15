@@ -91,7 +91,7 @@ export class AllusersPage {
   }
 
   showProfile(User_ID){
-    console.log(User_ID)
+    console.log('admin  user id : '+User_ID)
    this.navCtrl.push('ClientProfilePage',{'user_id':User_ID})
   }
 

@@ -240,7 +240,7 @@
     "Translator":"Translator",
     "Reviewer":"Reviewer",
     "Client":"Client",
-    "upgradeRequests":"ugrade requests",
+    "upgradeRequests":"upgrade requests",
     "newaccountsRequests":"new clients",
     "app language choose":"app language choose",
     "upgrade request send successfully":"upgrade request send successfully and pending admin",
@@ -352,5 +352,10 @@
    "direct accept":"direct accept",
    "direct refuse":"direct refuse",
    "testform": "testform",
-   "no_upgradeRequests":"no upgradeRequests for this language"
+   "no_upgradeRequests":"no upgradeRequests for this language",
+   "Request refused by admin":"Request refused by admin",
+   "User Roles":"User Roles",
+   "refused":"refused",
+   "Block User":"Block User",
+   "User Data":"User Data"
   }

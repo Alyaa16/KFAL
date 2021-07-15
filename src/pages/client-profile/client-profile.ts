@@ -1,3 +1,4 @@
+import { HelperProvider } from './../../providers/helper/helper';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, LoadingController, Platform, ToastController, ModalController, Events } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,6 +22,7 @@ export class ClientProfilePage {
   noData:boolean=false
  email:any
  name:any
+ mobileNumber:any
  password:any
  gender:any
  gender1:any
@@ -49,11 +51,12 @@ export class ClientProfilePage {
  _languages:any[]=[]
  cv:any
  isUpgraing:boolean
+ UserTypes:any[]=[]
   constructor(public translate: TranslateService,public viewCtrl:ViewController,public general:GeneralProvider,
               public toastCtrl:ToastController,public loadingCtrl:LoadingController,public modalCtrl: ModalController,
               public platform:Platform,public user:ClientProvider,public admin:AdminProvider,public event:Events,
               public navCtrl: NavController, public navParams: NavParams,private storage: Storage,
-              private panel:ControlpanelProvider) {
+              private panel:ControlpanelProvider,private helper:HelperProvider) {
                 this.event.subscribe('isupgrade' ,()=>{
                   this.isUpgraded=true
                 } )
@@ -67,15 +70,26 @@ export class ClientProfilePage {
                           this.isUpgraded=false
                         }
 
-                      })
+                })
 
                 console.log("admin account show other order accounts : "+this.navParams.get('user_id'))
                 this.dir=this.platform.isRTL
 
-        if(this.navParams.get('user_id')!=undefined){
-          this.comefrom='adminPanel'
-          this.userid=    this.navParams.get('user_id')
-          console.log("++++"+this.userid)
+              if(this.navParams.get('user_id')!=undefined){
+                this.comefrom='adminPanel'
+                this.userid=    this.navParams.get('user_id')
+                console.log("++++"+this.userid)
+
+              this.user.GetUserTypesByUserID(this.userid).subscribe((res:any)=>{
+                console.log( 'GetUserTypesByUserID  :  '+JSON.stringify(res));
+                if(res!="لا توجد بيانات متاحة "){
+                  this.helper.SetUserTypes(res);
+                  this.UserTypes=res;
+                }else{
+                  this.UserTypes=[];
+                }
+              
+              })
 
               let loading=this.loadingCtrl.create({})
               loading.present()
@@ -92,181 +106,173 @@ export class ClientProfilePage {
                 loading.dismiss()
                 this.email=this.userData.User_Email
                 this.name=this.userData.User_Full_Name
+                this.mobileNumber=this.userData.User_Mobile
 
-                if(this.userData.Gender =="F"){
-                  console.log("gender is ..f")
-                  this.gender= this.translate.instant("female")
-                }
-                else if(this.userData.Gender =="M"){
-                  console.log("gender is ..m")
-                  this.gender= this.translate.instant("male")
-                }else{
-                  this.gender=null
-                }
-
-
+                this.checkForGender()
 
                 this.checkIfClient(this.userData.User_Type)
 
-                if(this.userData.ISBlocked==null){
-                  this.isblocked=false
-                }else{
-                  this.isblocked=this.userData.ISBlocked
-                }
+                this.checkIfUserBlocked()
 
-                if(this.userData.FK_Country_ID==null && this.userData.FK_City_ID==null && this.userData.User_Address==null){
-                  this.DataNotCompleted=true
-                }else{
-                  this.DataNotCompleted=false
-
-
-                  this.CountryName=this.userData.Country_Name
-                  this.CityName=this.userData.City_Name
-
-                      console.log("city  :"+this.city_id)
-                        if(this.userData.User_Address=="undefined"){
-                          this.Address=""
-                        }else{
-                          this.Address=res.dt[0].User_Address
-                        }
-
-                   this.Get_City_By_Country_ID(this.userData.FK_Country_ID)
-                }
-
+                this.checkProfileCompletion(this.userData)
               },(err)=>{
                 loading.dismiss()
               })
-        }else{
-          this.comefrom='userprofile'
-          this.storage.get('Trans_user_id').then(val=>{
-            if(val){
-
-              let loading=this.loadingCtrl.create({})
-              loading.present()
-              this.user.GetUserDataByUserID(val).subscribe(
-              (res:any)=>{
-
-                 this.userData=res.dt[0]
-                if(res=="لا توجد بيانات متاحة لهذا المستخدم"){
-                 this. noData=true
-                  const toast = this.toastCtrl.create({
-                    message:res,
-                    duration: 5000
-                  });
-                  toast.present();
-
-                }else{
-
-                this.storage.get('Password').then((val)=>{
-                  console.log(val)
+              }
+              else{
+                this.comefrom='userprofile'
+                this.storage.get('Trans_user_id').then(val=>{
                   if(val){
-                    this.Password=val
+
+                    let loading=this.loadingCtrl.create({})
+                    loading.present()
+                    this.user.GetUserDataByUserID(val).subscribe(
+                    (res:any)=>{
+
+                      this.userData=res.dt[0]
+                      if(res=="لا توجد بيانات متاحة لهذا المستخدم"){
+                      this. noData=true
+                        const toast = this.toastCtrl.create({
+                          message:res,
+                          duration: 5000
+                        });
+                        toast.present();
+
+                      }else{
+
+                      this.storage.get('Password').then((val)=>{
+                        console.log(val)
+                        if(val){
+                          this.Password=val
+                        }
+                      })
+                      loading.dismiss()
+
+                      this.email=this.userData.User_Email
+                      this.name=this.userData.User_Full_Name
+                      this.mobileNumber=this.userData.User_Mobile
+
+                     this.checkForGender();
+                     this. checkProfileCompletion(this.userData);
+                     this.checkIfJoinDiscussion();
+
+                      if(this.userData.CV!=null){
+                        this.cv= this.userData.CV
+                      }
+
+                      if(this.userData.Fk_SpecializationParentID!=null){
+                          console.log("user has upgraded")
+                            // this user has sent upgrade request
+                                this.isUpgraing=true
+                              this.user.GetUpgradeRequestsByUserID(val).subscribe(
+                                (res:any)=>{
+                                  console.log("all upg request s by this user"+res)
+                                }
+                              )
+
+                              // set SpecializationParent
+                              this.general.GetParentSp().subscribe(
+                                (val:any[])=>{
+                                    val.forEach(elem=>{
+                                      if(elem.ID ==this.userData.Fk_SpecializationParentID){
+                                        this.Fk_SpecializationParentID=elem.SpecializationName
+                                      }
+                                    })
+                                    console.log(this.Fk_SpecializationParentID)
+                                },(err)=>{})
+
+                                if( this.userData.FK_SpecializationChildID!=null){
+                                  // set SpecializationChild
+                                this.general.GetChildSp(this.userData.Fk_SpecializationParentID).subscribe(
+                                  (val:any[])=>{
+                                      val.forEach(elem=>{
+                                        if(elem.ID == this.userData.FK_SpecializationChildID){
+                                          this.FK_SpecializationChildID=elem.SpecializationName
+                                          console.log(elem.SpecializationName )
+                                        }
+
+                                      })
+                                      console.log(this.FK_SpecializationChildID)
+                                  },(err)=>{}
+                                  )
+                    }
+                    }else{
+                      this.isUpgraing=false
+                    }
+
+                
+
+                      if(this.userData.User_Type==1){
+                        this.client=true
+                      }else{
+                        this.storage.get('Trans_upgrade').then((val)=>{
+                          if(val!=null){
+                            if(val==true){
+                              this.client=false
+                            }else{
+                              this.client=true
+                            }
+                          }else{
+                            this.client=true
+                          }
+                        })
+                      }
+
+
+                      this._languages=res.Languages
+                      if( this._languages.length!=0){
+                        this.noLanguages=false
+
+                        this.GetLanguages()
+                        console.log('there are languages',JSON.stringify(this._languages))
+                      }else{
+                        this.noLanguages=true
+                        console.log('no languages')
+                      }
+
+            
+
+                    }
+                    },(err)=>{
+                      loading.dismiss()
+                    })
                   }
                 })
-                loading.dismiss()
-
-                this.email=this.userData.User_Email
-                this.name=this.userData.User_Full_Name
-
-                if(this.userData.Gender=="f"){
-                  this.gender= this.translate.instant("female")
-                }
-                else if(this.userData.Gender=="m"){
-                  this.gender= this.translate.instant("male")
-                }else{
-                  this.gender=null
-                }
-
-                if(this.userData.CV!=null){
-                  this.cv= this.userData.CV
-                }
-
-                if(this.userData.Fk_SpecializationParentID!=null){
-                     console.log("user has upgraded")
-                      // this user has sent upgrade request
-                          this.isUpgraing=true
-                         this.user.GetUpgradeRequestsByUserID(val).subscribe(
-                           (res:any)=>{
-                             console.log("all upg request s by this user"+res)
-                           }
-                         )
-
-                      // set SpecializationParent
-                      this.general.GetParentSp().subscribe(
-                        (val:any[])=>{
-                            val.forEach(elem=>{
-                              if(elem.ID ==this.userData.Fk_SpecializationParentID){
-                                this.Fk_SpecializationParentID=elem.SpecializationName
-                              }
-                            })
-                            console.log(this.Fk_SpecializationParentID)
-                        },(err)=>{})
-
-                        if( this.userData.FK_SpecializationChildID!=null){
-                          // set SpecializationChild
-                        this.general.GetChildSp(this.userData.Fk_SpecializationParentID).subscribe(
-                          (val:any[])=>{
-                              val.forEach(elem=>{
-                                if(elem.ID == this.userData.FK_SpecializationChildID){
-                                  this.FK_SpecializationChildID=elem.SpecializationName
-                                  console.log(elem.SpecializationName )
-                                }
-
-                              })
-                              console.log(this.FK_SpecializationChildID)
-                          },(err)=>{}
-                          )
-                        }
-              }else{
-                this.isUpgraing=false
               }
-
-                if(this.userData.IsJoin==null){
-                  this.IsJoin=false
-                }else{
-                  this.IsJoin=this.userData.IsJoin
-                }
-
-                if(this.userData.User_Type==1){
-                  this.client=true
-                }else{
-                  this.storage.get('Trans_upgrade').then((val)=>{
-                    if(val!=null){
-                      if(val==true){
-                        this.client=false
-                      }else{
-                        this.client=true
-                      }
-                    }else{
-                      this.client=true
-                    }
-                  })
-                }
-
-
-                this._languages=res.Languages
-                if( this._languages.length!=0){
-                  this.noLanguages=false
-
-                  this.GetLanguages()
-                  console.log('there are languages',JSON.stringify(this._languages))
-                }else{
-                  this.noLanguages=true
-                  console.log('no languages')
-                }
-
-              this. checkProfileCompletion(this.userData)
-
-              }
-              },(err)=>{
-                loading.dismiss()
-              })
+  
             }
-          })
-        }
+
+checkIfJoinDiscussion(){
+  if(this.userData.IsJoin==null){
+    this.IsJoin=false
+  }else{
+    this.IsJoin=this.userData.IsJoin
   }
+}
+
+checkForGender(){
+  if(this.userData.Gender =="F"){
+    console.log("gender is ..f")
+    this.gender= this.translate.instant("female")
+  }
+  else if(this.userData.Gender =="M"){
+    console.log("gender is ..m")
+    this.gender= this.translate.instant("male")
+  }else{
+    this.gender=null
+  }
+}
 
 
+checkIfUserBlocked(){
+  if(this.userData.ISBlocked==null){
+    this.isblocked=false
+  }else{
+    this.isblocked=this.userData.ISBlocked
+  }
+}
+
+            
   checkProfileCompletion(userData){
     if(userData.FK_Country_ID==null && userData.FK_City_ID==null && userData.User_Address==null){
       this.DataNotCompleted=true
@@ -328,7 +334,7 @@ export class ClientProfilePage {
     )
   }
 
-
+  // this function need ton be modified after user type change
   checkIfClient(type){
     if(type==1){
       this.client=true
@@ -601,6 +607,8 @@ export class ClientProfilePage {
   }
 
   doRefresh(refresher){
+
+
     this.event.subscribe('isupgrade' ,()=>{
       this.isUpgraded=true
     } )
@@ -614,241 +622,221 @@ export class ClientProfilePage {
               this.isUpgraded=false
             }
 
-          })
+    })
 
     console.log("admin account show other order accounts : "+this.navParams.get('user_id'))
     this.dir=this.platform.isRTL
 
-if(this.navParams.get('user_id')!=undefined){
-this.comefrom='adminPanel'
-this.userid=    this.navParams.get('user_id')
-  console.log("++++"+this.userid)
+    if(this.navParams.get('user_id')!=undefined){
+      this.comefrom='adminPanel'
+      this.userid=    this.navParams.get('user_id')
+      console.log("++++"+this.userid)
 
-  this.user.GetUserDataByUserID(this.userid).subscribe(
-  (res:any)=>{
-    this.storage.get('Password').then((val)=>{
-      console.log(val)
-      if(val){
-        this.Password=val
+    this.user.GetUserTypesByUserID(this.userid).subscribe((res:any)=>{
+      console.log( 'GetUserTypesByUserID  :  '+JSON.stringify(res));
+      if(res!="لا توجد بيانات متاحة "){
+        this.helper.SetUserTypes(res);
+        this.UserTypes=res;
+      }else{
+        this.UserTypes=[];
       }
+    
     })
 
-    refresher.complete()
-    this.email=res.dt[0].User_Email
-    this.name=res.dt[0].User_Full_Name
-
-    if(res.dt[0].Gender=="F"){
-      console.log("gender is ..f")
-      this.gender= this.translate.instant("female")
-    }
-    else if(res.dt[0].Gender=="M"){
-      console.log("gender is ..m")
-      this.gender= this.translate.instant("male")
-    }else{
-      this.gender=null
-    }
-
-
-    if(res.dt[0].User_Type==1){
-      this.client=true
-    }else{
-      this.storage.get('Trans_upgrade').then((val)=>{
-        if(val!=null){
-          this.client=false
-        }else{
-          this.client=true
+    this.user.GetUserDataByUserID(this.userid).subscribe(
+    (res:any)=>{
+      this.userData=res.dt[0]
+      this.storage.get('Password').then((val)=>{
+        console.log(val)
+        if(val){
+          this.Password=val
         }
       })
-    }
+      refresher.complete()
 
-    if(res.dt[0].ISBlocked==null){
-      this.isblocked=false
-    }
+      this.email=this.userData.User_Email
+      this.name=this.userData.User_Full_Name
 
-    if(res.dt[0].FK_Country_ID==null && res.dt[0].FK_City_ID==null && res.dt[0].User_Address==null){
-      this.DataNotCompleted=true
-    }else{
-      this.DataNotCompleted=false
-          this.general.GetCountries().subscribe( (res:any[])=>{
-            res.forEach(elem=>{
-              if(elem.CountryID==this.country_id){
-                this.CountryName=elem.CountryName
-              }
-            })
-          }, (err:any)=>{ })
-          this.country_id=res.dt[0].FK_Country_ID
-          this.city_id=res[0].FK_City_ID
-          console.log("city  :"+this.city_id)
-            if(res.dt[0].User_Address=="undefined"){
-              this.Address=""
+      if(this.userData.Gender =="F"){
+        console.log("gender is ..f")
+        this.gender= this.translate.instant("female")
+      }
+      else if(this.userData.Gender =="M"){
+        console.log("gender is ..m")
+        this.gender= this.translate.instant("male")
+      }else{
+        this.gender=null
+      }
+
+      this.checkIfClient(this.userData.User_Type)
+
+      if(this.userData.ISBlocked==null){
+        this.isblocked=false
+      }else{
+        this.isblocked=this.userData.ISBlocked
+      }
+
+      if(this.userData.FK_Country_ID==null && this.userData.FK_City_ID==null && this.userData.User_Address==null){
+        this.DataNotCompleted=true
+      }else{
+        this.DataNotCompleted=false
+
+
+        this.CountryName=this.userData.Country_Name
+        this.CityName=this.userData.City_Name
+
+        console.log("city  :"+this.city_id)
+      
+        if(this.userData.User_Address=="undefined"){
+          this.Address=""
+        }else{
+          this.Address=res.dt[0].User_Address
+        }
+
+        this.Get_City_By_Country_ID(this.userData.FK_Country_ID)
+      }
+
+    },(err)=>{
+      refresher.complete()
+
+    })
+    }
+    else{
+      this.comefrom='userprofile'
+      this.storage.get('Trans_user_id').then(val=>{
+        if(val){
+
+      
+          this.user.GetUserDataByUserID(val).subscribe(
+          (res:any)=>{
+
+            this.userData=res.dt[0]
+            if(res=="لا توجد بيانات متاحة لهذا المستخدم"){
+            this. noData=true
+              const toast = this.toastCtrl.create({
+                message:res,
+                duration: 5000
+              });
+              toast.present();
+
             }else{
-              this.Address=res.dt[0].User_Address
-            }
 
-        this.general.GetCityByCountryID(this.country_id)
-          .subscribe((res:any)=>{
-            this.cities=res
-            this.cities.forEach(elem=>{
-                if(elem.CityID== this.city_id){
-                  this.CityName=elem.CityName
-                }
+            this.storage.get('Password').then((val)=>{
+              console.log(val)
+              if(val){
+                this.Password=val
+              }
             })
-          },(err:any)=>{})
-    }
-
-  },(err)=>{
-   refresher.complete()
-  })
-}else{
-this.comefrom='userprofile'
-this.storage.get('Trans_user_id').then(val=>{
-if(val){
+            refresher.complete()
 
 
-  this.user.GetUserDataByUserID(val).subscribe(
-  (res:any)=>{
+            this.email=this.userData.User_Email
+            this.name=this.userData.User_Full_Name
 
-    if(res=="لا توجد بيانات متاحة لهذا المستخدم"){
-     this. noData=true
-      const toast = this.toastCtrl.create({
-        message:res,
-        duration: 5000
-      });
-      toast.present();
-
-    }else{
-
-    this.storage.get('Password').then((val)=>{
-      console.log(val)
-      if(val){
-        this.Password=val
-      }
-    })
-    refresher.complete()
-
-    this.email=res.dt[0].User_Email
-    this.name=res.dt[0].User_Full_Name
-
-    if(res.dt[0].Gender=="F"){
-      console.log("gender is ..f")
-      this.gender= this.translate.instant("female")
-    }
-    else if(res.dt[0].Gender=="M"){
-      console.log("gender is ..m")
-      this.gender= this.translate.instant("male")
-    }else{
-      this.gender=null
-    }
-
-
-    if(res.dt[0].CV!=null){
-      this.cv=  res.dt[0].CV
-    }
-
-    if(res.dt[0].Fk_SpecializationParentID!=null){
-         console.log("user has upgraded")
-          // this user has sent upgrade request
-              this.isUpgraing=true
-             this.user.GetUpgradeRequestsByUserID(val).subscribe(
-               (res:any)=>{
-                 console.log("all upg request s by this user"+res)
-               }
-             )
-
-          // set SpecializationParent
-          this.general.GetParentSp().subscribe(
-            (val:any[])=>{
-                val.forEach(elem=>{
-                  if(elem.ID == res.dt[0].Fk_SpecializationParentID){
-                    this.Fk_SpecializationParentID=elem.SpecializationName
-                  }
-                })
-                console.log(this.Fk_SpecializationParentID)
-            },(err)=>{})
-
-            if( res.dt[0].FK_SpecializationChildID!=null){
-              // set SpecializationChild
-            this.general.GetChildSp(res.dt[0].Fk_SpecializationParentID).subscribe(
-              (val:any[])=>{
-                  val.forEach(elem=>{
-                    if(elem.ID == res.dt[0].FK_SpecializationChildID){
-                      this.FK_SpecializationChildID=elem.SpecializationName
-                      console.log(elem.SpecializationName )
-                    }
-
-                  })
-                  console.log(this.FK_SpecializationChildID)
-              },(err)=>{}
-              )
+            if(this.userData.Gender=="f"){
+              this.gender= this.translate.instant("female")
             }
-  }else{
-    this.isUpgraing=false
-  }
+            else if(this.userData.Gender=="m"){
+              this.gender= this.translate.instant("male")
+            }else{
+              this.gender=null
+            }
 
-    if(res.dt[0].IsJoin==null){
-      this.IsJoin=false
-    }else{
-      this.IsJoin=res.dt[0].IsJoin
-    }
+            if(this.userData.CV!=null){
+              this.cv= this.userData.CV
+            }
 
-    if(res.dt[0].User_Type==1){
-      this.client=true
-    }else{
-      this.storage.get('Trans_upgrade').then((val)=>{
-        if(val!=null){
-          if(val==true){
-            this.client=false
+            if(this.userData.Fk_SpecializationParentID!=null){
+                console.log("user has upgraded")
+                  // this user has sent upgrade request
+                      this.isUpgraing=true
+                    this.user.GetUpgradeRequestsByUserID(val).subscribe(
+                      (res:any)=>{
+                        console.log("all upg request s by this user"+res)
+                      }
+                    )
+
+                  // set SpecializationParent
+                  this.general.GetParentSp().subscribe(
+                    (val:any[])=>{
+                        val.forEach(elem=>{
+                          if(elem.ID ==this.userData.Fk_SpecializationParentID){
+                            this.Fk_SpecializationParentID=elem.SpecializationName
+                          }
+                        })
+                        console.log(this.Fk_SpecializationParentID)
+                    },(err)=>{})
+
+                    if( this.userData.FK_SpecializationChildID!=null){
+                      // set SpecializationChild
+                    this.general.GetChildSp(this.userData.Fk_SpecializationParentID).subscribe(
+                      (val:any[])=>{
+                          val.forEach(elem=>{
+                            if(elem.ID == this.userData.FK_SpecializationChildID){
+                              this.FK_SpecializationChildID=elem.SpecializationName
+                              console.log(elem.SpecializationName )
+                            }
+
+                          })
+                          console.log(this.FK_SpecializationChildID)
+                      },(err)=>{}
+                      )
+                    }
           }else{
-            this.client=true
+            this.isUpgraing=false
           }
-        }else{
-          this.client=true
+
+            if(this.userData.IsJoin==null){
+              this.IsJoin=false
+            }else{
+              this.IsJoin=this.userData.IsJoin
+            }
+
+            if(this.userData.User_Type==1){
+              this.client=true
+            }else{
+              this.storage.get('Trans_upgrade').then((val)=>{
+                if(val!=null){
+                  if(val==true){
+                    this.client=false
+                  }else{
+                    this.client=true
+                  }
+                }else{
+                  this.client=true
+                }
+              })
+            }
+
+            this._languages=res.Languages
+            if( this._languages.length!=0){
+              this.noLanguages=false
+
+              this.GetLanguages()
+              console.log('there are languages',JSON.stringify(this._languages))
+            }else{
+              this.noLanguages=true
+              console.log('no languages')
+            }
+
+          this. checkProfileCompletion(this.userData)
+
+          }
+          },(err)=>{
+            refresher.complete()
+
+          })
         }
       })
     }
 
-
-    if(res.dt[0].FK_Country_ID==null && res.dt[0].FK_City_ID==null && res.dt[0].User_Address==null){
-      this.DataNotCompleted=true
-    }else{
-      this.DataNotCompleted=false
-
-          this.general.GetCountries().subscribe( (res:any[])=>{
-            res.forEach(elem=>{
-              if(elem.CountryID==this.country_id){
-                this.CountryName=elem.CountryName
-              }
-            })
-          }, (err:any)=>{ })
-
-          this.country_id=res.dt[0].FK_Country_ID
-
-          this.city_id=res.dt[0].FK_City_ID
-
-          if(res.dt[0].User_Address=="undefined"){
-            this.Address=""
-          }else{
-            this.Address=res.dt[0].User_Address
-          }
-
-          this.general.GetCityByCountryID(this.country_id)
-            .subscribe((res:any)=>{
-              this.cities=res
-              this.cities.forEach(elem=>{
-                  if(elem.CityID== this.city_id){
-                    this.CityName=elem.CityName
-                  }
-              })
-          },(err:any)=>{})
-
-    }
-  }
-  },(err)=>{
-    refresher.complete()
-  })
-}
-})
-}
   }
 
+
+  changeUserTypeActivation(accpunttype,state){
+    this.admin.ChangeAccountTypeActivationState(accpunttype,state).subscribe((res:any)=>{
+      console.log('ChangeAccountTypeActivationState :'+JSON.stringify(res))
+    })
+
+  }
 }

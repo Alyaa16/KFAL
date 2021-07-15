@@ -1,3 +1,4 @@
+import { ClientProvider } from './../providers/client/client';
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, AlertController, MenuController, Events, Alert } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -36,7 +37,7 @@ export class MyApp {
   direction:boolean
   constructor(public helper:HelperProvider, public translate: TranslateService,private push: Push,
               public alertCtrl:AlertController,public events:Events,
-              public general: GeneralProvider,
+              public general: GeneralProvider,private user:ClientProvider,
               private socialSharing: SocialSharing,public platform: Platform,private device: Device,
               public statusBar: StatusBar,private faio:FingerprintAIO,
               public splashScreen: SplashScreen,private storage: Storage,public menuCtrl:MenuController) {
@@ -77,66 +78,69 @@ export class MyApp {
                   this.helper.changeLanguage(val)
                     // this.translate.setDefaultLang(val)
                 })
-
-                this.storage.get('Trans_user_type').then((val)=>{
-                  this.helper.set_type(val)
-                  if(val){
-                    if(val==1){
-                      this.storage.get('Trans_upgrade').then((res:any)=>{
-                        if(res){
-                          //---------------Here check for open app with touch id  -------------------
-                          this.storage.get('Trans_login_touch_id').then(
-                          (val)=>{
-                            if(val==true){
-                                this.rootPage = 'LoginPage';
-                            }else{
-                              this.rootPage = 'MainPage';
-                            }
-                          })
-                          //-------------------------------------------------------------------------
-                        }else{
-                          //---------------Here check for open app with touch id  -------------------
-                          this.storage.get('Trans_login_touch_id').then(
-                            (val)=>{
-                              if(val==true){
-                                this.rootPage = 'LoginPage';
-                              }else{
-                              this.rootPage = 'HometypePage';
-                              }
-                            })
-                            //-------------------------------------------------------------------------
-                        }
-                      })
-                    }else if(val==3 ||val==4 || val==2){
-                      //---------------Here check for open app with touch id  -------------------
-                      this.storage.get('Trans_login_touch_id').then(
-                        (val)=>{
-                          if(val==true){
+ 
+                this. GetUserTypesByUserID()
+              
+               
+                // this.storage.get('Trans_user_type').then((val)=>{
+                //   this.helper.set_type(val)
+                //   if(val){
+                //     if(val==1){
+                //       this.storage.get('Trans_upgrade').then((res:any)=>{
+                //         if(res){
+                //           //---------------Here check for open app with touch id  -------------------
+                //           this.storage.get('Trans_login_touch_id').then(
+                //           (val)=>{
+                //             if(val==true){
+                //                 this.rootPage = 'LoginPage';
+                //             }else{
+                //               this.rootPage = 'MainPage';
+                //             }
+                //           })
+                //           //-------------------------------------------------------------------------
+                //         }else{
+                //           //---------------Here check for open app with touch id  -------------------
+                //           this.storage.get('Trans_login_touch_id').then(
+                //             (val)=>{
+                //               if(val==true){
+                //                 this.rootPage = 'LoginPage';
+                //               }else{
+                //               this.rootPage = 'HometypePage';
+                //               }
+                //             })
+                //             //-------------------------------------------------------------------------
+                //         }
+                //       })
+                //     }else if(val==3 ||val==4 || val==2){
+                //       //---------------Here check for open app with touch id  -------------------
+                //       this.storage.get('Trans_login_touch_id').then(
+                //         (val)=>{
+                //           if(val==true){
                           
-                            this.rootPage = 'LoginPage';
-                          }else{
-                          this.rootPage = 'MainPage';
-                          }
-                        })
-                        //-------------------------------------------------------------------------
-                    }
-                    else if(val==5){
-                      //---------------Here check for open app with touch id  -------------------
-                      this.storage.get('Trans_login_touch_id').then(
-                      (val)=>{
-                        if(val==true){
+                //             this.rootPage = 'LoginPage';
+                //           }else{
+                //           this.rootPage = 'MainPage';
+                //           }
+                //         })
+                //         //-------------------------------------------------------------------------
+                //     }
+                //     else if(val==5){
+                //       //---------------Here check for open app with touch id  -------------------
+                //       this.storage.get('Trans_login_touch_id').then(
+                //       (val)=>{
+                //         if(val==true){
                           
-                          this.rootPage = 'LoginPage';
-                        }else{
-                          this.rootPage = 'MainAcademyPage';
-                        }
-                      })
-                      //-------------------------------------------------------------------------
-                  }
-                  }else{
-                    this.rootPage = 'LoginPage';
-                  }
-                })
+                //           this.rootPage = 'LoginPage';
+                //         }else{
+                //           this.rootPage = 'MainAcademyPage';
+                //         }
+                //       })
+                //       //-------------------------------------------------------------------------
+                //   }
+                //   }else{
+                //     this.rootPage = 'LoginPage';
+                //   }
+                // })
 
                 this.storage.get('Trans_language').then((val:any)=>{
                   console.log("app component stored language :"+val)
@@ -162,7 +166,20 @@ export class MyApp {
                 })
 
                 this.initializeApp();
+                this.GetDeviceId();
 
+  }
+
+  GetUserTypesByUserID(){
+    this.storage.get("Trans_user_id").then((UserId)=>{
+      if(UserId){
+        this.user.GetUserTypesByUserID(UserId).subscribe((res:any)=>{
+               console.log( 'GetUserTypesByUserID  :  '+JSON.stringify(res));
+               this.rootPage = 'MainPage';
+               this.helper.SetUserTypes(res);
+        })
+      }
+    })
   }
 
   getDimsensions(){  
@@ -267,20 +284,31 @@ export class MyApp {
   }
 
   Home(){
-    this.storage.get("Trans_user_type").then((val:any)=>{
-      console.log("current user  :"+val)
-      if(val==1){ // this user is client
-        this.storage.get('Trans_upgrade').then((res:any)=>{
-          if(res){
-            this.nav.push('MainPage')
-          }else{
-            this.nav.push('HometypePage')
-          }
+    // this.storage.get("Trans_user_type").then((val:any)=>{
+    //   console.log("current user  :"+val)
+    //   if(val==1){ // this user is client
+    //     this.storage.get('Trans_upgrade').then((res:any)=>{
+    //       if(res){
+    //         this.nav.push('MainPage')
+    //       }else{
+    //         this.nav.push('HometypePage')
+    //       }
+    //     })
+    //   }else{
+    //     this.nav.push('MainPage')   // this user is provider: translator or reviewer or admin
+    //   }
+    // })
+
+    this.storage.get("Trans_user_id").then((UserId)=>{
+      if(UserId){
+        this.user.GetUserTypesByUserID(UserId).subscribe((res:any)=>{
+            console.log( 'GetUserTypesByUserID  :  '+JSON.stringify(res));
+            this.nav.setRoot('MainPage') ;
+            this.helper.SetUserTypes(res);
         })
-      }else{
-        this.nav.push('MainPage')   // this user is provider: translator or reviewer or admin
       }
     })
+
   }
 
   sendInvitaion()

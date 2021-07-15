@@ -116,4 +116,13 @@ export class GeneralProvider {
         this.presentToastConnection()
       }
     }
+
+    GetAllUserTypes(){
+      if(navigator.onLine){
+        return   this.http.get(this.helper.base_url+"User/GetAllUserTypes")
+      }
+      else{
+        this.presentToastConnection()
+      }
+    }
 }

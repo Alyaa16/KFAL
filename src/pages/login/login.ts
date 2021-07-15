@@ -206,15 +206,15 @@ export class LoginPage {
     })
   }
 
-    Login(){
-        this.InitNotifications()
-        this.helper.set_email(this.myform.value.UserEmail)
-        if(this.myform.valid){
-          let loading =this.loadingCtrl.create({})
-          loading.present()//registration.registrationId
-         console.log(' before login this.helper.registrationId : '+   this.helper.registrationId)
-       
-         //if(this.helper.registrationId!=''){
+  Login(){
+      this.InitNotifications()
+      this.helper.set_email(this.myform.value.UserEmail)
+      if(this.myform.valid){
+        let loading =this.loadingCtrl.create({})
+        loading.present()//registration.registrationId
+        console.log(' before login this.helper.registrationId : '+   this.helper.registrationId)
+      
+      //  if(this.helper.registrationId!=''){
             this.user.sign_in(this.myform.value,this.helper.registrationId).subscribe(
                   (res:any)=>{
                     loading.dismiss()
@@ -242,20 +242,20 @@ export class LoginPage {
                       this.storage.set('Trans_user_id',res.UserData[0].ID)
                       this.storage.set('Password',res.UserData[0].Password)
                       this.storage.set('logined_in',true)
-                      this.storage.set('Trans_user_type',res.UserData[0].UserType)
+                      this.storage.set('Trans_user_type',res.Type) // list of available user profiles
                       this.storage.set('userEmail',res.UserData[0].Email)
 
 
                       // ------------------------ check if user is admin
-                      if(res.UserData[0].IsAdmin==true){
-                        console.log("admin")
-                        this.helper.UserIsAdmin(true);
-                        this.storage.set('isadmin',true)
-                      }else{
-                        console.log("not admin")
-                        this.helper.UserIsAdmin(false);
-                        this.storage.set('isadmin',false)
-                      }
+                      // if(res.UserData[0].IsAdmin==true){
+                      //   console.log("admin")
+                      //   this.helper.UserIsAdmin(true);
+                      //   this.storage.set('isadmin',true)
+                      // }else{
+                      //   console.log("not admin")
+                      //   this.helper.UserIsAdmin(false);
+                      //   this.storage.set('isadmin',false)
+                      // }
 
                       // ------------------------ check if user account is verified
                       if(res.UserData[0].VerificationStatus){
@@ -268,88 +268,91 @@ export class LoginPage {
                         .subscribe((val:any)=>{
                           if(val=="True"){
                             console.log('CheckCompleteDataFromDirectReg  true')
-                            if(res.UserData[0].UserType==1){
-                              this.navCtrl.setRoot('HometypePage')
-                              this.storage.set('Trans_upgrade',false)
-                            }
-                            else {
-                              this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
-                              console.log("this user has upgraded his account")
-                              this.storage.set('Trans_upgrade',true)
-                            }
+                            // if(res.UserData[0].UserType==1){
+                            //   this.navCtrl.setRoot('HometypePage')
+                            //   this.storage.set('Trans_upgrade',false)
+                            // }
+                            // else {
+                            //   this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
+                            //   console.log("this user has upgraded his account")
+                            //   this.storage.set('Trans_upgrade',true)
+                            // }
+                            console.log('user types  : '+JSON.stringify(res.Type))
+                            this.navCtrl.setRoot('MainPage',{'Types':res.Type})
                           }else{
                             console.log('CheckCompleteDataFromDirectReg  false')
                             this.navCtrl.push('AdminDirectRegCompleteDataPage')
                           }
                         })
                           
-                              // ask for touch id
+                        // ask for touch id
 
-                              this.storage.get('Trans_login_touch_id').then((val)=>{
-                                if(val!=null){
-                                
-                                }else{
-
-                                  this.translate.get("login with touch id").subscribe(
-                                    value => {
-                                    this.translate.get("yes").subscribe(
-                                        value1 => {
-                                          this.translate.get("cancel").subscribe(
-                                            value2 => {
-                                        const alert = this.alertCtrl.create({
-                                          subTitle: value,
-                                          buttons: [
-                                            {
-                                              text:  value2,
-                                              role: 'cancel',
-                                              handler: () => {
-                                                this.storage.set('Trans_login_touch_id',false)
-                                              }
-                                            },
-                                            {
-                                              text: value1,
-                                              handler: () => {
-                                                this.storage.set('Trans_login_touch_id',true)
-                                                this.faio.show({
-                                                  clientId: 'kfal',
-                                                  clientSecret: 'kfal2020', //Only necessary for Android
-                                                  disableBackup:true,  //Only for Android(optional)
-                                                  localizedFallbackTitle: 'Use Pin', //Only for iOS
-                                                  localizedReason: 'Please authenticate' //Only for iOS
-                                              })
-                                              .then((result: any) => {
-                                                console.log(JSON.stringify(result))
-                                                if(res.UserData[0].UserType==1){
-                                                  this.navCtrl.setRoot('HometypePage')
-                                                  this.storage.set('Trans_upgrade',false)
-                                                }
-                                                else {
-                                                  this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
-                                                  console.log("this user has upgraded his account")
-                                                  this.storage.set('Trans_upgrade',true)
-                                                }
-                                              })
-                                              .catch((error: any) => {
-                                                console.log(JSON.stringify(error))
-                                              });
-                                              }
-                                            }
-                                          ]
-                                        });
-                                        alert.present();
-                                      })
-                                    })
-                                  })
-                                }
-
-                              })
+                        this.storage.get('Trans_login_touch_id').then((val)=>{
+                          if(val!=null){
+                          
                           }else{
-                            const toast = this.toastCtrl.create({
-                              message:this.translate.instant('account is blocked'),
-                              duration: 5000
-                            });
-                            toast.present();
+
+                            this.translate.get("login with touch id").subscribe(
+                              value => {
+                              this.translate.get("yes").subscribe(
+                                  value1 => {
+                                    this.translate.get("cancel").subscribe(
+                                      value2 => {
+                                  const alert = this.alertCtrl.create({
+                                    subTitle: value,
+                                    buttons: [
+                                      {
+                                        text:  value2,
+                                        role: 'cancel',
+                                        handler: () => {
+                                          this.storage.set('Trans_login_touch_id',false)
+                                        }
+                                      },
+                                      {
+                                        text: value1,
+                                        handler: () => {
+                                          this.storage.set('Trans_login_touch_id',true)
+                                          this.faio.show({
+                                            clientId: 'kfal',
+                                            clientSecret: 'kfal2020', //Only necessary for Android
+                                            disableBackup:true,  //Only for Android(optional)
+                                            localizedFallbackTitle: 'Use Pin', //Only for iOS
+                                            localizedReason: 'Please authenticate' //Only for iOS
+                                        })
+                                        .then((result: any) => {
+                                          console.log(JSON.stringify(result))
+                                          // if(res.UserData[0].UserType==1){
+                                          //   this.navCtrl.setRoot('HometypePage')
+                                          //   this.storage.set('Trans_upgrade',false)
+                                          // }
+                                          // else {
+                                          //   this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
+                                          //   console.log("this user has upgraded his account")
+                                          //   this.storage.set('Trans_upgrade',true)
+                                          // }
+                                          this.navCtrl.setRoot('MainPage',{'Types':res.Type})
+                                        })
+                                        .catch((error: any) => {
+                                          console.log(JSON.stringify(error))
+                                        });
+                                        }
+                                      }
+                                    ]
+                                  });
+                                  alert.present();
+                                })
+                              })
+                            })
                           }
+
+                        })
+                        }else{
+                        const toast = this.toastCtrl.create({
+                          message:this.translate.instant('account is blocked'),
+                          duration: 5000
+                        });
+                        toast.present();
+                        }
                       }
                       else{
                         const toast = this.toastCtrl.create({
@@ -367,10 +370,10 @@ export class LoginPage {
                       loading.dismiss()
                   }
             )
-          // }else{
-          //   loading.dismiss()
-          //   this.InitNotifications()
-          // }
+        // }else{
+        //      loading.dismiss()
+        //      this.InitNotifications()
+        //  }
 
         }
         else{
@@ -382,25 +385,26 @@ export class LoginPage {
         }
     }
 
-    CheckCompleteDataFromDirectRegByadmin(UserID,UserType){
-      this.admin.CheckCompleteDataFromDirectReg(UserID).subscribe((val:any)=>{
-        if(val=="True"){
-          console.log('CheckCompleteDataFromDirectReg  true')
-          if(UserType==1){
-            this.navCtrl.setRoot('HometypePage')
-            this.storage.set('Trans_upgrade',false)
-          }
-          else {
-            this.navCtrl.setRoot('MainPage',{'user_type':UserType})
-            console.log("this user has upgraded his account")
-            this.storage.set('Trans_upgrade',true)
-          }
-        }else{
-          console.log('CheckCompleteDataFromDirectReg  false')
-          this.navCtrl.push('AdminDirectRegCompleteDataPage')
-        }
-      })
-    }
+    // CheckCompleteDataFromDirectRegByadmin(UserID,UserType){
+    //   this.admin.CheckCompleteDataFromDirectReg(UserID).subscribe((val:any)=>{
+    //     if(val=="True"){
+    //       console.log('CheckCompleteDataFromDirectReg  true')
+    //       // if(UserType==1){
+    //       //   this.navCtrl.setRoot('HometypePage')
+    //       //   this.storage.set('Trans_upgrade',false)
+    //       // }
+    //       // else {
+    //       //   this.navCtrl.setRoot('MainPage',{'user_type':UserType})
+    //       //   console.log("this user has upgraded his account")
+    //       //   this.storage.set('Trans_upgrade',true)
+    //       // }
+    //        this.navCtrl.setRoot('MainPage',{'Types':res.Type})
+    //     }else{
+    //       console.log('CheckCompleteDataFromDirectReg  false')
+    //       this.navCtrl.push('AdminDirectRegCompleteDataPage')
+    //     }
+    //   })
+    // }
 
     loginwithtouchid(){
 
@@ -438,28 +442,29 @@ export class LoginPage {
                         this.storage.set('Trans_user_id',res.UserData[0].ID)
                         this.storage.set('Password',res.UserData[0].Password)
                         this.storage.set('logined_in',true)
-                        this.storage.set('Trans_user_type',res.UserData[0].UserType)
+                        this.storage.set('Trans_user_type',res.Type)
                         this.storage.set('userEmail',res.UserData[0].Email)
 
-                        if(res.UserData[0].IsAdmin==true){
-                          console.log("admin")
-                          this.helper.UserIsAdmin(true);
-                          this.storage.set('isadmin',true)
-                        }else{
-                          console.log("not admin")
-                          this.helper.UserIsAdmin(false);
-                          this.storage.set('isadmin',false)
-                        }
+                        // if(res.UserData[0].IsAdmin==true){
+                        //   console.log("admin")
+                        //   this.helper.UserIsAdmin(true);
+                        //   this.storage.set('isadmin',true)
+                        // }else{
+                        //   console.log("not admin")
+                        //   this.helper.UserIsAdmin(false);
+                        //   this.storage.set('isadmin',false)
+                        // }
 
 
-                        if(res.UserData[0].UserType==1){
-                          this.navCtrl.setRoot('HometypePage')
-                          this.storage.set('Trans_upgrade',false)
-                        }else{
-                          this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
-                          console.log("this user has upgraded his account")
-                          this.storage.set('Trans_upgrade',true)
-                        }
+                        // if(res.UserData[0].UserType==1){
+                        //   this.navCtrl.setRoot('HometypePage')
+                        //   this.storage.set('Trans_upgrade',false)
+                        // }else{
+                        //   this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
+                        //   console.log("this user has upgraded his account")
+                        //   this.storage.set('Trans_upgrade',true)
+                        // }
+                        this.navCtrl.setRoot('MainPage',{'Types':res.Type})
                   }
                   },(err:any)=>{
                     loading.dismiss()

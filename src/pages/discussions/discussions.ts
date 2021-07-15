@@ -4,6 +4,7 @@ import { GeneralProvider } from '../../providers/general/general';
 import { Storage } from '@ionic/storage';
 import { AdminProvider } from '../../providers/admin/admin';
 import { ControlpanelProvider } from '../../providers/controlpanel/controlpanel';
+import { HelperProvider } from '../../providers/helper/helper';
 
 @IonicPage()
 @Component({
@@ -20,19 +21,36 @@ export class DiscussionsPage {
    document_levels:any[]=[]
    deadlines:any[]=[]
    GeneralFeild:any
-   Isadmin:boolean
+  // Isadmin:boolean
    MyDiscussions:any[]
+   IsAdmin:boolean=false
+   UserTypeCurrentState:number
   constructor(public viewCtrl:ViewController, public navCtrl: NavController,public toastCtrl:ToastController,
     public general:GeneralProvider,private storage: Storage,public admin:AdminProvider,private panel:ControlpanelProvider,
-              public navParams: NavParams,public platform:Platform,public loadingCtrl:LoadingController) {
-                this.dir=this.platform.isRTL
-                this.storage.get('isadmin').then(val=>{
-                  if(val==true){
-                    this.Isadmin=true
-                  }else{
-                   this.Isadmin=false
-                  }
-              })
+              public navParams: NavParams,public platform:Platform,private helper:HelperProvider,
+              public loadingCtrl:LoadingController) {
+
+                this.dir=this.platform.isRTL;
+
+                this.UserTypeCurrentState=this.helper.UserTypeCurrentState;
+                console.log(this.UserTypeCurrentState)
+                if(this.UserTypeCurrentState==2){
+                  this.storage.get('Trans_user_id').then(val=>{
+                    if(val){
+                        this.admin.GetAllDiscussionTopicsByAdminID(val).subscribe((res:any)=>{
+                          console.log("discussions made by admin :  "+JSON.stringify(res))
+                        })
+                    }
+                  })
+                
+                }
+                // this.storage.get('isadmin').then(val=>{
+                //   if(val==true){
+                //     this.Isadmin=true
+                //   }else{
+                //    this.Isadmin=false
+                //   }
+                // })
 
               // call api to get all available general_feilds
               this.panel.GetParentSp().subscribe((res:any)=>{this.general_feilds=res},(err:any)=>{})
@@ -42,26 +60,40 @@ export class DiscussionsPage {
                 this.document_levels=res
                 },(err:any)=>{})
 
-               this.storage.get("Trans_user_type"	).then((userID:any)=>{this.UserID=userID})
+              //  this.storage.get("Trans_user_type"	).then((userID:any)=>{
+              //    console.log('discussions :  '+JSON.stringify(userID));
+              //   this.UserID=userID
+              
+              // })
 
                 this.storage.get('Trans_user_id').then(val=>{
                   if(val){
                     let loading=this.loadingCtrl.create({})
                     loading.present()
-                    //  call api to get all discussions
-                        this.admin.GetAllDiscussionsByUserID(val).subscribe(
-                          (res:any)=>{
-                            if(!(res=="لا توجد بيانات متاحة")){
-                                  this.nodata=false
-                                  this.MyDiscussions=res
-                            }else{
-                              this.result=res
-                              this.nodata=true
-                            }
-                            loading.dismiss()
-                          },(err:any)=>{
-                            loading.dismiss()
-                          })
+                 
+                    // this.general.GetAllUserTypes().subscribe((res:any[])=>{
+                    //     for(let i=0;i<res.length;i++){
+                    //       if(res[0].UserTypeID==this.helper.UserTypeCurrentState)   {
+
+                    //       }
+                    //     }
+                       
+                    // })
+      
+                //  call api to get all discussions
+                    this.admin.GetAllDiscussionsByUserID(val).subscribe(
+                      (res:any)=>{
+                        if(!(res=="لا توجد بيانات متاحة")){
+                              this.nodata=false
+                              this.MyDiscussions=res
+                        }else{
+                          this.result=res
+                          this.nodata=true
+                        }
+                        loading.dismiss()
+                      },(err:any)=>{
+                        loading.dismiss()
+                      })
                   }else{
                   }
           })

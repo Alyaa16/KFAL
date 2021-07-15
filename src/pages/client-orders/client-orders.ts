@@ -47,7 +47,7 @@ export class ClientOrdersPage {
                   res[i].date= moment(res[i].Request_Date).format('ll').split(',')[0]
                   res[i].month=res[i].date.split(' ')[0]
                   res[i].day=res[i].date.split(' ')[1]
-                  res[i].Request_Orginal_File=  (res[i].Request_Orginal_File).substr(8)
+                  res[i].Request_Orginal_File=  (res[i].Request_Orginal_File) //.substr(8)
               }
 
                 // new:pending translator and admin to approve
@@ -105,7 +105,7 @@ export class ClientOrdersPage {
                       res[i].date= moment(res[i].Request_Date).format('ll').split(',')[0]
                       res[i].month=res[i].date.split(' ')[0]
                       res[i].day=res[i].date.split(' ')[1]
-                      res[i].Request_Orginal_File=  (res[i].Request_Orginal_File).substr(8)
+                      res[i].Request_Orginal_File=  (res[i].Request_Orginal_File)//.substr(8)
                   }
 
                     // new:pending translator and admin to approve
@@ -175,7 +175,7 @@ export class ClientOrdersPage {
                     res[i].date= moment(res[i].Request_Date).format('ll').split(',')[0]
                     res[i].month=res[i].date.split(' ')[0]
                     res[i].day=res[i].date.split(' ')[1]
-                    res[i].Request_Orginal_File=  (res[i].Request_Orginal_File).substr(8)
+                    res[i].Request_Orginal_File=  (res[i].Request_Orginal_File)//.substr(8)
                 }
 
                   // new:pending translator and admin to approve

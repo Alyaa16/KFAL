@@ -33,7 +33,7 @@
     {{"no discussions"|translate}}
   </div>
   <!-- for admin  ceate new  discussion-->
-  <ion-fab right bottom *ngIf="Isadmin==true && UserID==2">
+  <ion-fab right bottom *ngIf="UserTypeCurrentState==2">
     <button ion-fab color="custom2" (click)="addnewDiscission()">
       <ion-icon style="color:#e2e2e2;font-size:30px" name="md-add"></ion-icon>
     </button>

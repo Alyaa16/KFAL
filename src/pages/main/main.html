@@ -17,12 +17,17 @@
   <!-- autoplay="5000" -->
   <ion-slides  loop="true" speed="300" style="border-radius: 10px;background-color: white;" pager="true" [dir]="direction==true?'rtl':'ltr'" >
 
-    <ion-slide (click)="client()">
-      <img src="../../assets/imgs/1.png">
-      <h2>{{"client"|translate}}</h2>
+    <ion-slide (click)="GoProfile(type.FK_UserTypeID,type.AccountType_ID,type.FK_UserID)" *ngFor="let type of UserTypes">
+      <img src="../../assets/imgs/1.png" *ngIf="type.FK_UserTypeID==1">
+      <img src="../../assets/imgs/3.png" *ngIf="type.FK_UserTypeID==2">
+      <img src="../../assets/imgs/2.png" *ngIf="type.FK_UserTypeID==3">
+      <img src="../../assets/imgs/2.png" *ngIf="type.FK_UserTypeID==4">
+      <h2 *ngIf="direction==true">{{type.UserType_Ar}}</h2>
+      <h2 *ngIf="direction==false">{{type.UserType_En}}</h2>
+    
     </ion-slide>
 
-    <ion-slide (click)="provider('translator',3)">
+    <!-- <ion-slide (click)="provider('translator',3)">
         <img src="../../assets/imgs/2.png">
         <h2>{{ "translator"|translate}}</h2>
     </ion-slide>
@@ -35,7 +40,7 @@
     <ion-slide *ngIf="Isadmin"  (click)="admin('admin',2)">
         <img src="../../assets/imgs/3.png">
         <h2>{{ "admin"|translate}}</h2>
-    </ion-slide>
+    </ion-slide> -->
 
 </ion-slides>
 

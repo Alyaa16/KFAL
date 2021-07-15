@@ -356,5 +356,10 @@
    "direct accept":"موافقة مباشرة",
    "direct refuse":"رفض مباشر",
    "testform":"إرسال نماذج اختبار",
-   "no_upgradeRequests":"لا توجد طلبات ترقية في هذه اللغة"
+   "no_upgradeRequests":"لا توجد طلبات ترقية في هذه اللغة",
+   "Request refused by admin": "تم رفض الطلب من قبل الادمن  ", 
+   "User Roles":"صلاحيات المستخدم",
+   "refused":"مرفوضة",
+   "Block User":"ايقاف الحساب",
+   "User Data":"بيانات الحساب"
 }

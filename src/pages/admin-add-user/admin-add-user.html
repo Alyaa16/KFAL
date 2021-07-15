@@ -32,8 +32,13 @@
   
     <ion-item style="margin: 0px 4px;border-bottom: 1px solid lightgray;margin-bottom: 14px;">
       <ion-label style="color: #000;">    {{"User Type"|translate}}</ion-label>
-      <ion-select formControlName="account_type"  okText='{{"ok"|translate}}' cancelText='{{"cancel"|translate}}'>
-        <ion-option  value="1">
+      <ion-select (ionChange)="UserTypesSelected()"  multiple="true" formControlName="user_type"  okText='{{"ok"|translate}}' cancelText='{{"cancel"|translate}}'>
+        <ion-option *ngFor="let usertype of UserTypes" [value]="usertype.UserTypeID">
+           <span *ngIf="dir==true">{{usertype.Type_Ar}} </span>
+           <span *ngIf="dir==false">{{usertype.Type_En}} </span>
+        </ion-option>
+    
+        <!-- <ion-option  value="1">
           {{"Client"|translate}}
         </ion-option>
         
@@ -48,7 +53,7 @@
  
         <ion-option  value="2">
           {{"Admin"|translate}}
-        </ion-option>
+        </ion-option> -->
       </ion-select>
     </ion-item>
     <div style="color:red;    text-align:center;    margin: 9px;" *ngIf="!myform.get('UserEmail').valid && myform.get('UserEmail').touched">

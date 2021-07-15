@@ -1,7 +1,6 @@
 
 <ion-header>
   <request-header (ChooseAccount)="chooseAccount()"  (OpenClientProfile)="open_client_profile()" [UserName]='user' UserType="admin"  [RequestData]="request_data"  [langFrom]="langFrom"  [langTo]="langTo">
-
   </request-header>
 </ion-header>
  
@@ -25,6 +24,10 @@
 
     <div  *ngIf="request_data.FK_Request_Status_ID==12" style="font-size: 14px ;color: red;text-align: center;" >
       <p> {{'request rollback from client'|translate}}</p>
+    </div>
+
+    <div  *ngIf="request_data.FK_Request_Status_ID==14" style="font-size: 14px ;color: red;text-align: center;" >
+      <p> {{'Request refused by admin'|translate}}</p>
     </div>
 
     <ion-row *ngIf="request_data.FK_Request_Status_ID==5 || request_data.FK_Request_Status_ID==6 || request_data.FK_Request_Status_ID==7 || request_data.FK_Request_Status_ID==8">

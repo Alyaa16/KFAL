@@ -73,26 +73,26 @@ export class RequestComponent {
   }
 
   ngOnInit(){
-    console.log('calling ngOnInit ')
+  //  console.log('calling ngOnInit ')
   }
 
   ngOnDestroy	(){
-    console.log('calling ngOnDestroy	')
+   // console.log('calling ngOnDestroy	')
   }
 
   ionViewWillEnter	(){
-    console.log('calling ionViewWillEnter	')
+  //  console.log('calling ionViewWillEnter	')
   }
 
   ionViewDidEnter	(){
-    console.log('calling ionViewDidEnter	')
+  //  console.log('calling ionViewDidEnter	')
   }
 
   ionViewWillLeave	(){
-    console.log('caaling ionViewWillLeave	')
+    //console.log('caaling ionViewWillLeave	')
   }
 
   ionViewDidLeave	(){
-    console.log('calling ionViewDidLeave	')
+  //  console.log('calling ionViewDidLeave	')
   }
 }

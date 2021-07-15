@@ -1,3 +1,4 @@
+import { GeneralProvider } from './../../providers/general/general';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, MenuController, Events, ToastController, LoadingController, AlertController, ModalController, ViewController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,12 +19,13 @@ export class AdminAddUserPage {
   passwordIcon: string = 'eye-off';
   passwordType1: string = 'password';
   passwordIcon1: string = 'eye-off';
+  UserTypes:any[]=[]
   constructor(public menuCtrl: MenuController,public platform:Platform,public loadingCtrl:LoadingController,
     public events: Events,public toastCtrl:ToastController, public alertCtrl:AlertController,
     public navCtrl: NavController,public user:ClientProvider,private admin:AdminProvider,
     public formBuilder: FormBuilder,public helper:HelperProvider,private storage: Storage,
     public translate: TranslateService,public modalCtrl:ModalController,public viewCtrl:ViewController,
-    public navParams: NavParams) {
+    public navParams: NavParams,private general:GeneralProvider) {
     this.dir=this.platform.isRTL
     this.myform =  this.formBuilder.group({
       UserEmail: ['', Validators.compose([Validators.required,Validators.email])],
@@ -32,8 +34,17 @@ export class AdminAddUserPage {
     //  ConfirmPassword:['', Validators.compose([Validators.required])],
       Gender:['', Validators.compose([Validators.required])],
       Mobile:['', Validators.compose([Validators.required])],
-      account_type:['', Validators.compose([Validators.required])]
+      user_type:['', Validators.compose([Validators.required])]
     });
+
+    this.helper.presentLoading()
+    this.general.GetAllUserTypes().subscribe((res:any)=>{
+     this.UserTypes=res;
+     this.helper.dismissLoading()
+    },(err:any)=>{
+      console.log('get user types err  :  '+JSON.stringify(err))
+      this.helper.dismissLoading()
+    })
   }
 
   ionViewDidLoad() {
@@ -103,5 +114,8 @@ export class AdminAddUserPage {
       });
       toast.present();
     }
+  }
+  UserTypesSelected(){
+    console.log(JSON.stringify(this.myform.value))
   }
 }

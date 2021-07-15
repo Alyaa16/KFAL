@@ -205,6 +205,17 @@ export class UpgradeRequestsProvider {
         this.general. presentToastConnection()
       }
     }
+
+    UpdateRequestToRefusedByAdmin(AdminID, RequstID, StatusID)
+    {
+      if(navigator.onLine){
+        return   this.http.get(this.helper.base_url+"Request/UpdateRequestToRefusedByAdmin?AdminID="+AdminID+
+        "&RequstID="+RequstID+"&StatusID="+StatusID)
+      }
+      else{
+        this.general. presentToastConnection()
+      }
+    }
   //---------------------------------------- Reviewer Side -----------------------------------------------------//
 
     GetRequestsTestFormsForReviewer(Reviewer_ID)

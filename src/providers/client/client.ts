@@ -434,6 +434,35 @@ GetUpgradeRequestsByUserID(userid){
   }
 }
 
+
+GetUserNotification(DeviceID){
+  if(navigator.onLine){
+    return   this.http.get(this.helper.base_url+"Notifications/GetUserNotification?DeviceID="+DeviceID)
+  }
+  else{
+    this.general. presentToastConnection()
+  }
+}
+
+
+UpdateUserAccountType(AccountType_ID,UserID){
+  if(navigator.onLine){
+    return   this.http.get(this.helper.base_url+"User/UpdateUserAccountType?AccountType_ID="+AccountType_ID+"&UserID="+UserID)
+  }
+  else{
+    this.general. presentToastConnection()
+  }
+}
+
+
+GetUserTypesByUserID(UserID){
+  if(navigator.onLine){
+    return   this.http.get(this.helper.base_url+"User/GetUserTypesByUserID?UserID="+UserID)
+  }
+  else{
+    this.general. presentToastConnection()
+  }
+}
   // sign_in_touch_id(UserEmail,Password,DeviceID){
   //   if(navigator.onLine){
   //     return   this.http.get(this.helper.base_url+"User/Login?Email="+UserEmail+"&Password="+Password+"&DeviceID="+DeviceID)

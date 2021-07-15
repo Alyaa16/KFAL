@@ -25,6 +25,8 @@ export class AdminOrdersDashboardPage {
   closedOrdersNo: number = 0
   canceledOrders: any[] = []
   canceledOrdersNo: number = 0
+  refusedOrders: any[] = []
+  refusedOrdersNo: number = 0
   allorders: any[] = []
   dir: boolean
   complaints: number = 0
@@ -83,6 +85,11 @@ export class AdminOrdersDashboardPage {
 
               this.canceledOrders = []
               res.forEach(elem => { if (elem.FK_Request_Status_ID == 4) { this.canceledOrders.push(elem) } })
+              
+              this.refusedOrders = []
+              res.forEach(elem => { if (elem.FK_Request_Status_ID == 14) { this.refusedOrders.push(elem) } })
+           
+           
             }
           }
           this.chartMap = [
@@ -135,6 +142,12 @@ export class AdminOrdersDashboardPage {
               'orderList': this.canceledOrders,
               'title': 'cancel1',
               'percent': ((this.canceledOrders.length / this.allorders.length) * 100),
+            },
+            {
+              'orderType': 'refuse',
+              'orderList': this.refusedOrders,
+              'title': 'refused',
+              'percent': ((this.refusedOrders.length / this.allorders.length) * 100),
             }
 
           ]

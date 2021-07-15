@@ -14,7 +14,7 @@
 <ion-content padding>
 
  <ion-row>
-    <ion-col col-6 *ngFor="let item of chartMap">
+    <ion-col col-6 *ngFor="let item of chartMap" style="padding: 0px;">
       <ion-card style="padding: 0px;" (click)="orders(item.orderType,item.orderList)">
         <ion-card-header style="text-align: center;">
           <p  style="margin: 0px;font-size: 15px;color: #FFAA45;"> {{item.title|translate}}</p>
