@@ -5,16 +5,18 @@ import { HelperProvider } from '../helper/helper';
 import { ToastController } from 'ionic-angular';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { GeneralProvider } from '../general/general';
+import { CustomConfigrations } from '../../CustomConfigrations';
 
 @Injectable()
 export class ProvidersProvider {
 
-  constructor(public general:GeneralProvider,public http1:Http,public toastCtrl:ToastController,private translate: TranslateService,public http: HttpClient,public helper:HelperProvider) {
+  constructor(public general:GeneralProvider,public http1:Http,public toastCtrl:ToastController,
+    private translate: TranslateService,public http: HttpClient,public config:CustomConfigrations) {
     console.log('Hello ProvidersProvider Provider');
   }
   AllNewRequestsForTranslate(TranslatorID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Request/AllNewRequestsForTranslate?TranslatorID="+TranslatorID)
+      return   this.http.get(this.config.Base_Url+"Request/AllNewRequestsForTranslate?TranslatorID="+TranslatorID)
     }
     else{
       this.general. presentToastConnection()
@@ -25,7 +27,7 @@ export class ProvidersProvider {
   // الموافقه علي طلب جديد +  للتاكد اذا الطلب دة حد اخده او لا
   UpdateRequestByTranslator_check(RequestID,TranslatorID,ReqTransStDate){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Request/UpdateRequestByTranslator?RequestID="+RequestID
+      return   this.http.get(this.config.Base_Url+"Request/UpdateRequestByTranslator?RequestID="+RequestID
       +"&TranslatorID="+TranslatorID+"&ReqTransStDate="+ReqTransStDate)
     }
     else{
@@ -36,7 +38,7 @@ export class ProvidersProvider {
     //  الطلبات الحالية  عند المترجم
     AllcurrentRequests(TranslatorID){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"Request/GetAllRequestsByTranslatorID?TranslatorID="+TranslatorID)
+        return   this.http.get(this.config.Base_Url+"Request/GetAllRequestsByTranslatorID?TranslatorID="+TranslatorID)
       }
       else{
         this.general. presentToastConnection()
@@ -68,7 +70,7 @@ export class ProvidersProvider {
                     let ex=target_file.name.split('.').pop();
                     console.log("++++"+ex)
                     if(ex=='pdf' || ex=='jpg' ||  ex=='jpeg' || ex=='png' || ex=='bmb'  ){
-                      const endpoint=this.helper.base_url+"Request/DoneRequestByTranslator?RequestID="+RequestID+
+                      const endpoint=this.config.Base_Url+"Request/DoneRequestByTranslator?RequestID="+RequestID+
                       "&TranslatorID="+TranslatorID+
                       "&RequestTranslatedFile="+target_file.name+"&ReqTransEndDate="+ReqTransEndDate
                       return this.http.post(endpoint, formData)
@@ -101,7 +103,7 @@ export class ProvidersProvider {
    //TranslationAppAPI/Request/RollBackRequestFromTranslator
    RollBackRequestFromTranslator(TranslatorID,RequestID,TranslatorRefusedReson){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Request/RollBackRequestFromTranslator?RequestID="+RequestID+"&TranslatorID="+TranslatorID+"&TranslatorRefusedReson="+TranslatorRefusedReson)
+      return   this.http.get(this.config.Base_Url+"Request/RollBackRequestFromTranslator?RequestID="+RequestID+"&TranslatorID="+TranslatorID+"&TranslatorRefusedReson="+TranslatorRefusedReson)
     }
     else{
       this.general. presentToastConnection()
@@ -113,7 +115,7 @@ export class ProvidersProvider {
  // بانتظار التدقيق عند المترجم  -- بالطلبات الجديدة للتدقيق
   GetAllRequestsDoneForReview(ReviewerID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Request/GetAllRequestsDoneForReview?ReviewerID="+ReviewerID)
+      return   this.http.get(this.config.Base_Url+"Request/GetAllRequestsDoneForReview?ReviewerID="+ReviewerID)
     }
     else{
       this.general. presentToastConnection()
@@ -123,7 +125,7 @@ export class ProvidersProvider {
 // ------------------------------------6- UpdateRequestDoneByReviewer ----------------------------------//
 UpdateRequestByReviewer(RequestID,ReviewerID,ReqRevStDate){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Request/UpdateRequestByReviewer?RequestID="+RequestID
+    return   this.http.get(this.config.Base_Url+"Request/UpdateRequestByReviewer?RequestID="+RequestID
     +"&ReviewerID="+ReviewerID+"&RqRevStDate="+ReqRevStDate)
   }
   else{
@@ -134,7 +136,7 @@ UpdateRequestByReviewer(RequestID,ReviewerID,ReqRevStDate){
 
 GetAllRequestsByReviewerID(ReviewerID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Request/GetAllRequestsByReviewerID?ReviewerID="+ReviewerID)
+    return   this.http.get(this.config.Base_Url+"Request/GetAllRequestsByReviewerID?ReviewerID="+ReviewerID)
   }
   else{
     this.general. presentToastConnection()
@@ -153,12 +155,12 @@ formData.append('ReqRevEndDate', ReqRevEndDate);
 console.log("RequestReviewedFile name     :"+ file.name)
 
     if(navigator.onLine){
-     // return   this.http.get(this.helper.base_url+"Request/UpdateRequestDoneByReviewer?RequestID="+RequestID+"&ReviewerID="+ReviewerID)
+     // return   this.http.get(this.config.Base_Url+"Request/UpdateRequestDoneByReviewer?RequestID="+RequestID+"&ReviewerID="+ReviewerID)
      if(file.name!=undefined){
       let ex=file.name.split('.').pop();
       console.log("++++"+ex)
       if(ex=='pdf' || ex=='jpg' ||  ex=='jpeg' || ex=='png' || ex=='bmb' ){
-        const endpoint=this.helper.base_url+"Request/UpdateRequestDoneByReviewer?RequestID="+RequestID
+        const endpoint=this.config.Base_Url+"Request/UpdateRequestDoneByReviewer?RequestID="+RequestID
         +"&ReviewerID="+ReviewerID+"&RequestReviewedFile="+file.name
         +"&RqRevEndDate="+ReqRevEndDate
         return this.http.post(endpoint, formData)
@@ -195,12 +197,12 @@ console.log("RequestReviewedFile name     :"+ file.name)
     console.log("RequestReviewedFile name     :"+ file.name)
 
     if(navigator.onLine){
-     // return   this.http.get(this.helper.base_url+"Request/UpdateRequestDoneByReviewer?RequestID="+RequestID+"&ReviewerID="+ReviewerID)
+     // return   this.http.get(this.config.Base_Url+"Request/UpdateRequestDoneByReviewer?RequestID="+RequestID+"&ReviewerID="+ReviewerID)
      if(file.name!=undefined){
       let ex=file.name.split('.').pop();
       console.log("++++"+ex)
       if(ex=='pdf' || ex=='jpg' || ex=='png' ||ex=='jpeg' || ex=='bmb' ){
-        const endpoint=this.helper.base_url+"Request/RejectRequestByReviewer?RequestID="+RequestID+"&ReviewerID="+ReviewerID+"&RequestReviewedFile="+file.name
+        const endpoint=this.config.Base_Url+"Request/RejectRequestByReviewer?RequestID="+RequestID+"&ReviewerID="+ReviewerID+"&RequestReviewedFile="+file.name
         return this.http.post(endpoint, formData)
       }else{
         const toast = this.toastCtrl.create({

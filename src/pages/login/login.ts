@@ -215,6 +215,7 @@ export class LoginPage {
         console.log(' before login this.helper.registrationId : '+   this.helper.registrationId)
       
       //  if(this.helper.registrationId!=''){
+        this.storage.set('UserDeviceID',this.helper.registrationId)
             this.user.sign_in(this.myform.value,this.helper.registrationId).subscribe(
                   (res:any)=>{
                     loading.dismiss()
@@ -268,15 +269,7 @@ export class LoginPage {
                         .subscribe((val:any)=>{
                           if(val=="True"){
                             console.log('CheckCompleteDataFromDirectReg  true')
-                            // if(res.UserData[0].UserType==1){
-                            //   this.navCtrl.setRoot('HometypePage')
-                            //   this.storage.set('Trans_upgrade',false)
-                            // }
-                            // else {
-                            //   this.navCtrl.setRoot('MainPage',{'user_type':res.UserData[0].UserType})
-                            //   console.log("this user has upgraded his account")
-                            //   this.storage.set('Trans_upgrade',true)
-                            // }
+                        
                             console.log('user types  : '+JSON.stringify(res.Type))
                             this.navCtrl.setRoot('MainPage',{'Types':res.Type})
                           }else{

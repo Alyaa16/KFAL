@@ -3,14 +3,17 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HelperProvider } from '../helper/helper';
 import { ToastController } from 'ionic-angular';
-import { Http, RequestOptions, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { GeneralProvider } from '../general/general';
+import { CustomConfigrations } from '../../CustomConfigrations';
 
 @Injectable()
 export class ClientProvider {
    url:string=''
    lang_url:string=''
-  constructor(public general:GeneralProvider, public http1:Http,public toastCtrl:ToastController,private translate: TranslateService,public http: HttpClient,public helper:HelperProvider) {
+  constructor(public general:GeneralProvider, public http1:Http,private config:CustomConfigrations,
+    public toastCtrl:ToastController,private translate: TranslateService,
+    public http: HttpClient,public helper:HelperProvider) {
     console.log('Hello ClientProvider Provider');
   }
 
@@ -18,7 +21,7 @@ export class ClientProvider {
     //string Name, string Email, string Password, short UserType, string Gender
   // UserEmail  Name   Password     Gender
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/Registration?Name="+params.Name
+      return   this.http.get(this.config.Base_Url+"User/Registration?Name="+params.Name
       +"&Email="+params.UserEmail+
       "&Password="+params.Password+
       "&UserType=1"+
@@ -34,7 +37,7 @@ export class ClientProvider {
     //int UserID, int CountryID, int CityID, string Address, int Age, string Lat, string Long
 
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/CompleteRegistration?UserID="+UserID+"&CountryID="+CountryID+"&CityID="+CityID+"&Address="+Address+"&Age="+Age+"&Lat=10&Long=20")
+      return   this.http.get(this.config.Base_Url+"User/CompleteRegistration?UserID="+UserID+"&CountryID="+CountryID+"&CityID="+CityID+"&Address="+Address+"&Age="+Age+"&Lat=10&Long=20")
     }
     else{
       this.general.presentToastConnection()
@@ -43,7 +46,7 @@ export class ClientProvider {
 
   CheckVerificationEmailCode(UserEmail ,Code){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/CheckVerificationEmailCode?Email="+UserEmail +"&VerificationCode="+Code )
+      return   this.http.get(this.config.Base_Url+"User/CheckVerificationEmailCode?Email="+UserEmail +"&VerificationCode="+Code )
     }
     else{
       this.general.presentToastConnection()
@@ -53,7 +56,7 @@ export class ClientProvider {
   sign_in(params,DeviceID){
     console.log('login services : '+DeviceID)
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/Login?Email="+params.UserEmail+"&Password="+params.Password+"&DeviceID="+DeviceID)
+      return   this.http.get(this.config.Base_Url+"User/Login?Email="+params.UserEmail+"&Password="+params.Password+"&DeviceID="+DeviceID)
     }
     else{
       this.general.presentToastConnection()
@@ -62,7 +65,7 @@ export class ClientProvider {
 
   SendForgetPassword(Email){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/SendForgetPassword?Email="+Email)
+      return   this.http.get(this.config.Base_Url+"User/SendForgetPassword?Email="+Email)
     }
     else{
       this.general.presentToastConnection()
@@ -71,7 +74,7 @@ export class ClientProvider {
 
   ConfirmResetPassword(params){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/ConfirmResetPassword?Email="+params.Email+"&VerficationCode="+params.VerficationCode+"&NewPassword="+params.NewPassword)
+      return   this.http.get(this.config.Base_Url+"User/ConfirmResetPassword?Email="+params.Email+"&VerficationCode="+params.VerficationCode+"&NewPassword="+params.NewPassword)
     }
     else{
       this.general.presentToastConnection()
@@ -80,7 +83,7 @@ export class ClientProvider {
 
   AddUserComplain( UserID,date,CompalinText){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Other/AddUserComplain?UserID="+UserID+"&CompalinText="+CompalinText+"&Date="+date)
+      return   this.http.get(this.config.Base_Url+"Other/AddUserComplain?UserID="+UserID+"&CompalinText="+CompalinText+"&Date="+date)
     }
     else{
       this.general. presentToastConnection()
@@ -121,7 +124,7 @@ CreateRequest(RequestDate,UserID,OriginalLangID,TargetLangID,RequestDeadlineHour
       console.log("++++"+ex)
      // if(ex=='pdf' || ex=='jpg' || ex=='png' || ex=='bmb' ){
 
-        const endpoint=this.helper.base_url+"Request/AddRequest?RequestDate="
+        const endpoint=this.config.Base_Url+"Request/AddRequest?RequestDate="
         +RequestDate+"&UserID="+UserID+
         "&OriginalLangID="+OriginalLangID+
         "&TargetLangID="+TargetLangID+
@@ -186,7 +189,7 @@ UpdateRequest(RequestID,RequestCode,RequestDate,UserID,OriginalLangID,
       this.helper.dismissLoading()
     }  else if(OrginalFile==null){
       this.helper.dismissLoading()
-         const endpoint=this.helper.base_url+"Request/UpdateRequest?RequestID="+RequestID+
+         const endpoint=this.config.Base_Url+"Request/UpdateRequest?RequestID="+RequestID+
           "&RequestCode="+RequestCode+
           "&RequestDate="+RequestDate+
           "&UserID="+UserID+
@@ -205,7 +208,7 @@ UpdateRequest(RequestID,RequestCode,RequestDate,UserID,OriginalLangID,
         }
         else{
           this.helper.dismissLoading()
-          const endpoint=this.helper.base_url+"Request/UpdateRequest?RequestID="+RequestID+
+          const endpoint=this.config.Base_Url+"Request/UpdateRequest?RequestID="+RequestID+
           "&RequestCode="+RequestCode+
           "&RequestDate="+RequestDate+
           "&UserID="+UserID+
@@ -230,7 +233,7 @@ UpdateRequest(RequestID,RequestCode,RequestDate,UserID,OriginalLangID,
 
 cancel_new_request(RequestID,RequestCode){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Request/CancelRequest?RequestID="+RequestID+"&RequestCod="+RequestCode)
+    return   this.http.get(this.config.Base_Url+"Request/CancelRequest?RequestID="+RequestID+"&RequestCod="+RequestCode)
   }
   else{
     this.general. presentToastConnection()
@@ -240,7 +243,7 @@ cancel_new_request(RequestID,RequestCode){
 
 GetAllRequestsByUserId(UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Request/GetRequestByUserID?UserID="+UserID)
+    return   this.http.get(this.config.Base_Url+"Request/GetRequestByUserID?UserID="+UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -249,7 +252,7 @@ GetAllRequestsByUserId(UserID){
 
 GetRequestByID(RequestID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Request/GetRequestByID?RequestID="+RequestID)
+    return   this.http.get(this.config.Base_Url+"Request/GetRequestByID?RequestID="+RequestID)
   }
   else{
     this.general. presentToastConnection()
@@ -258,7 +261,7 @@ GetRequestByID(RequestID){
 
 GetFeedbackForRequest(RequestID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Other/GetFeedbackForRequest?RequestID="+RequestID)
+    return   this.http.get(this.config.Base_Url+"Other/GetFeedbackForRequest?RequestID="+RequestID)
   }
   else{
     this.general. presentToastConnection()
@@ -267,7 +270,7 @@ GetFeedbackForRequest(RequestID){
 
 GetUserDataByUserID(UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"User/GetUserDataByUserID?UserID="+UserID)
+    return   this.http.get(this.config.Base_Url+"User/GetUserDataByUserID?UserID="+UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -276,7 +279,7 @@ GetUserDataByUserID(UserID){
 
 UpdateProfile(UserID,Email,CV,Languages){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"User/UpdateProfile?UserID="+UserID+"&Email="+Email+"&CV="+CV+"&Languages="+Languages)
+    return   this.http.get(this.config.Base_Url+"User/UpdateProfile?UserID="+UserID+"&Email="+Email+"&CV="+CV+"&Languages="+Languages)
   }
   else{
     this.general. presentToastConnection()
@@ -285,7 +288,7 @@ UpdateProfile(UserID,Email,CV,Languages){
 
 CloseRequest(RequestID,UserID,RateNumber,Comments){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Request/CloseRequest?RequestID="+RequestID+"&UserID="+UserID+"&RateNumber="+RateNumber+"&Comments="+Comments)
+    return   this.http.get(this.config.Base_Url+"Request/CloseRequest?RequestID="+RequestID+"&UserID="+UserID+"&RateNumber="+RateNumber+"&Comments="+Comments)
   }
   else{
     this.general. presentToastConnection()
@@ -294,7 +297,7 @@ CloseRequest(RequestID,UserID,RateNumber,Comments){
 
 RollBackRequestFromUser(RequestID,UserID,RefusedReson){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Request/RollBackRequestFromUser?RequestID="+RequestID+"&UserID="+UserID+"&RefusedReson="+RefusedReson)
+    return   this.http.get(this.config.Base_Url+"Request/RollBackRequestFromUser?RequestID="+RequestID+"&UserID="+UserID+"&RefusedReson="+RefusedReson)
   }
   else{
     this.general. presentToastConnection()
@@ -303,7 +306,7 @@ RollBackRequestFromUser(RequestID,UserID,RefusedReson){
 
 GetUserWalletPointsByUserID(UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"User/GetUserWalletPointsByUserID?UserID="+UserID)
+    return   this.http.get(this.config.Base_Url+"User/GetUserWalletPointsByUserID?UserID="+UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -319,7 +322,7 @@ upgrade_client_account(UserID,cv,Languages){
     formData.append('Languages',JSON.stringify(Languages));
       console.log( cv.name)
   if(navigator.onLine){
-    const endpoint=this.helper.base_url+"User/UpgradeUser?UserID="+UserID+"&CV="+cv.name //.split('.').slice(0, -1).join('.') //+"&Languages="+JSON.stringify(Languages)
+    const endpoint=this.config.Base_Url+"User/UpgradeUser?UserID="+UserID+"&CV="+cv.name //.split('.').slice(0, -1).join('.') //+"&Languages="+JSON.stringify(Languages)
     return this.http.post(endpoint, JSON.stringify(formData),{headers:headers})
   }
   else{
@@ -334,7 +337,7 @@ UpgradeUserWithoutLang(UserID,cv,Languages,UserType){
     formData.append('UserID', UserID);
     formData.append('CV', null);
     if(navigator.onLine){
-        const endpoint=this.helper.base_url+"User/UpgradeUserWithoutLang?UserID="+UserID+"&CV=null&UserType="+UserType //.split('.').slice(0, -1).join('.') //+"&Languages="+JSON.stringify(Languages)
+        const endpoint=this.config.Base_Url+"User/UpgradeUserWithoutLang?UserID="+UserID+"&CV=null&UserType="+UserType //.split('.').slice(0, -1).join('.') //+"&Languages="+JSON.stringify(Languages)
         return this.http.post(endpoint,formData)
     }
     else{
@@ -347,7 +350,7 @@ UpgradeUserWithoutLang(UserID,cv,Languages,UserType){
     formData.append('CV', cv);
       console.log( cv.name)
     if(navigator.onLine){
-        const endpoint=this.helper.base_url+"User/UpgradeUserWithoutLang?UserID="+UserID+"&CV="+cv.name+"&UserType="+UserType //.split('.').slice(0, -1).join('.') //+"&Languages="+JSON.stringify(Languages)
+        const endpoint=this.config.Base_Url+"User/UpgradeUserWithoutLang?UserID="+UserID+"&CV="+cv.name+"&UserType="+UserType //.split('.').slice(0, -1).join('.') //+"&Languages="+JSON.stringify(Languages)
         return this.http.post(endpoint,formData)
     }
     else{
@@ -358,11 +361,8 @@ UpgradeUserWithoutLang(UserID,cv,Languages,UserType){
 
 UpgradeRequest(UserID,UserTypeOLd,UserTypeNew,Fk_SpecializationParentID,FK_SpecializationChildID,Languages){
   if(navigator.onLine){
-    let header=new HttpHeaders()
-    let body={
-      'Languages': JSON.stringify( Languages)
-    }
-    this.url= this.helper.base_url+"UpgradeRequest/AddUpgradeRequest?UserID="+UserID+"&UserTypeOLd="+UserTypeOLd+"&UserTypeNew="+UserTypeNew
+  
+    this.url= this.config.Base_Url+"UpgradeRequest/AddUpgradeRequest?UserID="+UserID+"&UserTypeOLd="+UserTypeOLd+"&UserTypeNew="+UserTypeNew
      +"&Fk_SpecializationParentID="+Fk_SpecializationParentID+"&FK_SpecializationChildID="+FK_SpecializationChildID
    for(let i=0;i<Languages.length;i++){
      console.log(Languages[i])
@@ -382,7 +382,7 @@ UpgradeRequest1(UserID,UserTypeOLd,UserTypeNew,Fk_SpecializationParentID,FK_Spec
     let formData=new FormData;
     formData.append('', cv);
     formData.append('OrginalFile', document);
-    this.url= this.helper.base_url+"UpgradeRequest/AddUpgradeRequest?UserID="+UserID+"&UserTypeOLd="+UserTypeOLd+"&UserTypeNew="+UserTypeNew
+    this.url= this.config.Base_Url+"UpgradeRequest/AddUpgradeRequest?UserID="+UserID+"&UserTypeOLd="+UserTypeOLd+"&UserTypeNew="+UserTypeNew
      +"&Fk_SpecializationParentID="+Fk_SpecializationParentID+"&FK_SpecializationChildID="+FK_SpecializationChildID
      +"&cv"+cv.name+"&document"+document.name
 
@@ -404,7 +404,7 @@ UploadUpgReqFile(ReqID,file){
   if(navigator.onLine){
     const formData: FormData = new FormData();
     formData.append('IMG', file);
-    return   this.http.post(this.helper.base_url+"UpgradeRequest/UploadUpgReqFile/"+ReqID,formData)
+    return   this.http.post(this.config.Base_Url+"UpgradeRequest/UploadUpgReqFile/"+ReqID,formData)
   }
   else{
     this.general. presentToastConnection()
@@ -417,7 +417,7 @@ UploadUpgUserDocument(ReqID,file){
   if(navigator.onLine){
     const formData: FormData = new FormData();
     formData.append('IMG', file);
-    return   this.http.post(this.helper.base_url+"UpgradeRequest/UploadUpgUserDocument/"+ReqID,formData)
+    return   this.http.post(this.config.Base_Url+"UpgradeRequest/UploadUpgUserDocument/"+ReqID,formData)
   }
   else{
     this.general. presentToastConnection()
@@ -427,7 +427,7 @@ UploadUpgUserDocument(ReqID,file){
 
 GetUpgradeRequestsByUserID(userid){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"UpgradeRequest/GetUpgradeRequestsByUserID?FK_User_ID="+userid)
+    return   this.http.get(this.config.Base_Url+"UpgradeRequest/GetUpgradeRequestsByUserID?FK_User_ID="+userid)
   }
   else{
     this.general. presentToastConnection()
@@ -437,7 +437,7 @@ GetUpgradeRequestsByUserID(userid){
 
 GetUserNotification(DeviceID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Notifications/GetUserNotification?DeviceID="+DeviceID)
+    return   this.http.get(this.config.Base_Url+"Notifications/GetUserNotification?DeviceID="+DeviceID)
   }
   else{
     this.general. presentToastConnection()
@@ -447,7 +447,7 @@ GetUserNotification(DeviceID){
 
 UpdateUserAccountType(AccountType_ID,UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"User/UpdateUserAccountType?AccountType_ID="+AccountType_ID+"&UserID="+UserID)
+    return   this.http.get(this.config.Base_Url+"User/UpdateUserAccountType?AccountType_ID="+AccountType_ID+"&UserID="+UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -457,7 +457,7 @@ UpdateUserAccountType(AccountType_ID,UserID){
 
 GetUserTypesByUserID(UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"User/GetUserTypesByUserID?UserID="+UserID)
+    return   this.http.get(this.config.Base_Url+"User/GetUserTypesByUserID?UserID="+UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -465,7 +465,7 @@ GetUserTypesByUserID(UserID){
 }
   // sign_in_touch_id(UserEmail,Password,DeviceID){
   //   if(navigator.onLine){
-  //     return   this.http.get(this.helper.base_url+"User/Login?Email="+UserEmail+"&Password="+Password+"&DeviceID="+DeviceID)
+  //     return   this.http.get(this.config.Base_Url+"User/Login?Email="+UserEmail+"&Password="+Password+"&DeviceID="+DeviceID)
   //    }
   //   else{
   //     this.general.presentToastConnection()

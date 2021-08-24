@@ -1,17 +1,17 @@
-    <ion-header style="background-color: #F2F2F2;">
-  <ion-navbar  hideBackButton>
-    <ion-row>
-      <ion-col col-1 (click)="dismiss()">
-        <ion-icon *ngIf="dir==true"  style="font-size: 35px;" name="ios-arrow-round-forward-outline"></ion-icon>
-        <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
-      </ion-col>
-      <ion-col col-10 style="text-align: center;    margin-top: 0px;">
-          <ion-title >{{"account_upgrade"|translate}}</ion-title>
-      </ion-col>
-      <ion-col col-1 >
-      </ion-col>
-    </ion-row>
-  </ion-navbar>
+<ion-header style="background-color: #F2F2F2;">
+      <ion-navbar  hideBackButton>
+        <ion-row>
+          <ion-col col-1 (click)="dismiss()">
+            <ion-icon *ngIf="dir==true"  style="font-size: 35px;" name="ios-arrow-round-forward-outline"></ion-icon>
+            <ion-icon *ngIf="dir==false"  style="font-size: 35px;" name="ios-arrow-round-back-outline"></ion-icon>
+          </ion-col>
+          <ion-col col-10 style="text-align: center;    margin-top: 0px;">
+              <ion-title >{{"account_upgrade"|translate}}</ion-title>
+          </ion-col>
+          <ion-col col-1 >
+          </ion-col>
+        </ion-row>
+      </ion-navbar>
 </ion-header>
 
 <ion-content padding style="background-color: #F2F2F2;padding-bottom: 0px;">
@@ -48,7 +48,7 @@
       <input  id="uploadBtn" type="file" class="upload" (change)="handleFileInput1($event,$event.target.files)"/>
     </div>
   </ion-item>
-
+<!-- this section must be modified to match the last updates -->
   <ion-item style="margin: 5px 0px;">
     <ion-label style="color:#FFAA45">{{ "upgrade to "|translate}}</ion-label>
     <ion-select  [(ngModel)]="upgradeType"     okText='{{"ok"|translate}}' cancelText='{{"cancel"|translate}}'  >

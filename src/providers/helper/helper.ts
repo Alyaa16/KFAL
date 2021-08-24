@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlertCmp, LoadingController } from 'ionic-angular';
-import { BehaviorSubject } from 'rxjs/Rx';
+import {  LoadingController } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable()
 export class HelperProvider {
@@ -22,16 +22,41 @@ export class HelperProvider {
   UserTypes:any=[];
   UserTypeCurrentState:any
   private theme: BehaviorSubject<String>;
-   // http://192.168.1.160:8899 local
-  // link to any file :https://kfal.careofme.net/Images/Artboard%20%E2%80%93%2036.png
-  // https://kfal.careofme.net  cloud
-  base_url:string="http://192.168.1.160:8899/TranslationAppAPI/"
+  private currentProfile=new BehaviorSubject(0);
+  private adminProfile=new BehaviorSubject(false);
+   
  
   constructor(public loadingCtrl:LoadingController,public translate: TranslateService,
       public http: HttpClient) {
     this.theme = new BehaviorSubject('dark-theme');
   }
 
+//------------------------------------- current profile  -------------------------------------------------//
+  set_currentProfile(newVal){
+     console.log('current profile id :'+newVal)
+     if(newVal==2){
+          this.set_admin(true);
+     }
+     if(newVal!=2){
+      this.set_admin(false);
+ }
+     this.currentProfile.next(newVal) ;
+  }
+  
+  getcurrentProfileObservable(): Observable<number>{
+    return this.currentProfile.asObservable();
+  }
+
+  set_admin(newVal){
+    console.log('current profile is admin :'+newVal)
+   
+    this.adminProfile.next(newVal) ;
+ }
+ 
+ getAdminObservable(): Observable<boolean>{
+   return this.adminProfile.asObservable();
+ }
+//----------------------------------------------------------------------------------------//
   // get device id from push plugin
   set_registration_id(va){
     console.log( 'helper service   registration id is :'+va);
@@ -108,7 +133,7 @@ export class HelperProvider {
   }
 
   SetCurrentActiveUserType(va){
-    //current account type id
+    //current account  type id
     console.log('current user type :  '+va);
     this.UserTypeCurrentState=va;
   }

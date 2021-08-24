@@ -26,17 +26,10 @@ export class MainPage {
      this.UserTypes=this.navParams.get('Types') ==undefined ? this.helper.UserTypes:this.navParams.get('Types')
      console.log('user types :  '+ JSON.stringify(this.UserTypes))
      console.log("constructor direction   :"+this.direction)
-        this.Isadmin= this.helper.isadmin
-        console.log(this.helper.isadmin)
-
-        // this.storage.get('isadmin').then(val=>{
-        //     if(val==true){
-        //       this.Isadmin=true
-        //     }else{
-        //      this.Isadmin=false
-        //     }
-        // })
-
+     
+        this.helper.getAdminObservable().subscribe((isAdmin:any)=>{
+          this.Isadmin=isAdmin;
+        })
 
         this.events.subscribe('language', (val)=>{
           console.log( "language    :"+ val)
@@ -108,10 +101,12 @@ export class MainPage {
   GoProfile(FK_UserTypeID, AccountType,UserID){
     console.log('go profile  :  ' +AccountType)
     console.log('user id :  '+UserID)
+    this.helper.set_currentProfile(FK_UserTypeID)
     this.helper.presentLoading()
    this.clientService.UpdateUserAccountType(AccountType,UserID).subscribe((res:any)=>{
      this.helper.dismissLoading()
      this.helper.SetCurrentActiveUserType(FK_UserTypeID)
+     if(FK_UserTypeID==1){ this.navCtrl.setRoot('OwnerHomePage') }
      if(FK_UserTypeID==3){ this.navCtrl.setRoot('HometypePage') }
      if(FK_UserTypeID==2){ this.navCtrl.setRoot('AdminHomePage') }
      if(FK_UserTypeID==4 ){ 

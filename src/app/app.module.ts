@@ -28,9 +28,9 @@ import { GeneralProvider } from '../providers/general/general';
 import { TestformsProvider } from '../providers/testforms/testforms';
 import { ControlpanelProvider } from '../providers/controlpanel/controlpanel';
 import { UpgradeRequestsProvider } from '../providers/upgrade-requests/upgrade-requests';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ExpandableHeaderComponent } from '../components/expandable-header/expandable-header';
-
+import { NgCircleProgressModule } from 'ng-circle-progress';
+import { CustomConfigrations } from '../CustomConfigrations';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'assets/i18n/', '.json');
 }
@@ -61,6 +61,7 @@ export function createTranslateLoader(http: HttpClient) {
         outerStrokeColor: "#FFAA45",
         animationDuration: 300,
         innerStrokeWidth:4,
+        
       }),
     TranslateModule.forRoot(),
     IonicStorageModule.forRoot(),
@@ -95,7 +96,8 @@ export function createTranslateLoader(http: HttpClient) {
     GeneralProvider,
     TestformsProvider,
     ControlpanelProvider,
-    UpgradeRequestsProvider
+    UpgradeRequestsProvider,
+    CustomConfigrations
   ]
 })
 export class AppModule {}

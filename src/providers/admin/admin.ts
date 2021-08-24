@@ -5,6 +5,7 @@ import { HelperProvider } from '../helper/helper';
 import { ToastController } from 'ionic-angular';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { GeneralProvider } from '../general/general';
+import { CustomConfigrations } from '../../CustomConfigrations';
 
 @Injectable()
 export class AdminProvider {
@@ -13,7 +14,7 @@ export class AdminProvider {
   UserType_url:string='';
   UserType_full_url:string=''
   constructor(public general:GeneralProvider,public http1:Http,public toastCtrl:ToastController,
-              private translate: TranslateService,public http: HttpClient,public helper:HelperProvider) {
+              private translate: TranslateService,public http: HttpClient,public config:CustomConfigrations) {
     console.log('Hello AdminProvider Provider');
   }
   // private link to create admin account
@@ -21,7 +22,7 @@ export class AdminProvider {
   sign_up_admin(){
     // http://kfal.careofme.net/TranslationAppAPI/User/Registration?Name=hani&Email=bareedon@gmail.com&Password=111&UserType=2&Gender=m&&Mobile=773363636
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/Registration?Name=salah&Email=hisham@nitcotek.com&Password=111&UserType=2&CountryID=1&CityID=1&Address=wewqweq&Age=23&Lat=10&Long=20")
+      return   this.http.get(this.config.Base_Url+"User/Registration?Name=salah&Email=hisham@nitcotek.com&Password=111&UserType=2&CountryID=1&CityID=1&Address=wewqweq&Age=23&Lat=10&Long=20")
     }
     else{
       this.general. presentToastConnection()
@@ -30,7 +31,7 @@ export class AdminProvider {
 
   ChangeBlockStatus(UserID,Status){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/ChangeBlockStatus?UserID="+UserID+"&Status="+Status)
+      return   this.http.get(this.config.Base_Url+"User/ChangeBlockStatus?UserID="+UserID+"&Status="+Status)
     }
     else{
       this.general. presentToastConnection()
@@ -39,7 +40,7 @@ export class AdminProvider {
 
   SendCustomNotification(Title,Body,UserType){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Request/SendCustomNotification?Title="+Title+"&Body="+Body+"&UserType="+UserType)
+      return   this.http.get(this.config.Base_Url+"Request/SendCustomNotification?Title="+Title+"&Body="+Body+"&UserType="+UserType)
     }
     else{
       this.general. presentToastConnection()
@@ -48,7 +49,7 @@ export class AdminProvider {
 
   GetUserData(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/GetUserData")
+      return   this.http.get(this.config.Base_Url+"User/GetUserData")
     }
     else{
       this.general. presentToastConnection()
@@ -57,7 +58,7 @@ export class AdminProvider {
 
   EvaluationSelect(providerType,rate){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Request/EvaluationSelect?FlagType="+providerType+"&FlagOrder="+rate)
+      return   this.http.get(this.config.Base_Url+"Request/EvaluationSelect?FlagType="+providerType+"&FlagOrder="+rate)
     }
     else{
       this.general. presentToastConnection()
@@ -66,7 +67,7 @@ export class AdminProvider {
 
   UpdateInformation(Rules,FAQ,AboutUs){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Other/UpdateInformation?InfoID=1&Rules="+Rules+"&FAQ="+FAQ+"&AboutUs="+AboutUs)
+      return   this.http.get(this.config.Base_Url+"Other/UpdateInformation?InfoID=1&Rules="+Rules+"&FAQ="+FAQ+"&AboutUs="+AboutUs)
     }
     else{
       this.general. presentToastConnection()
@@ -76,7 +77,7 @@ export class AdminProvider {
   GetAllCompalinsForAdmin()
   {
     if(navigator.onLine){
-      return this.http.get(this.helper.base_url+"Other/GetAllCompalinsForAdmin")
+      return this.http.get(this.config.Base_Url+"Other/GetAllCompalinsForAdmin")
     }
     else{
       this.general. presentToastConnection()
@@ -85,7 +86,7 @@ export class AdminProvider {
 
   ShowAllRequestsForAdmin(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Request/ShowAllRequestsForAdmin")
+      return   this.http.get(this.config.Base_Url+"Request/ShowAllRequestsForAdmin")
     }
     else{
       this.general. presentToastConnection()
@@ -94,7 +95,7 @@ export class AdminProvider {
   
   UpdateLanguageAcademicStatus(LangID, AcademicStatus){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Language/UpdateLanguageAcademicStatus?LangID="+ LangID+"&AcademicStatus="+AcademicStatus )
+      return   this.http.get(this.config.Base_Url+"Language/UpdateLanguageAcademicStatus?LangID="+ LangID+"&AcademicStatus="+AcademicStatus )
   
     }
     else{
@@ -105,7 +106,7 @@ export class AdminProvider {
 
   DirectAdminRegistration(params,FK_AdminID){
     if(navigator.onLine){   
-      this.UserType_full_url=this.helper.base_url+"User/DirectAdminRegistration?Name="+params.Name
+      this.UserType_full_url=this.config.Base_Url+"User/DirectAdminRegistration?Name="+params.Name
       +"&Email="+params.UserEmail+
       "&Gender="+params.Gender+
       "&Mobile="+params.Mobile+
@@ -126,7 +127,7 @@ export class AdminProvider {
 
   CheckCompleteDataFromDirectReg(UserID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/CheckCompleteDataFromDirectReg?UserID="+UserID)
+      return   this.http.get(this.config.Base_Url+"User/CheckCompleteDataFromDirectReg?UserID="+UserID)
     }
     else{
       this.general. presentToastConnection()
@@ -135,7 +136,7 @@ export class AdminProvider {
 
   CompleteUserData(UserID,Fk_SpecializationParentID,FK_SpecializationChildID,Languages){
     if(navigator.onLine){
-     this.url=this.helper.base_url+"User/CompleteUserData?UserID="+UserID+"&Fk_SpecializationParentID="+Fk_SpecializationParentID+"&FK_SpecializationChildID="+FK_SpecializationChildID
+     this.url=this.config.Base_Url+"User/CompleteUserData?UserID="+UserID+"&Fk_SpecializationParentID="+Fk_SpecializationParentID+"&FK_SpecializationChildID="+FK_SpecializationChildID
     
      for(let i=0;i<Languages.length;i++){
       console.log(Languages[i])
@@ -153,7 +154,7 @@ export class AdminProvider {
 // for admin only
 AddNewTopic(TopicName,TopicContent,Fk_SpecializationParentID,FK_SpecializationChildID,FK_LanguageID,Age, FK_UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Discussion/AddDiscussionTopic?TopicName="+TopicName+
+    return   this.http.get(this.config.Base_Url+"Discussion/AddDiscussionTopic?TopicName="+TopicName+
     "&TopicContent="+TopicContent+
     "&Fk_SpecializationParentID="+Fk_SpecializationParentID+
     "&FK_SpecializationChildID="+FK_SpecializationChildID+
@@ -167,7 +168,7 @@ AddNewTopic(TopicName,TopicContent,Fk_SpecializationParentID,FK_SpecializationCh
 
 joinDiscussionTable(FK_UserID,FK_EducationLevelID,Fk_SpecializationParentID,FK_SpecializationChildID,UniversityName,CollegeName){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Discussion/AddUserDiscussionRegistration?FK_UserID="+FK_UserID+
+    return   this.http.get(this.config.Base_Url+"Discussion/AddUserDiscussionRegistration?FK_UserID="+FK_UserID+
     "&FK_EducationLevelID="+FK_EducationLevelID+
     "&Fk_SpecializationParentID="+Fk_SpecializationParentID+
     "&FK_SpecializationChildID="+FK_SpecializationChildID+
@@ -182,7 +183,7 @@ joinDiscussionTable(FK_UserID,FK_EducationLevelID,Fk_SpecializationParentID,FK_S
 
 GetAllDiscussionTopicsByAdminID(UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Discussion/GetAllDiscussionTopicsByAdminID?UserID="+UserID)
+    return   this.http.get(this.config.Base_Url+"Discussion/GetAllDiscussionTopicsByAdminID?UserID="+UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -191,7 +192,7 @@ GetAllDiscussionTopicsByAdminID(UserID){
 
 GetAllDiscussionsByUserID(UserID){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Discussion/GetAllDiscussionsByUserID?UserID="+UserID)
+    return   this.http.get(this.config.Base_Url+"Discussion/GetAllDiscussionsByUserID?UserID="+UserID)
   }
   else{
     this.general. presentToastConnection()
@@ -201,7 +202,7 @@ GetAllDiscussionsByUserID(UserID){
 GetAllDiscussionLogsByDiscussionTopicID(DiscussionTopicID){
   // by discuss not by user id
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Discussion/GetAllDiscussionLogsByDiscussionTopicID?DiscussionTopicID="+DiscussionTopicID)
+    return   this.http.get(this.config.Base_Url+"Discussion/GetAllDiscussionLogsByDiscussionTopicID?DiscussionTopicID="+DiscussionTopicID)
   }
   else{
     this.general. presentToastConnection()
@@ -212,7 +213,7 @@ GetAllDiscussionLogsByDiscussionTopicID(DiscussionTopicID){
 
 AddDiscussionLog(Fk_UserID,Fk_DiscussionTopicID,UserDiscussionDetails,DiscussionDate){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"Discussion/AddDiscussionLog?Fk_UserID="+Fk_UserID+
+    return   this.http.get(this.config.Base_Url+"Discussion/AddDiscussionLog?Fk_UserID="+Fk_UserID+
     "&Fk_DiscussionTopicID="+Fk_DiscussionTopicID+
     "&UserDiscussionDetails="+UserDiscussionDetails+
     "&DiscussionDate="+DiscussionDate
@@ -226,7 +227,7 @@ AddDiscussionLog(Fk_UserID,Fk_DiscussionTopicID,UserDiscussionDetails,Discussion
 
 ChangeAccountTypeActivationState(AccountType_ID,ActiveState){
   if(navigator.onLine){
-    return   this.http.get(this.helper.base_url+"User/ChangeAccountTypeActivationState?AccountType_ID="+AccountType_ID+'&ActiveState='+ActiveState)
+    return   this.http.get(this.config.Base_Url+"User/ChangeAccountTypeActivationState?AccountType_ID="+AccountType_ID+'&ActiveState='+ActiveState)
   }
   else{
     this.general. presentToastConnection()

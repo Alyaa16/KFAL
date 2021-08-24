@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ViewController, Platform } from 'i
 import { Storage } from '@ionic/storage';
 import { AdminProvider } from '../../providers/admin/admin';
 import { GeneralProvider } from '../../providers/general/general';
+import { HelperProvider } from '../../providers/helper/helper';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,7 @@ export class AboutPage {
  isediting:boolean=false
  isadmin:boolean=false
   constructor(public viewCtrl:ViewController, public navCtrl: NavController,public platform:Platform,public general:GeneralProvider,
-              public navParams: NavParams,public admin:AdminProvider,private storage: Storage) {
+              public navParams: NavParams,public admin:AdminProvider,private storage: Storage,private helper:HelperProvider) {
                 this.dir=this.platform.isRTL
                 this.general.GetInformation().subscribe(
                   (res:any)=>{
@@ -24,12 +25,8 @@ export class AboutPage {
                   }
                 )
 
-                this.storage.get('isadmin').then(val=>{
-                  if(val==true){
-                    this.isadmin=true
-                  }else{
-                   this.isadmin=false
-                  }
+              this.helper.getAdminObservable().subscribe((isAdmin:any)=>{
+                this.isadmin=isAdmin;
               })
   }
 

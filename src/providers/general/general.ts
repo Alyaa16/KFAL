@@ -1,20 +1,22 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { HelperProvider } from '../helper/helper';
 import { ToastController } from 'ionic-angular';
-import { Http, RequestOptions, Headers } from '@angular/http';
+import { Http } from '@angular/http';
+import { CustomConfigrations } from '../../CustomConfigrations';
 
 @Injectable()
 export class GeneralProvider {
 
-  constructor(public http1:Http,public toastCtrl:ToastController,private translate: TranslateService,public http: HttpClient,public helper:HelperProvider) {
+  constructor(public http1:Http,public toastCtrl:ToastController,private translate: TranslateService,
+    public http: HttpClient,public helper:HelperProvider,private config:CustomConfigrations) {
     console.log('Hello GeneralProvider Provider');
   }
 
     GetCurrencies(){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"CountryCity/GetCurrencies")
+        return   this.http.get(this.config.Base_Url+"CountryCity/GetCurrencies")
       }
       else{
         this.presentToastConnection()
@@ -23,7 +25,7 @@ export class GeneralProvider {
     
     GetCountries(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"CountryCity/GetCountries")
+      return   this.http.get(this.config.Base_Url+"CountryCity/GetCountries")
     }
     else{
       this.presentToastConnection()
@@ -32,7 +34,7 @@ export class GeneralProvider {
 
   GetCityByCountryID(CountryID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"CountryCity/GetCityByCountryID?CountryID="+CountryID)
+      return   this.http.get(this.config.Base_Url+"CountryCity/GetCityByCountryID?CountryID="+CountryID)
     }
     else{
       this.presentToastConnection()
@@ -41,7 +43,7 @@ export class GeneralProvider {
 
   GetCities(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"CountryCity/GetCities")
+      return   this.http.get(this.config.Base_Url+"CountryCity/GetCities")
     }
     else{
       this.presentToastConnection()
@@ -53,7 +55,7 @@ export class GeneralProvider {
     formData.append('', UserID);
     formData.append('platform', platform); */
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"User/CreateInvitation?FK_UserIDSender="+UserID);
+      return   this.http.get(this.config.Base_Url+"User/CreateInvitation?FK_UserIDSender="+UserID);
     }
     else{
       this.presentToastConnection()
@@ -62,7 +64,7 @@ export class GeneralProvider {
 
   GetParentSp(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Specialization/GetParentSp")
+      return   this.http.get(this.config.Base_Url+"Specialization/GetParentSp")
     }
     else{
       this.presentToastConnection()
@@ -71,7 +73,7 @@ export class GeneralProvider {
 
   GetChildSp(SpParentID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Specialization/GetChildSp/"+SpParentID)
+      return   this.http.get(this.config.Base_Url+"Specialization/GetChildSp/"+SpParentID)
     }
     else{
       this.presentToastConnection()
@@ -80,7 +82,7 @@ export class GeneralProvider {
 
   GetDeadlines(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"DeadlineHours/GetDeadlineHours")
+      return   this.http.get(this.config.Base_Url+"DeadlineHours/GetDeadlineHours")
     }
     else{
       this.presentToastConnection()
@@ -101,7 +103,7 @@ export class GeneralProvider {
 
     Contact(MailTo,Subject,Body){
       if(navigator.onLine){
-          return   this.http.get(this.helper.base_url+'Other/ContactUs?MailTo='+MailTo+'&Subject='+Subject+'&Body='+Body)
+          return   this.http.get(this.config.Base_Url+'Other/ContactUs?MailTo='+MailTo+'&Subject='+Subject+'&Body='+Body)
         }
         else{
           this.presentToastConnection()
@@ -110,7 +112,7 @@ export class GeneralProvider {
 
     GetInformation(){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"Other/GetInformation")
+        return   this.http.get(this.config.Base_Url+"Other/GetInformation")
       }
       else{
         this.presentToastConnection()
@@ -119,7 +121,7 @@ export class GeneralProvider {
 
     GetAllUserTypes(){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"User/GetAllUserTypes")
+        return   this.http.get(this.config.Base_Url+"User/GetAllUserTypes")
       }
       else{
         this.presentToastConnection()

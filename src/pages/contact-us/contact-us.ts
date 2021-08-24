@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, Platform, ViewController, ToastCon
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
 import { GeneralProvider } from '../../providers/general/general';
+import { HelperProvider } from '../../providers/helper/helper';
 
 @IonicPage()
 @Component({
@@ -14,17 +15,13 @@ export class ContactUsPage {
   contactMessage:string=""
   contactTitle:string=""
   dir:boolean
-  constructor(public viewCtrl:ViewController, private translate: TranslateService,
+  constructor(public viewCtrl:ViewController, private translate: TranslateService,private helper:HelperProvider,
     public navCtrl: NavController, public navParams: NavParams,public general:GeneralProvider,
     public platform:Platform,private storage: Storage,public toastCtrl:ToastController) {
       this.dir=this.platform.isRTL
 
-    this.storage.get("Trans_user_type").then((val:any)=>{
-      if(val==2){
-        this.admin=true
-      }else{
-        this.admin=false
-      }
+    this.helper.getAdminObservable().subscribe((isAdmin:any)=>{
+      this.admin=isAdmin;
     })
   }
 

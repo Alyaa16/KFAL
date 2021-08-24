@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController, Platform } from 'ionic-angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Storage } from '@ionic/storage';
+import { ClientProvider } from '../../providers/client/client';
 
 @IonicPage()
 @Component({
@@ -17,7 +18,7 @@ admin:boolean
   constructor(public translate: TranslateService,public viewCtrl:ViewController,
 
               public navCtrl: NavController, public navParams: NavParams,private storage: Storage,
-              public platform:Platform) {
+              public platform:Platform,private user:ClientProvider) {
 
                 this.storage.get('notifications').then((val)=>{
                   if(val!=null){
@@ -29,6 +30,14 @@ admin:boolean
 
                 })
 
+                this.storage.get('UserDeviceID').then((UserDeviceID)=>{
+                  if(UserDeviceID!=null){
+                      this.user.GetUserNotification(UserDeviceID).subscribe((res:any)=>{
+                      console.log('user notifications : '+JSON.stringify(res))
+                    })
+                  }
+                })
+                
                 this.dir=this.platform.isRTL
                 this.storage.get("Trans_user_type").then((val:any)=>{
                   if(val==2){

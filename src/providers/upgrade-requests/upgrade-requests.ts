@@ -6,14 +6,15 @@ import { ToastController } from 'ionic-angular';
 import { GeneralProvider } from '../general/general';
 import { HelperProvider } from '../helper/helper';
 import moment from 'moment';
+import { CustomConfigrations } from '../../CustomConfigrations';
 
 @Injectable()
 export class UpgradeRequestsProvider {
 
   url:string=''
   lang_url:string=''
- constructor(public general:GeneralProvider, public http1:Http,public toastCtrl:ToastController,
-            private translate: TranslateService,public http: HttpClient,public helper:HelperProvider) {
+ constructor(public general:GeneralProvider, public http1:Http,public toastCtrl:ToastController,private helper:HelperProvider,
+            private translate: TranslateService,public http: HttpClient,public config:CustomConfigrations) {
                   console.log('Hello UpgradeRequests Provider');
  }
 
@@ -27,7 +28,7 @@ export class UpgradeRequestsProvider {
         let body={
           'Languages': JSON.stringify( Languages)
         }
-        this.url= this.helper.base_url+"UpgradeRequest/AddUpgradeRequest?UserID="+UserID+"&UserTypeOLd="+UserTypeOLd+"&UserTypeNew="+UserTypeNew
+        this.url= this.config.Base_Url+"UpgradeRequest/AddUpgradeRequest?UserID="+UserID+"&UserTypeOLd="+UserTypeOLd+"&UserTypeNew="+UserTypeNew
         +"&Fk_SpecializationParentID="+Fk_SpecializationParentID+"&FK_SpecializationChildID="+FK_SpecializationChildID
       for(let i=0;i<Languages.length;i++){
         console.log(Languages[i])
@@ -46,7 +47,7 @@ export class UpgradeRequestsProvider {
       if(navigator.onLine){
         const formData: FormData = new FormData();
         formData.append('IMG', file);
-        return   this.http.post(this.helper.base_url+"UpgradeRequest/UploadUpgReqFile/"+ReqID,formData)
+        return   this.http.post(this.config.Base_Url+"UpgradeRequest/UploadUpgReqFile/"+ReqID,formData)
       }
       else{
         this.general. presentToastConnection()
@@ -55,7 +56,7 @@ export class UpgradeRequestsProvider {
 
     GetUpgradeRequestDetailsByUserID(FK_User_ID){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/GetUpgradeRequestDetailsByUserID?FK_User_ID="+FK_User_ID)
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/GetUpgradeRequestDetailsByUserID?FK_User_ID="+FK_User_ID)
       }
       else{
         this.general. presentToastConnection()
@@ -65,7 +66,7 @@ export class UpgradeRequestsProvider {
     // user recieve test form
     UpgradeRequestDetailsUser(UpgReqDetails_ID){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/UpgradeRequestDetailsUser?UpgReqDetails_ID="+UpgReqDetails_ID+
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/UpgradeRequestDetailsUser?UpgReqDetails_ID="+UpgReqDetails_ID+
         "&UserRecivedDate="+moment(new Date()).format('llll'))
       }
       else{
@@ -88,7 +89,7 @@ export class UpgradeRequestsProvider {
           formData.append('UpgReqDetails_ID', UpgReqDetails_ID);
           formData.append('TranslatedTestFormDate',moment(new Date()).format('llll'));
           formData.append('TranslatedTestForm', TranslatedTestForm); // file
-          return   this.http.post(this.helper.base_url+"UpgradeRequest/UpgradeRequestDetailsUserTranslatedTestForm?UpgReqDetails_ID="+UpgReqDetails_ID+
+          return   this.http.post(this.config.Base_Url+"UpgradeRequest/UpgradeRequestDetailsUserTranslatedTestForm?UpgReqDetails_ID="+UpgReqDetails_ID+
         "&TranslatedTestForm="+TranslatedTestForm+"&TranslatedTestFormDate="+moment(new Date()).format('llll'),formData)
         }
       }
@@ -103,7 +104,7 @@ export class UpgradeRequestsProvider {
 
     GetAllUpgradeRequests(){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/GetUpgradeRequests")
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/GetUpgradeRequests")
       }
       else{
         this.general.presentToastConnection()
@@ -113,7 +114,7 @@ export class UpgradeRequestsProvider {
     GetUpgradeRequestsByLangID(Fk_LangID)
     {
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/GetUpgradeRequestsByLangID?Fk_LangID="+Fk_LangID)
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/GetUpgradeRequestsByLangID?Fk_LangID="+Fk_LangID)
       }
       else{
         this.general.presentToastConnection()
@@ -122,7 +123,7 @@ export class UpgradeRequestsProvider {
 
     GetAllRequestsToAdminWaitingForAccept(){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/GetAllRequestsToAdminWaitingForAccept")
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/GetAllRequestsToAdminWaitingForAccept")
       }
       else{
         this.general. presentToastConnection()
@@ -133,7 +134,7 @@ export class UpgradeRequestsProvider {
 
     GetUpgradeRequestByReqID(ReqID){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/GetUpgradeRequestByReqID?UpgReq_ID="+ReqID)
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/GetUpgradeRequestByReqID?UpgReq_ID="+ReqID)
       }
       else{
         this.general.presentToastConnection()
@@ -144,7 +145,7 @@ export class UpgradeRequestsProvider {
 
     Directactionforupgradebyadmin(Req_ID,ReqStatus,Notes){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/AdminDirectUpgrade_Requests?Req_ID="+Req_ID+
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/AdminDirectUpgrade_Requests?Req_ID="+Req_ID+
         "&ReqStatus="+ReqStatus
         +"&ReqStatusDate="+moment(new Date()).format('llll')+"&Notes="+Notes)
       }
@@ -156,7 +157,7 @@ export class UpgradeRequestsProvider {
     // admin send test form to client
     UpgradeRequestDetails(FK_UpgReq_ID,FK_TestForm_ID,TestFormSendUser){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/AddUpgradeRequestDetails?FK_UpgReq_ID="+FK_UpgReq_ID+
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/AddUpgradeRequestDetails?FK_UpgReq_ID="+FK_UpgReq_ID+
         "&FK_TestForm_ID="+FK_TestForm_ID
         +"&TestFormSendDate="+moment(new Date()).format('llll')+"&TestFormSendUser="+TestFormSendUser)
       }
@@ -168,7 +169,7 @@ export class UpgradeRequestsProvider {
     // admin final desicion after send test form to client
     UpgradeRequestDetailsAdmin(UpgReqDetails_ID,ReqStatus){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/UpgradeRequestDetailsAdmin?UpgReqDetails_ID="+UpgReqDetails_ID+
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/UpgradeRequestDetailsAdmin?UpgReqDetails_ID="+UpgReqDetails_ID+
       "&ReqStatusDate="+moment(new Date()).format('llll')+
       "&ReqStatus="+ReqStatus)
       }
@@ -179,7 +180,7 @@ export class UpgradeRequestsProvider {
    
     AdminAcceptUpgradeRequests(Req_ID,ReqDate,ReqState){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/AdminUpgradeRequests?Req_ID="+Req_ID+"&ReqDate="+ReqDate+"&ReqState="+ReqState)
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/AdminUpgradeRequests?Req_ID="+Req_ID+"&ReqDate="+ReqDate+"&ReqState="+ReqState)
       }
       else{
         this.general. presentToastConnection()
@@ -188,7 +189,7 @@ export class UpgradeRequestsProvider {
 
     AdminUpgradeRequests(Req_ID,ReqDate){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"User/UpgradeRequest?Req_ID="+Req_ID+"&ReqDate="+ReqDate)
+        return   this.http.get(this.config.Base_Url+"User/UpgradeRequest?Req_ID="+Req_ID+"&ReqDate="+ReqDate)
       }
       else{
         this.general. presentToastConnection()
@@ -198,7 +199,7 @@ export class UpgradeRequestsProvider {
     UpdateRequestToApproveByAdmin(AdminID,RequstID,StatusID)
     {
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"Request/UpdateRequestToApproveByAdmin?AdminID="+AdminID+
+        return   this.http.get(this.config.Base_Url+"Request/UpdateRequestToApproveByAdmin?AdminID="+AdminID+
         "&RequstID="+RequstID+"&StatusID="+StatusID)
       }
       else{
@@ -209,7 +210,7 @@ export class UpgradeRequestsProvider {
     UpdateRequestToRefusedByAdmin(AdminID, RequstID, StatusID)
     {
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"Request/UpdateRequestToRefusedByAdmin?AdminID="+AdminID+
+        return   this.http.get(this.config.Base_Url+"Request/UpdateRequestToRefusedByAdmin?AdminID="+AdminID+
         "&RequstID="+RequstID+"&StatusID="+StatusID)
       }
       else{
@@ -221,7 +222,7 @@ export class UpgradeRequestsProvider {
     GetRequestsTestFormsForReviewer(Reviewer_ID)
     {
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/GetRequestsTestFormsForReviewer?Reviewer_ID="+Reviewer_ID)
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/GetRequestsTestFormsForReviewer?Reviewer_ID="+Reviewer_ID)
       }
       else{
         this.general. presentToastConnection()
@@ -231,7 +232,7 @@ export class UpgradeRequestsProvider {
     // 8- reviewer recive a translated test form
     UpgradeRequestDetailsReviewer(UpgReqDetails_ID,FK_Reviewer_ID){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/UpgradeRequestDetailsReviewer?UpgReqDetails_ID="+UpgReqDetails_ID+
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/UpgradeRequestDetailsReviewer?UpgReqDetails_ID="+UpgReqDetails_ID+
         "&FK_Reviewer_ID="+FK_Reviewer_ID+"&ReviewerReceivedDate="+moment(new Date()).format('llll'))
       }
       else{
@@ -242,7 +243,7 @@ export class UpgradeRequestsProvider {
     //9- reviewer complete
     UpgradeRequestDetailsReviewerFinishReview(UpgReqDetails_ID,ReviewerComment ,ReviewerStatus){
       if(navigator.onLine){
-        return   this.http.get(this.helper.base_url+"UpgradeRequest/UpgradeRequestDetailsReviewerFinishReview?UpgReqDetails_ID="+UpgReqDetails_ID+
+        return   this.http.get(this.config.Base_Url+"UpgradeRequest/UpgradeRequestDetailsReviewerFinishReview?UpgReqDetails_ID="+UpgReqDetails_ID+
       "&ReviewerFinishedDate="+moment(new Date()).format('llll')+
       "&ReviewerComment="+ReviewerComment+"&ReviewerStatus="+ReviewerStatus)
       }

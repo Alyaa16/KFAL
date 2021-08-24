@@ -2,12 +2,13 @@ import { HelperProvider } from './../helper/helper';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { GeneralProvider } from '../general/general';
+import { CustomConfigrations } from '../../CustomConfigrations';
 
 
 @Injectable()
 export class ControlpanelProvider {
 
-  constructor(public http: HttpClient,private helper:HelperProvider,private general:GeneralProvider) {
+  constructor(public http: HttpClient,private config:CustomConfigrations,private general:GeneralProvider) {
     console.log('Hello ControlpanelProvider Provider');
   }
 
@@ -15,7 +16,7 @@ export class ControlpanelProvider {
 
   AddDeadlineHours(Hour,Price){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Other/AddDeadlineHours?Hour="+Hour+"&Price="+Price)
+      return   this.http.get(this.config.Base_Url+"Other/AddDeadlineHours?Hour="+Hour+"&Price="+Price)
     }
     else{
       this.general. presentToastConnection()
@@ -23,7 +24,7 @@ export class ControlpanelProvider {
   }
   UpdateDeadlineHours(DeadlineID,Hour,Price){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Other/UpdateDeadlineHours?DeadlineID="+DeadlineID+"&Hour="+Hour+"&Price="+Price )
+      return   this.http.get(this.config.Base_Url+"Other/UpdateDeadlineHours?DeadlineID="+DeadlineID+"&Hour="+Hour+"&Price="+Price )
     }
     else{
       this.general. presentToastConnection()
@@ -32,7 +33,7 @@ export class ControlpanelProvider {
 
   DeleteDeadlineHours(DeadlineID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Other/DeleteDeadlineHours?DeadlineID="+DeadlineID )
+      return   this.http.get(this.config.Base_Url+"Other/DeleteDeadlineHours?DeadlineID="+DeadlineID )
     }
     else{
       this.general. presentToastConnection()
@@ -41,7 +42,7 @@ export class ControlpanelProvider {
 
   GetAllDeadlineHours(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Other/GetAllDeadlineHours")
+      return   this.http.get(this.config.Base_Url+"Other/GetAllDeadlineHours")
     }
     else{
       this.general. presentToastConnection()
@@ -54,7 +55,7 @@ export class ControlpanelProvider {
   // int LangID, bool AcademicStatus
   AddLanguage(Lang_Name, Lan_Name_En, LangAbbreviation, Stasus,FK_AdminID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Language/AddLanguage?Lang_Name="+Lang_Name +"&Lan_Name_En="+Lan_Name_En
+      return   this.http.get(this.config.Base_Url+"Language/AddLanguage?Lang_Name="+Lang_Name +"&Lan_Name_En="+Lan_Name_En
       +"&LangAbbreviation="+LangAbbreviation+"&Stasus="+ Stasus+"&FK_AdminID="+FK_AdminID )
     }
     else{
@@ -64,7 +65,7 @@ export class ControlpanelProvider {
 
   UpdateLanguage(Lang_ID,Lang_Name,  Lan_Name_En, LangAbbreviation, Stasus,FK_AdminID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Language/UpdateLanguage?Lang_Name="+Lang_Name +"&Lan_Name_En="+Lan_Name_En
+      return   this.http.get(this.config.Base_Url+"Language/UpdateLanguage?Lang_Name="+Lang_Name +"&Lan_Name_En="+Lan_Name_En
       +"&LangAbbreviation="+LangAbbreviation+"&Stasus="+ Stasus+"&Lang_ID="+ Lang_ID +"&FK_AdminID="+FK_AdminID)
     }
     else{
@@ -74,7 +75,7 @@ export class ControlpanelProvider {
 
   DeleteLanguage(Lang_ID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Language/DeleteLanguage?Lang_ID="+ Lang_ID )
+      return   this.http.get(this.config.Base_Url+"Language/DeleteLanguage?Lang_ID="+ Lang_ID )
     }
     else{
       this.general. presentToastConnection()
@@ -83,7 +84,7 @@ export class ControlpanelProvider {
 
   GetLanguages(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Language/GetAllLanguages" )
+      return   this.http.get(this.config.Base_Url+"Language/GetAllLanguages" )
     }
     else{
       this.general. presentToastConnection()
@@ -92,7 +93,7 @@ export class ControlpanelProvider {
 
   UpdateLanguageAcademicStatus(LangID, AcademicStatus){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Language/UpdateLanguageAcademicStatus?LangID="+ LangID+"&AcademicStatus="+ AcademicStatus )
+      return   this.http.get(this.config.Base_Url+"Language/UpdateLanguageAcademicStatus?LangID="+ LangID+"&AcademicStatus="+ AcademicStatus )
     }
     else{
       this.general. presentToastConnection()
@@ -103,7 +104,7 @@ export class ControlpanelProvider {
 
   GetTestForm_ByLangID(FK_Lang_ID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"TestForms/GetTestForm_ByLangID?FK_Lang_ID="+FK_Lang_ID)
+      return   this.http.get(this.config.Base_Url+"TestForms/GetTestForm_ByLangID?FK_Lang_ID="+FK_Lang_ID)
     }
     else{
       this.general. presentToastConnection()
@@ -114,7 +115,7 @@ export class ControlpanelProvider {
     if(navigator.onLine){
       const formData: FormData = new FormData();
       formData.append('TestFormPath', TestFormPath);
-      return   this.http.post(this.helper.base_url+"TestForms/AddTestForm?FK_Lang_ID="+FK_Lang_ID+"&Fk_Admin_ID="+Fk_Admin_ID
+      return   this.http.post(this.config.Base_Url+"TestForms/AddTestForm?FK_Lang_ID="+FK_Lang_ID+"&Fk_Admin_ID="+Fk_Admin_ID
       +"&TestFormPath="+TestFormPath.name ,formData)
     }
     else{
@@ -124,7 +125,7 @@ export class ControlpanelProvider {
 
   DeleteTestForm_ByTestID(FK_Test_ID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"TestForms/DeleteTestForm?TestForm_ID="+FK_Test_ID)
+      return   this.http.get(this.config.Base_Url+"TestForms/DeleteTestForm?TestForm_ID="+FK_Test_ID)
     }
     else{
       this.general. presentToastConnection()
@@ -138,7 +139,7 @@ export class ControlpanelProvider {
 
   GetParentSp(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Specialization/GetParentSp")
+      return   this.http.get(this.config.Base_Url+"Specialization/GetParentSp")
     }
     else{
       this.general.presentToastConnection()
@@ -147,7 +148,7 @@ export class ControlpanelProvider {
 
   GetChildSp(SpParentID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Specialization/GetChildSp/"+SpParentID)
+      return   this.http.get(this.config.Base_Url+"Specialization/GetChildSp/"+SpParentID)
     }
     else{
       this.general.presentToastConnection()
@@ -156,7 +157,7 @@ export class ControlpanelProvider {
 
   DeleteSpecialization(Specialization_ID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Specialization/DeleteSpecialization?Specialization_ID="+ Specialization_ID )
+      return   this.http.get(this.config.Base_Url+"Specialization/DeleteSpecialization?Specialization_ID="+ Specialization_ID )
     }
     else{
       this.general.presentToastConnection()
@@ -165,7 +166,7 @@ export class ControlpanelProvider {
 
   UpdateSpecialization(Specialization_ID,SpecializationName, FK_ParentID, FK_AdminID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Specialization/UpdateSpecialization?Specialization_ID="+
+      return   this.http.get(this.config.Base_Url+"Specialization/UpdateSpecialization?Specialization_ID="+
       Specialization_ID +"&SpecializationName="+SpecializationName+"&FK_ParentID="+FK_ParentID +"&FK_AdminID="+FK_AdminID)
     }
     else{
@@ -175,7 +176,7 @@ export class ControlpanelProvider {
 
   AddSpecialization(SpecializationName,FK_ParentID,FK_AdminID){
   if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"Specialization/AddSpecialization?SpecializationName="+ SpecializationName
+      return   this.http.get(this.config.Base_Url+"Specialization/AddSpecialization?SpecializationName="+ SpecializationName
       +"&FK_ParentID="+FK_ParentID+"&FK_ParentID="+FK_ParentID +"&FK_AdminID="+FK_AdminID)
     }
     else{
@@ -187,7 +188,7 @@ export class ControlpanelProvider {
 
  AddEducationLevel(EducationNameAr,EducationNameEn,Fk_Admin_ID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"EducationLevel/AddEducationLevel?EducationNameAr="+EducationNameAr
+      return   this.http.get(this.config.Base_Url+"EducationLevel/AddEducationLevel?EducationNameAr="+EducationNameAr
        +"&EducationNameEn="+EducationNameEn+"&Fk_Admin_ID="+Fk_Admin_ID)
     }
     else{
@@ -197,7 +198,7 @@ export class ControlpanelProvider {
 
   UpdateEducationLevel(EducationLevel_ID,  EducationNameAr, EducationNameEn, Fk_Admin_ID){
    if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"EducationLevel/UpdateEducationLevel?EducationLevel_ID="+EducationLevel_ID
+      return   this.http.get(this.config.Base_Url+"EducationLevel/UpdateEducationLevel?EducationLevel_ID="+EducationLevel_ID
        +"&EducationNameAr="+EducationNameAr+"&EducationNameEn="+EducationNameEn+"&Fk_Admin_ID="+Fk_Admin_ID)
     }
     else{
@@ -207,7 +208,7 @@ export class ControlpanelProvider {
 
   DeleteEducationLevel(EducationLevel_ID){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"EducationLevel/DeleteEducationLevel?EducationLevel_ID="+EducationLevel_ID)
+      return   this.http.get(this.config.Base_Url+"EducationLevel/DeleteEducationLevel?EducationLevel_ID="+EducationLevel_ID)
     }
     else{
       this.general. presentToastConnection()
@@ -216,7 +217,7 @@ export class ControlpanelProvider {
 
   GetEducationLevel(){
     if(navigator.onLine){
-      return   this.http.get(this.helper.base_url+"EducationLevel/GetEducationLevel")
+      return   this.http.get(this.config.Base_Url+"EducationLevel/GetEducationLevel")
     }
     else{
       this.general.presentToastConnection()
