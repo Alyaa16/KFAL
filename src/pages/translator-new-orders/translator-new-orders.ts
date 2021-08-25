@@ -53,9 +53,6 @@ export class TranslatorNewOrdersPage {
       })
       this.storage.get('Trans_user_id').then(userId=>{
         if(userId){
-
-
-
             if(this.providerType=='translator'){
               let loading=this.loadingCtrl.create({})
               loading.present()
@@ -106,13 +103,12 @@ export class TranslatorNewOrdersPage {
                   }else{
                     this.nodata=true
                   }
-                  },(err:any)=>{
-                    loading.dismiss()
-                  })
+                },(err:any)=>{
+                  loading.dismiss()
+                })
             }
             if(this.providerType=='Proofreader'){
-
-                    // upgrade tests
+              // upgrade tests  - these requests appear to academic reviewers only
               this.testform.GetRequestsTestFormsForReviewer(userId).subscribe(
                 (res:any)=>{
                     if(typeof(res)=='string'){
@@ -121,8 +117,9 @@ export class TranslatorNewOrdersPage {
                       this.upgradeTranslatedTests=res
                     }
                 },(err:any)=>{
+              })
 
-                })
+              // translated requests  - these requests appear to  reviewers only
               let loading=this.loadingCtrl.create({})
               loading.present()
               this.provider.GetAllRequestsDoneForReview(userId).subscribe(

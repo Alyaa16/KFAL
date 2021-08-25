@@ -109,12 +109,21 @@ export class MainPage {
      if(FK_UserTypeID==1){ this.navCtrl.setRoot('OwnerHomePage') }
      if(FK_UserTypeID==3){ this.navCtrl.setRoot('HometypePage') }
      if(FK_UserTypeID==2){ this.navCtrl.setRoot('AdminHomePage') }
-     if(FK_UserTypeID==4 ){ 
+     if(FK_UserTypeID==4 )
+     { 
+       // translator 
         this.navCtrl.push('TranslatorNewOrdersPage',{'type':'translator','UserType':FK_UserTypeID})
-    }
-    if(FK_UserTypeID==5 ){ 
-    this.navCtrl.push('TranslatorNewOrdersPage',{'type':'Proofreader','UserType':FK_UserTypeID})
-    }
+      }
+      if(FK_UserTypeID==5 )
+      { 
+       // reviewer 
+      this.navCtrl.push('TranslatorNewOrdersPage',{'type':'Proofreader','UserType':FK_UserTypeID})
+      }
+      if(FK_UserTypeID==6)
+      { 
+       //  academic reviewer 
+      this.navCtrl.push('TranslatorNewOrdersPage',{'type':'Proofreader','UserType':FK_UserTypeID})
+      }
    },(err:any)=>{
     this.helper.dismissLoading()
    })
