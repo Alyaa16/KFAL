@@ -37,20 +37,8 @@
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div *ngIf="!noData">
 
 
-
-
-  <div id="div1" *ngIf="DataNotCompleted && comefrom=='userprofile'" style="text-align: center;margin-top: 10%;">
-    <button (click)="completeProfile()" ion-button color="custom2" full style="height: 48px;border-radius: 10px;">
-        {{"completeProfile"|translate}}
-    </button>
-  </div>
-
-  
-
-  </div>
   <div *ngIf="noData">
 
   </div>
@@ -206,6 +194,15 @@
     </ion-card-content>
   </ion-card>
   
+  
+  <div *ngIf="!noData">
+    <div id="div1" *ngIf="DataNotCompleted && comefrom=='userprofile'" style="text-align: center;padding: 0 8px;">
+      <button (click)="completeProfile()" ion-button color="custom2" full style="height: 48px;border-radius: 10px;">
+          {{"completeProfile"|translate}}
+      </button>
+    </div>
+  </div>
+  
   <div class="User_Permissions"  *ngIf="comefrom=='adminPanel' &&  UserTypes.length!=0">
     <ion-card>
       <ion-card-header style="background: #e4e4e4">
@@ -234,7 +231,7 @@
     </ion-card-content>
   </ion-card>
 
-  <div id="div2" *ngIf="client && comefrom=='userprofile'" style="padding:8px;text-align: center;">
+  <div id="div2" *ngIf="client && comefrom=='userprofile'" style="padding: 0 8px;text-align: center;">
     <button *ngIf="!isUpgraing" (click)="upgradeProfile()" ion-button color="custom2" full style=" height: 43px;border-radius: 10px;">
         {{"account_upgrade"|translate}}
     </button>
@@ -244,7 +241,7 @@
     </div>
   </div>
 
-  <div id="div3" *ngIf="comefrom=='userprofile' && IsJoin==false" style="padding:8px;text-align: center;">
+  <div id="div3" *ngIf="comefrom=='userprofile' && IsJoin==false" style="padding:0 8px;text-align: center;">
     <button  (click)="joinDiscussions()" ion-button color="custom2" full style="height: 43px;border-radius: 10px;">
         {{"join_discussion"|translate}}
     </button>

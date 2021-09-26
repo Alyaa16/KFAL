@@ -68,21 +68,21 @@ export class ChatPage {
 
     if(this.data.message == '')
     {}
-  else
-  {
-      let newData = firebase.database().ref('chatrooms/'+this.RequestCode+'/chats').push();
-    newData.set({
-      type:this.data.type,
-      user:this.data.user,
-      message:this.data.message,
-      devid:this.data.deviceid,
-      regid:this.data.regid,
-      sendDate:moment(new Date()).format('llll')
+      else
+      {
+          let newData = firebase.database().ref('chatrooms/'+this.RequestCode+'/chats').push();
+        newData.set({
+          type:this.data.type,
+          user:this.data.user,
+          message:this.data.message,
+          devid:this.data.deviceid,
+          regid:this.data.regid,
+          sendDate:moment(new Date()).format('llll')
 
-    });
-    this.data.message = '';
+        });
+        this.data.message = '';
 
-  }
+      }
   }
 }
 export const snapshotToArray = snapshot => {
